@@ -54,14 +54,14 @@ class AppThemes {
         ),
       ),
       
-      // Bottom navigation bar theme
-      bottomNavigationBarTheme: const BottomNavigationBarTheme(
-        backgroundColor: AppConstants.surfaceColor,
-        selectedItemColor: AppConstants.primaryBlue,
-        unselectedItemColor: AppConstants.secondaryTextColor,
-        type: BottomNavigationBarType.fixed,
-        elevation: AppConstants.elevationM,
-      ),
+      // // Bottom navigation bar theme
+      // bottomNavigationBarTheme:  BottomNavigationBarTheme(
+      //   backgroundColor: AppConstants.surfaceColor,
+      //   selectedItemColor: AppConstants.primaryBlue,
+      //   unselectedItemColor: AppConstants.secondaryTextColor,
+      //   type: BottomNavigationBarType.fixed,
+      //   elevation: AppConstants.elevationM,
+      // ),
       
       // Card theme
       cardTheme: const CardTheme(

@@ -47,6 +47,16 @@ class AppCategories {
     subcategories: ['Médecine', 'Pharmacie', 'Fitness', 'Nutrition'],
   );
 
+  static const business = AppCategory(
+    id: 'business',
+    name: 'Business',
+    nameArabic: 'التجارة',
+    description: 'Applications de gestion d\'entreprise',
+    icon: Icons.business,
+    color: Colors.blue,
+    subcategories: ['Gestion', 'CRM', 'Comptabilité', 'Logistique'],
+  );
+
   static const education = AppCategory(
     id: 'education',
     name: 'Éducation',

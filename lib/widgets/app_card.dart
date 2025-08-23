@@ -39,7 +39,7 @@ class AppCard extends StatelessWidget {
         Stack(
           children: [
             Container(
-              height: 120,
+              height: 100, // Reduced from 120 to fit better
               width: double.infinity,
               decoration: BoxDecoration(
                 gradient: LinearGradient(
@@ -52,7 +52,7 @@ class AppCard extends StatelessWidget {
                 ),
               ),
               child: Center(
-                child: _buildAppIcon(AppConstants.appIconSizeL),
+                child: _buildAppIcon(AppConstants.appIconSizeM), // Reduced icon size
               ),
             ),
             if (showFeaturedBadge && app.isFeatured)
@@ -81,72 +81,82 @@ class AppCard extends StatelessWidget {
           ],
         ),
 
-        // App information
+        // App information - FIXED OVERFLOW
         Expanded(
           child: Padding(
-            padding: const EdgeInsets.all(AppConstants.paddingM),
+            padding: const EdgeInsets.all(AppConstants.paddingS), // Reduced padding
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
               children: [
                 // App name
                 Text(
                   app.name,
-                  style: theme.textTheme.titleMedium?.copyWith(
+                  style: theme.textTheme.titleSmall?.copyWith( // Smaller title
                     fontWeight: FontWeight.bold,
+                    fontSize: 14,
                   ),
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                 ),
-                const SizedBox(height: AppConstants.paddingXS),
+                const SizedBox(height: 2), // Reduced spacing
 
                 // Developer name
                 Text(
                   app.developerName,
                   style: theme.textTheme.bodySmall?.copyWith(
                     color: AppConstants.secondaryTextColor,
+                    fontSize: 11,
                   ),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                 ),
-                const SizedBox(height: AppConstants.paddingS),
+                const SizedBox(height: 4), // Reduced spacing
 
-                // Description
+                // Description - make it flexible to take remaining space
                 Expanded(
                   child: Text(
                     app.description,
-                    style: theme.textTheme.bodySmall,
-                    maxLines: 3,
+                    style: theme.textTheme.bodySmall?.copyWith(
+                      fontSize: 10,
+                    ),
+                    maxLines: 2, // Reduced max lines
                     overflow: TextOverflow.ellipsis,
                   ),
                 ),
-                const SizedBox(height: AppConstants.paddingS),
+                const SizedBox(height: 4), // Reduced spacing
 
                 // Rating and downloads
                 Row(
                   children: [
                     Icon(
                       Icons.star,
-                      size: AppConstants.iconSizeS,
+                      size: 12, // Smaller icon
                       color: AppConstants.primaryYellow,
                     ),
-                    const SizedBox(width: AppConstants.paddingXS),
+                    const SizedBox(width: 2),
                     Text(
                       app.rating.toStringAsFixed(1),
                       style: theme.textTheme.bodySmall?.copyWith(
                         fontWeight: FontWeight.w500,
+                        fontSize: 10,
                       ),
                     ),
                     const Spacer(),
                     Icon(
                       Icons.download,
-                      size: AppConstants.iconSizeS,
+                      size: 12, // Smaller icon
                       color: AppConstants.secondaryTextColor,
                     ),
-                    const SizedBox(width: AppConstants.paddingXS),
-                    Text(
-                      _formatDownloadCount(app.downloadCount),
-                      style: theme.textTheme.bodySmall?.copyWith(
-                        color: AppConstants.secondaryTextColor,
+                    const SizedBox(width: 2),
+                    Flexible(
+                      child: Text(
+                        _formatDownloadCount(app.downloadCount),
+                        style: theme.textTheme.bodySmall?.copyWith(
+                          color: AppConstants.secondaryTextColor,
+                          fontSize: 10,
+                        ),
+                        overflow: TextOverflow.ellipsis,
                       ),
                     ),
                   ],
@@ -161,18 +171,19 @@ class AppCard extends StatelessWidget {
 
   Widget _buildCompactLayout(ThemeData theme) {
     return Padding(
-      padding: const EdgeInsets.all(AppConstants.paddingM),
+      padding: const EdgeInsets.all(AppConstants.paddingS), // Reduced padding
       child: Row(
         children: [
           // App icon
-          _buildAppIcon(AppConstants.appIconSizeM),
+          _buildAppIcon(48), // Fixed size instead of constant
           const SizedBox(width: AppConstants.paddingM),
 
-          // App information
+          // App information - FIXED OVERFLOW
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisSize: MainAxisSize.min,
               children: [
                 // App name and featured badge
                 Row(
@@ -182,6 +193,7 @@ class AppCard extends StatelessWidget {
                         app.name,
                         style: theme.textTheme.titleSmall?.copyWith(
                           fontWeight: FontWeight.bold,
+                          fontSize: 14,
                         ),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
@@ -192,7 +204,7 @@ class AppCard extends StatelessWidget {
                         margin: const EdgeInsets.only(left: AppConstants.paddingS),
                         padding: const EdgeInsets.symmetric(
                           horizontal: AppConstants.paddingS,
-                          vertical: AppConstants.paddingXS,
+                          vertical: 2,
                         ),
                         decoration: BoxDecoration(
                           color: AppConstants.primaryYellow,
@@ -209,45 +221,51 @@ class AppCard extends StatelessWidget {
                       ),
                   ],
                 ),
-                const SizedBox(height: AppConstants.paddingXS),
+                const SizedBox(height: 4),
 
                 // Developer name
                 Text(
                   app.developerName,
                   style: theme.textTheme.bodySmall?.copyWith(
                     color: AppConstants.secondaryTextColor,
+                    fontSize: 12,
                   ),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                 ),
-                const SizedBox(height: AppConstants.paddingXS),
+                const SizedBox(height: 6),
 
                 // Rating and downloads
                 Row(
                   children: [
                     Icon(
                       Icons.star,
-                      size: AppConstants.iconSizeS,
+                      size: 14,
                       color: AppConstants.primaryYellow,
                     ),
-                    const SizedBox(width: AppConstants.paddingXS),
+                    const SizedBox(width: 2),
                     Text(
                       app.rating.toStringAsFixed(1),
                       style: theme.textTheme.bodySmall?.copyWith(
                         fontWeight: FontWeight.w500,
+                        fontSize: 11,
                       ),
                     ),
                     const SizedBox(width: AppConstants.paddingM),
                     Icon(
                       Icons.download,
-                      size: AppConstants.iconSizeS,
+                      size: 14,
                       color: AppConstants.secondaryTextColor,
                     ),
-                    const SizedBox(width: AppConstants.paddingXS),
-                    Text(
-                      _formatDownloadCount(app.downloadCount),
-                      style: theme.textTheme.bodySmall?.copyWith(
-                        color: AppConstants.secondaryTextColor,
+                    const SizedBox(width: 2),
+                    Flexible(
+                      child: Text(
+                        _formatDownloadCount(app.downloadCount),
+                        style: theme.textTheme.bodySmall?.copyWith(
+                          color: AppConstants.secondaryTextColor,
+                          fontSize: 11,
+                        ),
+                        overflow: TextOverflow.ellipsis,
                       ),
                     ),
                   ],

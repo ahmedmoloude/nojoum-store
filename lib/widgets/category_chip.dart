@@ -30,51 +30,59 @@ class CategoryChip extends StatelessWidget {
         onTap: onTap,
         borderRadius: BorderRadius.circular(AppConstants.borderRadiusM),
         child: Container(
-          padding: const EdgeInsets.all(AppConstants.paddingM),
+          padding: const EdgeInsets.all(AppConstants.paddingS), // Reduced padding
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisSize: MainAxisSize.min, // Added to minimize space usage
             children: [
-              // Category icon
+              // Category icon - made more compact
               Container(
-                padding: const EdgeInsets.all(AppConstants.paddingS),
+                padding: const EdgeInsets.all(AppConstants.paddingXS), // Reduced padding
                 decoration: BoxDecoration(
                   color: isSelected 
                       ? category.color 
                       : category.color.withOpacity(0.1),
-                  borderRadius: BorderRadius.circular(AppConstants.borderRadiusL),
+                  borderRadius: BorderRadius.circular(AppConstants.borderRadiusM), // Reduced radius
                 ),
                 child: Icon(
                   category.icon,
-                  size: AppConstants.iconSizeL,
+                  size: AppConstants.iconSizeM, // Reduced icon size
                   color: isSelected 
                       ? AppConstants.whiteTextColor 
                       : category.color,
                 ),
               ),
-              const SizedBox(height: AppConstants.paddingS),
+              const SizedBox(height: AppConstants.paddingXS), // Reduced spacing
 
-              // Category name
-              Text(
-                category.name,
-                style: theme.textTheme.labelMedium?.copyWith(
-                  fontWeight: FontWeight.w600,
-                  color: isSelected 
-                      ? category.color 
-                      : AppConstants.primaryTextColor,
+              // Category name - FIXED OVERFLOW ISSUE
+              Expanded(
+                child: Center(
+                  child: Text(
+                    category.name,
+                    style: theme.textTheme.labelSmall?.copyWith( // Smaller text
+                      fontWeight: FontWeight.w600,
+                      color: isSelected 
+                          ? category.color 
+                          : AppConstants.primaryTextColor,
+                      fontSize: 11, // Explicit smaller font size
+                    ),
+                    textAlign: TextAlign.center,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                  ),
                 ),
-                textAlign: TextAlign.center,
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
               ),
 
-              // App count (if enabled)
+              // App count (if enabled) - made more compact
               if (showCount && appCount != null) ...[
-                const SizedBox(height: AppConstants.paddingXS),
+                const SizedBox(height: 1), // Minimal spacing
                 Text(
                   '$appCount app${appCount! > 1 ? 's' : ''}',
                   style: theme.textTheme.labelSmall?.copyWith(
                     color: AppConstants.secondaryTextColor,
+                    fontSize: 9, // Very small font for count
                   ),
+                  overflow: TextOverflow.ellipsis,
                 ),
               ],
             ],
@@ -208,11 +216,15 @@ class CompactCategoryChip extends StatelessWidget {
               color: category.color,
             ),
             const SizedBox(width: AppConstants.paddingS),
-            Text(
-              category.name,
-              style: theme.textTheme.labelSmall?.copyWith(
-                color: category.color,
-                fontWeight: FontWeight.w600,
+            // FIXED: Added Flexible to prevent overflow in horizontal layout
+            Flexible(
+              child: Text(
+                category.name,
+                style: theme.textTheme.labelSmall?.copyWith(
+                  color: category.color,
+                  fontWeight: FontWeight.w600,
+                ),
+                overflow: TextOverflow.ellipsis,
               ),
             ),
           ],

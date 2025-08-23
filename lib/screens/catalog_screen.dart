@@ -163,10 +163,10 @@ class _CatalogScreenState extends State<CatalogScreen> {
     return GridView.builder(
       padding: const EdgeInsets.all(AppConstants.paddingM),
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: AppConstants.gridCrossAxisCount,
-        childAspectRatio: AppConstants.gridChildAspectRatio,
-        crossAxisSpacing: AppConstants.gridSpacing,
-        mainAxisSpacing: AppConstants.gridSpacing,
+        crossAxisCount: 2, // Better for mobile screens
+        childAspectRatio: 0.75, // Adjusted aspect ratio to give more height
+        crossAxisSpacing: AppConstants.paddingM,
+        mainAxisSpacing: AppConstants.paddingM,
       ),
       itemCount: _filteredApps.length,
       itemBuilder: (context, index) {
@@ -195,7 +195,7 @@ class _CatalogScreenState extends State<CatalogScreen> {
         final app = _filteredApps[index];
         return Container(
           margin: const EdgeInsets.only(bottom: AppConstants.paddingM),
-          height: 120,
+          height: 100, // Reduced height to fit better
           child: AppCard(
             app: app,
             isCompact: true,

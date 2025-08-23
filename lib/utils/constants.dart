@@ -8,6 +8,10 @@ class AppConstants {
   static const String appTaglineArabic = 'اكتشف وانشر الحلول الرقمية الموريتانية';
   static const String appVersion = '1.0.0';
 
+  static const Color primaryGreen = Color(0xFF00A651);
+  static const Color darkGreen = Color(0xFF007937);
+  static const Color primaryYellow = Color(0xFFFFC107);
+  static const Color accentYellow = Color(0xFFFFE082);
   // Professional Marketplace Colors
   static const Color primaryBlue = Color(0xFF0d47a1);
   static const Color royalBlue = Color(0xFF1976d2);

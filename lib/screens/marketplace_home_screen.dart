@@ -139,10 +139,10 @@ class _MarketplaceHomeScreenState extends State<MarketplaceHomeScreen> {
                 _buildSponsoredSection(theme),
                 
                 // Success Stories Section
-                _buildSuccessStories(theme),
+                // _buildSuccessStories(theme),r
                 
                 // Newsletter Signup
-                _buildNewsletterSignup(theme),
+                // _buildNewsletterSignup(theme),
                 
                 SizedBox(height: AppConstants.paddingXL),
               ],
