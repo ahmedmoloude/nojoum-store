@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 class AppConstants {
   // App Information
   static const String appName = 'Noujoum Store';
-  static const String appTagline = 'Discover & Publish Mauritanian Digital Solutions';
+  static const String appTagline = '';
   static const String appTaglineArabic = 'اكتشف وانشر الحلول الرقمية الموريتانية';
   static const String appVersion = '1.0.0';
 

@@ -33,6 +33,51 @@ class AppCategory {
   String toString() {
     return 'AppCategory(id: $id, name: $name)';
   }
+
+  /// Create AppCategory from API JSON response
+  factory AppCategory.fromApiJson(Map<String, dynamic> json) {
+    return AppCategory(
+      id: json['id'].toString(),
+      name: json['name'] ?? '',
+      nameArabic: json['name_arabic'] ?? '',
+      description: json['description'] ?? '',
+      icon: _parseIcon(json['icon']),
+      color: _parseColor(json['color']),
+      subcategories: List<String>.from(json['subcategories'] ?? []),
+    );
+  }
+
+  static IconData _parseIcon(String? iconName) {
+    switch (iconName?.toLowerCase()) {
+      case 'health': case 'medical': return Icons.local_hospital;
+      case 'business': case 'work': return Icons.business;
+      case 'education': case 'school': return Icons.school;
+      case 'finance': case 'money': return Icons.account_balance;
+      case 'transport': case 'car': return Icons.directions_car;
+      case 'food': case 'restaurant': return Icons.restaurant;
+      case 'shopping': case 'store': return Icons.shopping_cart;
+      case 'government': case 'public': return Icons.account_balance;
+      case 'news': case 'media': return Icons.newspaper;
+      case 'religion': case 'mosque': return Icons.mosque;
+      case 'tourism': case 'travel': return Icons.flight;
+      case 'agriculture': case 'farming': return Icons.agriculture;
+      default: return Icons.apps;
+    }
+  }
+
+  static Color _parseColor(String? colorHex) {
+    if (colorHex == null || colorHex.isEmpty) return Colors.blue;
+    
+    try {
+      // Remove # if present
+      String hex = colorHex.replaceAll('#', '');
+      // Add alpha if not present
+      if (hex.length == 6) hex = 'FF$hex';
+      return Color(int.parse(hex, radix: 16));
+    } catch (e) {
+      return Colors.blue;
+    }
+  }
 }
 
 /// Predefined categories for Mauritanian applications

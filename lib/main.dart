@@ -1,13 +1,17 @@
 import 'package:flutter/material.dart';
-import 'screens/marketplace_home_screen.dart';
+import 'screens/main_navigation_screen.dart';
+import 'services/auth_service.dart';
 import 'utils/constants.dart';
 import 'utils/themes.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  await AuthService.initialize();
+
   runApp(const NoujoumStoreApp());
 }
 
-/// Main application widget for Noujoum Store Marketplace
 class NoujoumStoreApp extends StatelessWidget {
   const NoujoumStoreApp({super.key});
 
@@ -16,7 +20,7 @@ class NoujoumStoreApp extends StatelessWidget {
     return MaterialApp(
       title: AppConstants.appName,
       theme: AppThemes.lightTheme,
-      home: const MarketplaceHomeScreen(),
+      home: const MainNavigationScreen(),
       debugShowCheckedModeBanner: false,
     );
   }

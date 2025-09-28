@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../data/static_data.dart';
+import '../data/app_repository.dart';
 import '../models/mauritanian_app.dart';
 import '../utils/constants.dart';
 import '../widgets/app_card.dart';
@@ -21,8 +21,7 @@ class CatalogScreen extends StatefulWidget {
 }
 
 class _CatalogScreenState extends State<CatalogScreen> {
-  List<MauritanianApp> _apps = [];
-  List<MauritanianApp> _filteredApps = [];
+  late Future<List<MauritanianApp>> _appsFuture;
   bool _isGridView = true;
   String _sortBy = 'name_asc';
 
@@ -35,40 +34,38 @@ class _CatalogScreenState extends State<CatalogScreen> {
   void _loadApps() {
     setState(() {
       if (widget.initialFilter == 'featured') {
-        _apps = StaticData.featuredApps;
+        _appsFuture = AppRepository.getFeaturedApps();
       } else if (widget.initialCategory != null) {
-        _apps = StaticData.getAppsByCategory(widget.initialCategory!);
+        _appsFuture = AppRepository.getApps(category: widget.initialCategory);
       } else {
-        _apps = StaticData.apps;
+        _appsFuture = AppRepository.getApps();
       }
-      _filteredApps = List.from(_apps);
-      _sortApps();
     });
   }
 
-  void _sortApps() {
-    setState(() {
-      switch (_sortBy) {
-        case 'name_asc':
-          _filteredApps.sort((a, b) => a.name.compareTo(b.name));
-          break;
-        case 'name_desc':
-          _filteredApps.sort((a, b) => b.name.compareTo(a.name));
-          break;
-        case 'rating_desc':
-          _filteredApps.sort((a, b) => b.rating.compareTo(a.rating));
-          break;
-        case 'downloads_desc':
-          _filteredApps.sort((a, b) => b.downloadCount.compareTo(a.downloadCount));
-          break;
-        case 'date_desc':
-          _filteredApps.sort((a, b) => b.dateAdded.compareTo(a.dateAdded));
-          break;
-        case 'date_asc':
-          _filteredApps.sort((a, b) => a.dateAdded.compareTo(b.dateAdded));
-          break;
-      }
-    });
+  List<MauritanianApp> _sortApps(List<MauritanianApp> apps) {
+    final sortedApps = List<MauritanianApp>.from(apps);
+    switch (_sortBy) {
+      case 'name_asc':
+        sortedApps.sort((a, b) => a.appName.compareTo(b.appName));
+        break;
+      case 'name_desc':
+        sortedApps.sort((a, b) => b.appName.compareTo(a.appName));
+        break;
+      case 'rating_desc':
+        sortedApps.sort((a, b) => b.rating.compareTo(a.rating));
+        break;
+      case 'downloads_desc':
+        sortedApps.sort((a, b) => b.downloads.compareTo(a.downloads));
+        break;
+      case 'date_desc':
+        sortedApps.sort((a, b) => b.publishDate.compareTo(a.publishDate));
+        break;
+      case 'date_asc':
+        sortedApps.sort((a, b) => a.publishDate.compareTo(b.publishDate));
+        break;
+    }
+    return sortedApps;
   }
 
   @override
@@ -90,7 +87,7 @@ class _CatalogScreenState extends State<CatalogScreen> {
             onSelected: (value) {
               setState(() {
                 _sortBy = value;
-                _sortApps();
+                // Sorting will be handled in FutureBuilder
               });
             },
             itemBuilder: (context) => [
@@ -122,8 +119,47 @@ class _CatalogScreenState extends State<CatalogScreen> {
           ),
         ],
       ),
-      body: _filteredApps.isEmpty
-          ? const Center(
+      body: FutureBuilder<List<MauritanianApp>>(
+        future: _appsFuture,
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(child: CircularProgressIndicator());
+          }
+
+          if (snapshot.hasError) {
+            return Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(
+                    Icons.error_outline,
+                    size: 64,
+                    color: AppConstants.secondaryTextColor,
+                  ),
+                  SizedBox(height: AppConstants.paddingM),
+                  Text(
+                    'Erreur lors du chargement des applications',
+                    style: TextStyle(
+                      fontSize: 18,
+                      color: AppConstants.secondaryTextColor,
+                    ),
+                  ),
+                  SizedBox(height: AppConstants.paddingM),
+                  ElevatedButton(
+                    onPressed: () {
+                      setState(() {
+                        _loadApps();
+                      });
+                    },
+                    child: Text('Réessayer'),
+                  ),
+                ],
+              ),
+            );
+          }
+
+          if (!snapshot.hasData || snapshot.data!.isEmpty) {
+            return const Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -142,10 +178,15 @@ class _CatalogScreenState extends State<CatalogScreen> {
                   ),
                 ],
               ),
-            )
-          : _isGridView
-              ? _buildGridView()
-              : _buildListView(),
+            );
+          }
+
+          final sortedApps = _sortApps(snapshot.data!);
+          return _isGridView
+              ? _buildGridView(sortedApps)
+              : _buildListView(sortedApps);
+        },
+      ),
     );
   }
 
@@ -159,7 +200,7 @@ class _CatalogScreenState extends State<CatalogScreen> {
     }
   }
 
-  Widget _buildGridView() {
+  Widget _buildGridView(List<MauritanianApp> apps) {
     return GridView.builder(
       padding: const EdgeInsets.all(AppConstants.paddingM),
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -168,9 +209,9 @@ class _CatalogScreenState extends State<CatalogScreen> {
         crossAxisSpacing: AppConstants.paddingM,
         mainAxisSpacing: AppConstants.paddingM,
       ),
-      itemCount: _filteredApps.length,
+      itemCount: apps.length,
       itemBuilder: (context, index) {
-        final app = _filteredApps[index];
+        final app = apps[index];
         return AppCard(
           app: app,
           showFeaturedBadge: true,
@@ -187,12 +228,12 @@ class _CatalogScreenState extends State<CatalogScreen> {
     );
   }
 
-  Widget _buildListView() {
+  Widget _buildListView(List<MauritanianApp> apps) {
     return ListView.builder(
       padding: const EdgeInsets.all(AppConstants.paddingM),
-      itemCount: _filteredApps.length,
+      itemCount: apps.length,
       itemBuilder: (context, index) {
-        final app = _filteredApps[index];
+        final app = apps[index];
         return Container(
           margin: const EdgeInsets.only(bottom: AppConstants.paddingM),
           height: 100, // Reduced height to fit better

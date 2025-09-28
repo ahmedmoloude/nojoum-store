@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-import '../data/static_data.dart';
+import 'package:noujoum_store/data/app_repository.dart';
 import '../models/app_category.dart';
 import '../models/mauritanian_app.dart';
 import '../utils/constants.dart';
@@ -12,6 +12,8 @@ import 'catalog_screen.dart';
 import 'categories_screen.dart';
 import 'search_screen.dart';
 import 'publish_app_screen.dart';
+import '../services/category_service.dart';
+import '../services/app_service.dart';
 
 /// New Marketplace Home Screen with dual-mode functionality
 class MarketplaceHomeScreen extends StatefulWidget {
@@ -22,60 +24,52 @@ class MarketplaceHomeScreen extends StatefulWidget {
 }
 
 class _MarketplaceHomeScreenState extends State<MarketplaceHomeScreen> {
-  bool _isBrowseMode = true; // true = Browse Apps, false = Publish Mode
+  bool _isBrowseMode = true;
   int _currentCarouselIndex = 0;
+
+  late Future<List<MauritanianApp>> _featuredAppsFuture;
+  late Future<List<AppCategory>> _categoriesFuture;
+  late Future<Map<String, String>> _statsFuture;
+
+  @override
+  void initState() {
+    super.initState();
+    _featuredAppsFuture = AppRepository.getFeaturedApps();
+    _categoriesFuture = CategoryService.getCategories();
+    _statsFuture = _getMarketplaceStats();
+  }
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final featuredApps = StaticData.featuredApps;
-    final categories = AppCategories.all.take(6).toList();
-    final stats = _getMarketplaceStats();
 
     return Scaffold(
       body: CustomScrollView(
         slivers: [
           // Modern App Bar with dual-mode toggle
           SliverAppBar(
-            expandedHeight: 180,
+            expandedHeight: 210,
             floating: false,
             pinned: true,
             backgroundColor: AppConstants.primaryBlue,
             flexibleSpace: FlexibleSpaceBar(
-              title: Text(
-                AppConstants.appName,
-                style: TextStyle(
-                  color: AppConstants.whiteTextColor,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
               background: Container(
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
-                    colors: [AppConstants.primaryBlue, AppConstants.royalBlue],
+                    colors: [AppConstants.backgroundColor, AppConstants.royalBlue],
                   ),
                 ),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     SizedBox(height: 40),
-                    Icon(
-                      Icons.storefront,
-                      size: AppConstants.iconSizeXL,
-                      color: AppConstants.whiteTextColor,
+                    Image.asset(
+                      'assets/images/noujoum_store_logo.png',
+                      width: 200,
                     ),
                     SizedBox(height: AppConstants.paddingS),
-                    Text(
-                      AppConstants.appTagline,
-                      style: TextStyle(
-                        color: AppConstants.whiteTextColor,
-                        fontSize: 14,
-                        fontWeight: FontWeight.w500,
-                      ),
-                      textAlign: TextAlign.center,
-                    ),
                   ],
                 ),
               ),
@@ -111,29 +105,60 @@ class _MarketplaceHomeScreenState extends State<MarketplaceHomeScreen> {
                 _buildAdCarousel(),
                 
                 // Quick Stats
-                _buildQuickStats(stats, theme),
-                
+                FutureBuilder<Map<String, String>>(
+                  future: _statsFuture,
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return Container(
+                        margin: EdgeInsets.symmetric(horizontal: AppConstants.paddingM),
+                        height: 80,
+                        child: Center(child: CircularProgressIndicator()),
+                      );
+                    }
+                    if (!snapshot.hasData) return SizedBox();
+                    return _buildQuickStats(snapshot.data!, theme);
+                  },
+                ),
+
                 // Featured Apps Section
-                if (featuredApps.isNotEmpty) ...[
-                  _buildSectionHeader('Applications en vedette', 'Voir tout', theme, () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => CatalogScreen(initialFilter: 'featured'),
-                      ),
+                FutureBuilder<List<MauritanianApp>>(
+                  future: _featuredAppsFuture,
+                  builder: (context, snapshot) {
+                    if (!snapshot.hasData || snapshot.data!.isEmpty) return SizedBox();
+                    return Column(
+                      children: [
+                        _buildSectionHeader('Applications en vedette', 'Voir tout', theme, () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => CatalogScreen(initialFilter: 'featured'),
+                            ),
+                          );
+                        }),
+                        _buildFeaturedAppsCarousel(snapshot.data!),
+                      ],
                     );
-                  }),
-                  _buildFeaturedAppsCarousel(featuredApps),
-                ],
-                
+                  },
+                ),
+
                 // Categories Quick Access
-                _buildSectionHeader('Catégories populaires', 'Voir tout', theme, () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => CategoriesScreen()),
-                  );
-                }),
-                _buildCategoriesGrid(categories),
+                FutureBuilder<List<AppCategory>>(
+                  future: _categoriesFuture,
+                  builder: (context, snapshot) {
+                    if (!snapshot.hasData) return SizedBox();
+                    return Column(
+                      children: [
+                        _buildSectionHeader('Catégories populaires', 'Voir tout', theme, () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => CategoriesScreen()),
+                          );
+                        }),
+                        _buildCategoriesGrid(snapshot.data!),
+                      ],
+                    );
+                  },
+                ),
                 
                 // Sponsored Apps Carousel Placeholder
                 _buildSponsoredSection(theme),
@@ -629,11 +654,24 @@ class _MarketplaceHomeScreenState extends State<MarketplaceHomeScreen> {
     );
   }
 
-  Map<String, String> _getMarketplaceStats() {
-    return {
-      'Apps disponibles': '${StaticData.apps.length}+',
-      'Développeurs actifs': '50+',
-      'Clients satisfaits': '1000+',
-    };
+  Future<Map<String, String>> _getMarketplaceStats() async {
+    try {
+      // Get marketplace statistics from API
+      final stats = await AppService.getStats();
+
+      return {
+        'Apps disponibles': '${stats['total_apps'] ?? 0}+',
+        'Développeurs actifs': '${stats['total_developers'] ?? 0}+',
+      };
+
+      
+    } catch (e) {
+      // Fallback to default values if API fails
+      return {
+        'Apps disponibles': '',
+        'Développeurs actifs': '',
+        'Clients satisfaits': '',
+      };
+    }
   }
 }

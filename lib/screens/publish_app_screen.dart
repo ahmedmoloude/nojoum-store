@@ -1,8 +1,13 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import '../models/mauritanian_app.dart';
 import '../models/app_category.dart';
+import '../services/auth_service.dart';
+import '../services/app_service.dart';
 import '../utils/constants.dart';
+import 'auth/login_screen.dart';
 
 /// Multi-step app publishing screen for developers
 class PublishAppScreen extends StatefulWidget {
@@ -16,7 +21,57 @@ class _PublishAppScreenState extends State<PublishAppScreen> {
   final PageController _pageController = PageController();
   final GlobalKey<FormBuilderState> _formKey = GlobalKey<FormBuilderState>();
   int _currentStep = 0;
-  final int _totalSteps = 5;
+  final int _totalSteps = 4;
+
+  @override
+  void initState() {
+    super.initState();
+    _checkAuthentication();
+  }
+
+  void _checkAuthentication() {
+    if (!AuthService.staticIsLoggedIn) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        _showLoginRequired();
+      });
+    }
+  }
+
+  void _showLoginRequired() {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) => AlertDialog(
+        title: const Text('Connexion requise'),
+        content: const Text(
+          'Vous devez être connecté pour publier une application. '
+          'Souhaitez-vous vous connecter maintenant ?',
+        ),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+              Navigator.of(context).pop(); // Go back to previous screen
+            },
+            child: const Text('Annuler'),
+          ),
+          ElevatedButton(
+            onPressed: () async {
+              Navigator.of(context).pop();
+              final result = await Navigator.push<bool>(
+                context,
+                MaterialPageRoute(builder: (context) => const LoginScreen()),
+              );
+              if (result != true) {
+                Navigator.of(context).pop(); // Go back if login failed
+              }
+            },
+            child: const Text('Se connecter'),
+          ),
+        ],
+      ),
+    );
+  }
 
   @override
   void dispose() {
@@ -42,18 +97,20 @@ class _PublishAppScreenState extends State<PublishAppScreen> {
           
           // Form content
           Expanded(
-            child: PageView(
-              controller: _pageController,
-              onPageChanged: (index) {
-                setState(() => _currentStep = index);
-              },
-              children: [
-                _buildBasicInfoStep(),
-                _buildTechnicalDetailsStep(),
-                _buildPricingStep(),
-                _buildBusinessDetailsStep(),
-                _buildContactLegalStep(),
-              ],
+            child: FormBuilder(
+              key: _formKey,
+              child: PageView(
+                controller: _pageController,
+                onPageChanged: (index) {
+                  setState(() => _currentStep = index);
+                },
+                children: [
+                  _buildBasicInfoStep(),
+                  _buildTechnicalDetailsStep(),
+                  _buildPricingStep(),
+                  _buildBusinessDetailsStep(),
+                ],
+              ),
             ),
           ),
           
@@ -121,11 +178,9 @@ class _PublishAppScreenState extends State<PublishAppScreen> {
   Widget _buildBasicInfoStep() {
     return SingleChildScrollView(
       padding: const EdgeInsets.all(AppConstants.paddingM),
-      child: FormBuilder(
-        key: _formKey,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
             Text(
               'Informations de base',
               style: Theme.of(context).textTheme.headlineSmall,
@@ -216,8 +271,73 @@ class _PublishAppScreenState extends State<PublishAppScreen> {
                 return null;
               },
             ),
+            const SizedBox(height: AppConstants.paddingM),
+
+            FormBuilderTextField(
+              name: 'iconUrl',
+              decoration: const InputDecoration(
+                labelText: 'URL de l\'icône *',
+                hintText: 'https://example.com/icon.png',
+              ),
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'L\'URL de l\'icône est requise';
+                }
+                final uri = Uri.tryParse(value);
+                if (uri == null || !uri.hasAbsolutePath) {
+                  return 'Veuillez saisir une URL valide';
+                }
+                return null;
+              },
+            ),
+            const SizedBox(height: AppConstants.paddingM),
+
+            FormBuilderTextField(
+              name: 'screenshots',
+              decoration: const InputDecoration(
+                labelText: 'URLs des captures d\'écran *',
+                hintText: 'Séparez les URLs par des virgules',
+              ),
+              maxLines: 3,
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Au moins une capture d\'écran est requise';
+                }
+                return null;
+              },
+            ),
+            const SizedBox(height: AppConstants.paddingM),
+
+            FormBuilderTextField(
+              name: 'subcategory',
+              decoration: const InputDecoration(
+                labelText: 'Sous-catégorie *',
+                hintText: 'Ex: CRM, Comptabilité, etc.',
+              ),
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'La sous-catégorie est requise';
+                }
+                return null;
+              },
+            ),
+            const SizedBox(height: AppConstants.paddingM),
+
+            FormBuilderTextField(
+              name: 'tags',
+              decoration: const InputDecoration(
+                labelText: 'Tags *',
+                hintText: 'Séparez les tags par des virgules (ex: gestion, client, vente)',
+              ),
+              maxLines: 2,
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Au moins un tag est requis';
+                }
+                return null;
+              },
+            ),
           ],
-        ),
       ),
     );
   }
@@ -404,78 +524,7 @@ class _PublishAppScreenState extends State<PublishAppScreen> {
     );
   }
 
-  Widget _buildContactLegalStep() {
-    return SingleChildScrollView(
-      padding: const EdgeInsets.all(AppConstants.paddingM),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            'Contact et informations légales',
-            style: Theme.of(context).textTheme.headlineSmall,
-          ),
-          const SizedBox(height: AppConstants.paddingL),
-          
-          FormBuilderTextField(
-            name: 'developerName',
-            decoration: const InputDecoration(
-              labelText: 'Nom du développeur *',
-            ),
-          ),
-          const SizedBox(height: AppConstants.paddingM),
-          
-          FormBuilderTextField(
-            name: 'companyName',
-            decoration: const InputDecoration(
-              labelText: 'Nom de l\'entreprise',
-              hintText: 'Optionnel si développeur individuel',
-            ),
-          ),
-          const SizedBox(height: AppConstants.paddingM),
-          
-          FormBuilderTextField(
-            name: 'developerEmail',
-            decoration: const InputDecoration(
-              labelText: 'Email de contact *',
-            ),
-            keyboardType: TextInputType.emailAddress,
-          ),
-          const SizedBox(height: AppConstants.paddingM),
-          
-          FormBuilderTextField(
-            name: 'developerPhone',
-            decoration: const InputDecoration(
-              labelText: 'Téléphone *',
-              hintText: '+222 XX XX XX XX',
-            ),
-            keyboardType: TextInputType.phone,
-          ),
-          const SizedBox(height: AppConstants.paddingM),
-          
-          FormBuilderTextField(
-            name: 'developerWebsite',
-            decoration: const InputDecoration(
-              labelText: 'Site web',
-              hintText: 'https://monsite.mr',
-            ),
-            keyboardType: TextInputType.url,
-          ),
-          const SizedBox(height: AppConstants.paddingL),
-          
-          FormBuilderCheckbox(
-            name: 'acceptTerms',
-            title: const Text('J\'accepte les conditions d\'utilisation'),
-            validator: (value) {
-              if (value != true) {
-                return 'Vous devez accepter les conditions';
-              }
-              return null;
-            },
-          ),
-        ],
-      ),
-    );
-  }
+
 
   Widget _buildNavigationButtons() {
     return Container(
@@ -502,13 +551,24 @@ class _PublishAppScreenState extends State<PublishAppScreen> {
           if (_currentStep > 0) const SizedBox(width: AppConstants.paddingM),
           Expanded(
             child: ElevatedButton(
-              onPressed: _currentStep < _totalSteps - 1 ? _nextStep : _submitForm,
+              onPressed: _isSubmitting
+                  ? null
+                  : (_currentStep < _totalSteps - 1 ? _nextStep : _submitForm),
               style: ElevatedButton.styleFrom(
                 backgroundColor: AppConstants.teal,
               ),
-              child: Text(
-                _currentStep < _totalSteps - 1 ? 'Suivant' : 'Publier l\'application',
-              ),
+              child: _isSubmitting
+                  ? const SizedBox(
+                      height: 20,
+                      width: 20,
+                      child: CircularProgressIndicator(
+                        strokeWidth: 2,
+                        valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                      ),
+                    )
+                  : Text(
+                      _currentStep < _totalSteps - 1 ? 'Suivant' : 'Publier l\'application',
+                    ),
             ),
           ),
         ],
@@ -517,6 +577,7 @@ class _PublishAppScreenState extends State<PublishAppScreen> {
   }
 
   void _nextStep() {
+    log('next step ');
     if (_validateCurrentStep()) {
       _pageController.nextPage(
         duration: const Duration(milliseconds: 300),
@@ -533,34 +594,307 @@ class _PublishAppScreenState extends State<PublishAppScreen> {
   }
 
   bool _validateCurrentStep() {
-    // Add validation logic for each step
+
+    
+
+
+    log('formket currentState ${_formKey.currentState}');
+    if (_formKey.currentState == null) return false;
+
+
+
+    log('current state ');
+    // Save and validate the form first to populate values
+    if (!_formKey.currentState!.saveAndValidate()) {
+      return false;
+    }
+
+    // Get current form values (now they should be populated)
+    final formData = _formKey.currentState!.value;
+    log('Form data after saveAndValidate: $formData');
+
+    switch (_currentStep) {
+      case 0: // Basic Info
+        return _validateBasicInfo(formData);
+      case 1: // Technical Details
+        return _validateTechnicalDetails(formData);
+      case 2: // Pricing
+        return _validatePricing(formData);
+      case 3: // Business Details
+        return _validateBusinessDetails(formData);
+      default:
+        return true;
+    }
+  }
+
+  bool _validateBasicInfo(Map<String, dynamic> formData) {
+    log('Validating basic info step formData: $formData');
+    final appName = formData['appName']?.toString().trim();
+    final tagline = formData['tagline']?.toString().trim();
+    final description = formData['description']?.toString().trim();
+    final category = formData['category'];
+    final targetAudience = formData['targetAudience'];
+    final iconUrl = formData['iconUrl']?.toString().trim();
+    final screenshots = formData['screenshots']?.toString().trim();
+    final subcategory = formData['subcategory']?.toString().trim();
+    final tags = formData['tags']?.toString().trim();
+
+    if (appName == null || appName.isEmpty) {
+      _showValidationError('Veuillez saisir le nom de l\'application');
+      return false;
+    }
+    if (tagline == null || tagline.isEmpty) {
+      _showValidationError('Veuillez saisir le slogan de l\'application');
+      return false;
+    }
+    if (description == null || description.isEmpty) {
+      _showValidationError('Veuillez saisir la description de l\'application');
+      return false;
+    }
+    if (category == null || category.toString().isEmpty) {
+      _showValidationError('Veuillez sélectionner une catégorie');
+      return false;
+    }
+    if (targetAudience == null || targetAudience.toString().isEmpty) {
+      _showValidationError('Veuillez sélectionner le public cible');
+      return false;
+    }
+    if (iconUrl == null || iconUrl.isEmpty) {
+      _showValidationError('Veuillez saisir l\'URL de l\'icône');
+      return false;
+    }
+    if (screenshots == null || screenshots.isEmpty) {
+      _showValidationError('Veuillez ajouter au moins une capture d\'écran');
+      return false;
+    }
+    if (subcategory == null || subcategory.isEmpty) {
+      _showValidationError('Veuillez saisir la sous-catégorie');
+      return false;
+    }
+    if (tags == null || tags.isEmpty) {
+      _showValidationError('Veuillez ajouter au moins un tag');
+      return false;
+    }
     return true;
   }
 
-  void _submitForm() {
-    if (_formKey.currentState?.saveAndValidate() ?? false) {
-      final formData = _formKey.currentState!.value;
-      
-      // Show success dialog
-      showDialog(
-        context: context,
-        builder: (context) => AlertDialog(
-          title: const Text('Application soumise !'),
-          content: const Text(
-            'Votre application a été soumise avec succès. '
-            'Notre équipe va l\'examiner et vous contactera sous 48h.',
-          ),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-                Navigator.of(context).pop();
-              },
-              child: const Text('OK'),
-            ),
-          ],
+
+  bool _validateTechnicalDetails(Map<String, dynamic> formData) {
+
+    log('formdata ${formData}');
+    final appType = formData['appType'];
+    final platforms = formData['platforms'] as List?;
+    final version = formData['currentVersion']?.toString().trim();
+
+    if (appType == null || appType.toString().isEmpty) {
+      _showValidationError('Veuillez sélectionner le type d\'application');
+      return false;
+    }
+    if (platforms == null || platforms.isEmpty) {
+      _showValidationError('Veuillez sélectionner au moins une plateforme');
+      return false;
+    }
+    if (version == null || version.isEmpty) {
+      _showValidationError('Veuillez saisir la version de l\'application');
+      return false;
+    }
+    return true;
+  }
+
+  bool _validatePricing(Map<String, dynamic> formData) {
+    final licenseType = formData['pricingModel'];
+    final pricingModel = formData['pricingModel'];
+
+    if (licenseType == null || licenseType.toString().isEmpty) {
+      _showValidationError('Veuillez sélectionner le type de licence');
+      return false;
+    }
+    if (pricingModel == null || pricingModel.toString().isEmpty) {
+      _showValidationError('Veuillez sélectionner le modèle de tarification');
+      return false;
+    }
+    return true;
+  }
+
+  bool _validateBusinessDetails(Map<String, dynamic> formData) {
+    final businessValue = formData['businessValue']?.toString().trim();
+    final keyFeatures = formData['keyFeatures']?.toString().trim();
+
+    if (businessValue == null || businessValue.isEmpty) {
+      _showValidationError('Veuillez saisir la valeur commerciale');
+      return false;
+    }
+    if (keyFeatures == null || keyFeatures.isEmpty) {
+      _showValidationError('Veuillez ajouter au moins une fonctionnalité clé');
+      return false;
+    }
+    return true;
+  }
+
+  void _showValidationError(String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(message),
+        backgroundColor: Colors.red,
+      ),
+    );
+  }
+
+  // Helper method to convert category name to category ID
+  int? _getCategoryId(String? categoryName) {
+    if (categoryName == null) return null;
+
+    // Map category names to IDs (you may need to adjust these based on your actual categories)
+    final categoryMap = {
+      'entertainment': 1,
+      'productivity': 2,
+      'education': 3,
+      'business': 4,
+      'health': 5,
+      'finance': 6,
+      'social': 7,
+      'utilities': 8,
+      'games': 9,
+      'news': 10,
+    };
+
+    return categoryMap[categoryName.toLowerCase()];
+  }
+
+  bool _isSubmitting = false;
+
+  Future<void> _submitForm() async {
+    if (!(_formKey.currentState?.saveAndValidate() ?? false)) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Veuillez corriger les erreurs dans le formulaire'),
+          backgroundColor: Colors.red,
         ),
       );
+      return;
+    }
+
+    setState(() => _isSubmitting = true);
+
+    try {
+      final formData = _formKey.currentState!.value;
+      log('error while submitting app data $formData');
+
+      // Helper function to convert enum to string
+      String enumToString(dynamic enumValue) {
+        if (enumValue == null) return '';
+        return enumValue.toString().split('.').last;
+      }
+
+      // Helper function to convert list of enums to list of strings
+      List<String> enumListToStringList(List<dynamic>? enumList) {
+        if (enumList == null) return [];
+        return enumList.map((e) => enumToString(e)).toList();
+      }
+
+      // Helper function to parse key features
+      List<String> parseKeyFeatures(dynamic keyFeatures) {
+        if (keyFeatures == null) return [];
+        if (keyFeatures is List) return keyFeatures.map((e) => e.toString()).toList();
+        if (keyFeatures is String) {
+          return keyFeatures.split(',').map((e) => e.trim()).where((e) => e.isNotEmpty).toList();
+        }
+        return [keyFeatures.toString()];
+      }
+
+      // Prepare app data for API (map form field names to API field names)
+      final appTypeString = enumToString(formData['appType']);
+      final pricingModelString = enumToString(formData['pricingModel']);
+
+      // Helper function to parse screenshots URLs
+      List<String> parseScreenshots(String? screenshots) {
+        if (screenshots == null || screenshots.isEmpty) return [];
+        return screenshots.split(',').map((e) => e.trim()).where((e) => e.isNotEmpty).toList();
+      }
+
+      // Helper function to parse tags
+      List<String> parseTags(String? tags) {
+        if (tags == null || tags.isEmpty) return [];
+        return tags.split(',').map((e) => e.trim()).where((e) => e.isNotEmpty).toList();
+      }
+
+      final appData = {
+        'app_name': formData['appName'] ?? '',
+        'tagline': formData['tagline'] ?? '',
+        'description': formData['description'] ?? '',
+        'detailed_description': formData['detailedDescription'] ?? formData['description'],
+        'category_id': _getCategoryId(formData['category']),
+        'subcategory': formData['subcategory'] ?? '',
+        'tags': parseTags(formData['tags']),
+        'app_type': appTypeString.isNotEmpty ? appTypeString : 'mobile',
+        'supported_platforms': enumListToStringList(formData['platforms'] as List<dynamic>?),
+        'current_version': formData['currentVersion'] ?? '1.0.0',
+        'icon_url': formData['iconUrl'] ?? '',
+        'screenshots': parseScreenshots(formData['screenshots']),
+        'demo_videos': formData['demoVideos'],
+        'live_demo': formData['liveDemo'],
+        'download_link': formData['downloadLink'],
+        'license_type': pricingModelString.isNotEmpty ? pricingModelString : 'free',
+        'pricing_model': pricingModelString.isNotEmpty ? pricingModelString : 'free',
+        'pricing': formData['pricing']?.toString() ?? '0',
+        'has_free_trial': formData['hasFreeTrial'] ?? false,
+        'trial_days': int.tryParse(formData['trialDays']?.toString() ?? '0') ?? 0,
+        'is_open_source': formData['isOpenSource'] ?? false,
+        'target_audience': formData['targetAudience'] ?? '',
+        'business_sectors': formData['businessSectors'] ?? [],
+        'business_value': formData['businessValue'] ?? '',
+        'key_features': parseKeyFeatures(formData['keyFeatures']),
+        'technical_requirements': formData['technicalRequirements'],
+        'has_documentation': formData['hasDocumentation'] ?? false,
+        'documentation_url': formData['documentationUrl'],
+        'support_options': enumListToStringList(formData['supportOptions'] as List<dynamic>?),
+        'languages': formData['languages'] ?? ['Français'],
+      };
+
+
+
+      log('app data $appData');
+      // Submit to API
+      await AppService.createApp(appData);
+
+      if (mounted) {
+        // Show success dialog
+        showDialog(
+          context: context,
+          barrierDismissible: false,
+          builder: (context) => AlertDialog(
+            title: const Text('Application publiée !'),
+            content: const Text(
+              'Votre application a été publiée avec succès. '
+              'Elle sera visible dans le marketplace après validation par notre équipe.',
+            ),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop(); // Close dialog
+                  Navigator.of(context).pop(true); // Return to previous screen with success
+                },
+                child: const Text('OK'),
+              ),
+            ],
+          ),
+        );
+      }
+    } catch (e) {
+
+      log('error $e');
+            if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Erreur lors de la publication: ${e.toString()}'),
+            backgroundColor: Colors.red,
+          ),
+        );
+      }
+    } finally {
+      if (mounted) {
+        setState(() => _isSubmitting = false);
+      }
     }
   }
 
@@ -570,7 +904,6 @@ class _PublishAppScreenState extends State<PublishAppScreen> {
       case 1: return 'Détails techniques';
       case 2: return 'Tarification et licence';
       case 3: return 'Détails commerciaux';
-      case 4: return 'Contact et informations légales';
       default: return '';
     }
   }

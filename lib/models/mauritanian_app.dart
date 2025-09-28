@@ -348,6 +348,127 @@ class MauritanianApp {
     );
   }
 
+  /// Create MauritanianApp from API JSON response
+  factory MauritanianApp.fromApiJson(Map<String, dynamic> json) {
+    return MauritanianApp(
+      id: json['id'].toString(),
+      appName: json['app_name'] ?? '',
+      tagline: json['tagline'] ?? '',
+      description: json['description'] ?? '',
+      detailedDescription: json['detailed_description'] ?? '',
+      developerName: json['developer_name'] ?? '',
+      developerEmail: json['developer_email'] ?? '',
+      developerPhone: json['developer_phone'] ?? '',
+      developerWhatsApp: json['developer_whatsapp'] ?? json['developer_phone'] ?? '',
+      companyName: json['company_name'] ?? '',
+      developerWebsite: json['developer_website'] ?? '',
+      appType: _parseAppType(json['app_type']),
+      supportedPlatforms: _parsePlatforms(json['supported_platforms']),
+      currentVersion: json['current_version'] ?? '1.0.0',
+      iconUrl: json['icon_url'] ?? '',
+      screenshots: List<String>.from(json['screenshots'] ?? []),
+      demoVideos: [], // Not in current API
+      liveDemo: json['live_demo'] ?? '',
+      downloadLink: json['download_link'] ?? '',
+      licenseType: _parseLicenseType(json['license_type']),
+      pricingModel: _parsePricingModel(json['pricing_model']),
+      pricing: json['pricing'] ?? 'Free',
+      hasFreeTrial: json['has_free_trial'] ?? false,
+      trialDays: json['trial_days'] ?? 0,
+      isOpenSource: json['is_open_source'] ?? false,
+      targetAudience: json['target_audience'] ?? '',
+      businessSectors: List<String>.from(json['business_sectors'] ?? []),
+      businessValue: json['business_value'] ?? '',
+      keyFeatures: List<String>.from(json['key_features'] ?? []),
+      technicalRequirements: json['technical_requirements'] ?? '',
+      hasDocumentation: json['has_documentation'] ?? false,
+      documentationUrl: json['documentation_url'] ?? '',
+      supportOptions: _parseSupportOptions(json['support_options']),
+      languages: List<String>.from(json['languages'] ?? ['Français']),
+      downloads: json['downloads'] ?? 0,
+      activeUsers: json['active_users'] ?? 0,
+      rating: double.tryParse(json['rating']?.toString() ?? '0.0') ?? 0.0,
+      viewCount: json['view_count'] ?? 0,
+      publishDate: DateTime.parse(json['publish_date'] ?? DateTime.now().toIso8601String()),
+      lastUpdate: DateTime.parse(json['updated_at'] ?? DateTime.now().toIso8601String()),
+      isVerified: json['is_verified'] ?? false,
+      isFeatured: json['is_featured'] ?? false,
+      primaryCategory: json['category']?['name'] ?? json['primary_category'] ?? json['category_id']?.toString() ?? '',
+      subcategory: json['subcategory'] ?? '',
+      tags: List<String>.from(json['tags'] ?? []),
+      searchKeywords: json['search_keywords'] ?? '',
+    );
+  }
+
+  static AppType _parseAppType(String? type) {
+    switch (type?.toLowerCase()) {
+      case 'mobile': return AppType.mobile;
+      case 'web': return AppType.web;
+      case 'desktop': return AppType.desktop;
+      case 'saas': return AppType.saas;
+      case 'api': return AppType.api;
+      case 'plugin': return AppType.plugin;
+      case 'template': return AppType.template;
+      default: return AppType.mobile;
+    }
+  }
+
+  static List<Platform> _parsePlatforms(dynamic platforms) {
+    if (platforms == null) return [Platform.android];
+    
+    List<String> platformList = List<String>.from(platforms);
+    return platformList.map((p) {
+      switch (p.toLowerCase()) {
+        case 'ios': return Platform.iOS;
+        case 'android': return Platform.android;
+        case 'windows': return Platform.windows;
+        case 'macos': return Platform.macOS;
+        case 'linux': return Platform.linux;
+        case 'web': return Platform.web;
+        case 'api': return Platform.api;
+        default: return Platform.android;
+      }
+    }).toList();
+  }
+
+  static LicenseType _parseLicenseType(String? type) {
+    switch (type?.toLowerCase()) {
+      case 'onetime': return LicenseType.oneTime;
+      case 'monthly': return LicenseType.monthly;
+      case 'yearly': return LicenseType.yearly;
+      case 'custom': return LicenseType.custom;
+      case 'free': return LicenseType.free;
+      default: return LicenseType.free;
+    }
+  }
+
+  static PricingModel _parsePricingModel(String? model) {
+    switch (model?.toLowerCase()) {
+      case 'free': return PricingModel.free;
+      case 'freemium': return PricingModel.freemium;
+      case 'paid': return PricingModel.paid;
+      case 'enterprise': return PricingModel.enterprise;
+      case 'custom': return PricingModel.custom;
+      default: return PricingModel.free;
+    }
+  }
+
+  static List<SupportType> _parseSupportOptions(dynamic options) {
+    if (options == null) return [SupportType.email];
+    
+    List<String> optionList = List<String>.from(options);
+    return optionList.map((o) {
+      switch (o.toLowerCase()) {
+        case 'email': return SupportType.email;
+        case 'phone': return SupportType.phone;
+        case 'chat': return SupportType.chat;
+        case 'training': return SupportType.training;
+        case 'documentation': return SupportType.documentation;
+        default: return SupportType.email;
+      }
+    }).toList();
+  }
+
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;

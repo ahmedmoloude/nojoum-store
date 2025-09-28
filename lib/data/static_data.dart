@@ -1,6 +1,8 @@
 import '../models/mauritanian_app.dart';
 
 /// Static data containing all Mauritanian applications for the Noujoum Store Marketplace
+/// @deprecated This class is deprecated. Use AppRepository and API services instead.
+@Deprecated('Use AppRepository and API services instead of static data')
 class StaticData {
 
   static final List<MauritanianApp> apps = [
@@ -132,7 +134,7 @@ class StaticData {
     ),
 
     MauritanianApp(
-      id: 'ecole_numerique',
+      id: 'epe_numerique',
       appName: 'École Numérique MR',
       tagline: 'L\'école à portée de main',
       description: 'Plateforme d\'apprentissage en ligne pour les élèves mauritaniens. Cours de mathématiques, sciences, français et arabe adaptés au programme national.',

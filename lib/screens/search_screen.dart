@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../data/static_data.dart';
+import '../data/app_repository.dart';
 import '../models/mauritanian_app.dart';
 import '../utils/constants.dart';
 import '../widgets/app_card.dart';
@@ -24,24 +24,47 @@ class _SearchScreenState extends State<SearchScreen> {
     super.dispose();
   }
 
-  void _performSearch(String query) {
+  void _performSearch(String query) async {
     setState(() {
       _isSearching = true;
     });
 
-    // Simulate search delay
-    Future.delayed(const Duration(milliseconds: 300), () {
-      if (mounted) {
+    try {
+      if (query.isEmpty) {
         setState(() {
-          if (query.isEmpty) {
-            _searchResults = [];
-          } else {
-            _searchResults = StaticData.searchApps(query);
-          }
+          _searchResults = [];
           _isSearching = false;
         });
+        return;
       }
-    });
+
+      // Add a small delay to avoid too many API calls while typing
+      await Future.delayed(const Duration(milliseconds: 300));
+
+      if (mounted) {
+        final results = await AppRepository.getApps(search: query);
+        if (mounted) {
+          setState(() {
+            _searchResults = results;
+            _isSearching = false;
+          });
+        }
+      }
+    } catch (e) {
+      if (mounted) {
+        setState(() {
+          _searchResults = [];
+          _isSearching = false;
+        });
+        // Show error message
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Erreur lors de la recherche: ${e.toString()}'),
+            backgroundColor: Colors.red,
+          ),
+        );
+      }
+    }
   }
 
   @override
