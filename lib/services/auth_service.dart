@@ -17,8 +17,8 @@ class AuthService extends ChangeNotifier {
 
   bool get isLoggedIn => _currentUser != null;
   static bool get staticIsLoggedIn => _instance._currentUser != null;
-  // Register new user
-  static Future<User> register({
+  // Register new user - Step 1: Send verification email
+  static Future<Map<String, dynamic>> register({
     required String name,
     required String email,
     required String password,
@@ -46,18 +46,74 @@ class AuthService extends ChangeNotifier {
 
       log('Registration response: ${response.toString()}');
 
-      // Store the token
+      return response['data'];
+    } catch (e) {
+      log('Registration error: $e');
+      rethrow;
+    }
+  }
+
+  // Verify email and complete registration - Step 2
+  static Future<User> verifyEmailAndCompleteRegistration({
+    required String email,
+    required String code,
+    required String name,
+    required String password,
+    String? phone,
+    String? companyName,
+    String? website,
+    String? bio,
+  }) async {
+    try {
+      log('Verifying email and completing registration: $email');
+
+      final data = {
+        'email': email,
+        'code': code,
+        'name': name,
+        'password': password,
+        if (phone != null) 'phone': phone,
+        if (companyName != null) 'company_name': companyName,
+        if (website != null) 'website': website,
+        if (bio != null) 'bio': bio,
+      };
+
+      final response = await ApiService.post('/verify-email', data);
+
+      log('Verification response: ${response.toString()}');
+
       final token = response['data']['token'];
       await ApiService.setToken(token);
 
-      // Create user object
       _instance._currentUser = User.fromJson(response['data']['user']);
       _instance.notifyListeners();
 
-      log('User registered successfully: ${_instance._currentUser?.name}');
+      log('User verified and registered successfully: ${_instance._currentUser?.name}');
       return _instance._currentUser!;
     } catch (e) {
-      log('Registration error: $e');
+      log('Verification error: $e');
+      rethrow;
+    }
+  }
+
+  // Resend verification code
+  static Future<void> resendVerificationCode({
+    required String email,
+    required String name,
+  }) async {
+    try {
+      log('Resending verification code to: $email');
+
+      final data = {
+        'email': email,
+        'name': name,
+      };
+
+      await ApiService.post('/resend-verification', data);
+
+      log('Verification code resent successfully');
+    } catch (e) {
+      log('Resend verification error: $e');
       rethrow;
     }
   }

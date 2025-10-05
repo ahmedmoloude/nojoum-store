@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../services/auth_service.dart';
+import 'email_verification_screen.dart';
 import '../../utils/constants.dart';
 
 class RegisterScreen extends StatefulWidget {
@@ -57,10 +58,24 @@ class _RegisterScreenState extends State<RegisterScreen> {
       );
 
       if (mounted) {
-        Navigator.of(context).pop(true); // Return success
+        // Navigate to email verification screen
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (context) => EmailVerificationScreen(
+              email: _emailController.text.trim(),
+              name: _nameController.text.trim(),
+              password: _passwordController.text,
+              phone: _phoneController.text.trim().isEmpty ? null : _phoneController.text.trim(),
+              companyName: _companyController.text.trim().isEmpty ? null : _companyController.text.trim(),
+              website: _websiteController.text.trim().isEmpty ? null : _websiteController.text.trim(),
+              bio: _bioController.text.trim().isEmpty ? null : _bioController.text.trim(),
+            ),
+          ),
+        );
+
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
-            content: Text('Compte créé avec succès!'),
+            content: Text('Code de vérification envoyé à votre email!'),
             backgroundColor: Colors.green,
           ),
         );

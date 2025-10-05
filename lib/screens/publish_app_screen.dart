@@ -1,6 +1,10 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'dart:io';
+import 'package:image_picker/image_picker.dart';
+import '../services/api_service.dart';
+
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import '../models/mauritanian_app.dart';
 import '../models/app_category.dart';
@@ -19,6 +23,49 @@ class PublishAppScreen extends StatefulWidget {
 
 class _PublishAppScreenState extends State<PublishAppScreen> {
   final PageController _pageController = PageController();
+  final ImagePicker _imagePicker = ImagePicker();
+  String? _uploadedIconUrl;
+  bool _isUploadingIcon = false;
+
+  Future<void> _pickAndUploadIcon(FormFieldState<String> field) async {
+    try {
+      final XFile? picked = await _imagePicker.pickImage(
+        source: ImageSource.gallery,
+        maxWidth: 1024,
+        imageQuality: 85,
+      );
+      if (picked == null) return;
+
+      setState(() => _isUploadingIcon = true);
+
+      final file = File(picked.path);
+      final resp = await ApiService.uploadFile(file, fields: {'folder': 'app-icons'});
+      final url = (resp['data'] ?? {})['url']?.toString();
+      if (url == null || url.isEmpty) {
+        throw Exception('Upload failed');
+      }
+
+      setState(() {
+        _uploadedIconUrl = url;
+      });
+      field.didChange(url);
+
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Icône téléchargée avec succès')),
+        );
+      }
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Échec du téléchargement: $e'), backgroundColor: Colors.red),
+        );
+      }
+    } finally {
+      if (mounted) setState(() => _isUploadingIcon = false);
+    }
+  }
+
   final GlobalKey<FormBuilderState> _formKey = GlobalKey<FormBuilderState>();
   int _currentStep = 0;
   final int _totalSteps = 4;
@@ -94,7 +141,7 @@ class _PublishAppScreenState extends State<PublishAppScreen> {
         children: [
           // Progress indicator
           _buildProgressIndicator(theme),
-          
+
           // Form content
           Expanded(
             child: FormBuilder(
@@ -113,7 +160,7 @@ class _PublishAppScreenState extends State<PublishAppScreen> {
               ),
             ),
           ),
-          
+
           // Navigation buttons
           _buildNavigationButtons(),
         ],
@@ -140,14 +187,14 @@ class _PublishAppScreenState extends State<PublishAppScreen> {
             children: List.generate(_totalSteps, (index) {
               final isActive = index <= _currentStep;
               final isCompleted = index < _currentStep;
-              
+
               return Expanded(
                 child: Container(
                   margin: EdgeInsets.symmetric(horizontal: AppConstants.paddingXS),
                   height: 4,
                   decoration: BoxDecoration(
-                    color: isActive 
-                        ? AppConstants.whiteTextColor 
+                    color: isActive
+                        ? AppConstants.whiteTextColor
                         : AppConstants.whiteTextColor.withOpacity(0.3),
                     borderRadius: BorderRadius.circular(2),
                   ),
@@ -186,7 +233,7 @@ class _PublishAppScreenState extends State<PublishAppScreen> {
               style: Theme.of(context).textTheme.headlineSmall,
             ),
             const SizedBox(height: AppConstants.paddingL),
-            
+
             FormBuilderTextField(
               name: 'appName',
               decoration: const InputDecoration(
@@ -201,7 +248,7 @@ class _PublishAppScreenState extends State<PublishAppScreen> {
               },
             ),
             const SizedBox(height: AppConstants.paddingM),
-            
+
             FormBuilderTextField(
               name: 'tagline',
               decoration: const InputDecoration(
@@ -216,7 +263,7 @@ class _PublishAppScreenState extends State<PublishAppScreen> {
               },
             ),
             const SizedBox(height: AppConstants.paddingM),
-            
+
             FormBuilderTextField(
               name: 'description',
               decoration: const InputDecoration(
@@ -232,7 +279,7 @@ class _PublishAppScreenState extends State<PublishAppScreen> {
               },
             ),
             const SizedBox(height: AppConstants.paddingM),
-            
+
             FormBuilderDropdown<String>(
               name: 'category',
               decoration: const InputDecoration(
@@ -252,7 +299,7 @@ class _PublishAppScreenState extends State<PublishAppScreen> {
               },
             ),
             const SizedBox(height: AppConstants.paddingM),
-            
+
             FormBuilderDropdown<String>(
               name: 'targetAudience',
               decoration: const InputDecoration(
@@ -273,21 +320,55 @@ class _PublishAppScreenState extends State<PublishAppScreen> {
             ),
             const SizedBox(height: AppConstants.paddingM),
 
-            FormBuilderTextField(
+            FormBuilderField<String>(
               name: 'iconUrl',
-              decoration: const InputDecoration(
-                labelText: 'URL de l\'icône *',
-                hintText: 'https://example.com/icon.png',
-              ),
               validator: (value) {
                 if (value == null || value.isEmpty) {
-                  return 'L\'URL de l\'icône est requise';
-                }
-                final uri = Uri.tryParse(value);
-                if (uri == null || !uri.hasAbsolutePath) {
-                  return 'Veuillez saisir une URL valide';
+                  return 'Veuillez télécharger l\'icône de l\'application';
                 }
                 return null;
+              },
+              builder: (field) {
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Icône de l\'application *',
+                      style: Theme.of(context).textTheme.bodyMedium,
+                    ),
+                    const SizedBox(height: 8),
+                    Row(
+                      children: [
+                        Container(
+                          width: 72,
+                          height: 72,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(AppConstants.borderRadiusS),
+                            color: AppConstants.primaryGreen.withOpacity(0.1),
+                          ),
+                          clipBehavior: Clip.antiAlias,
+                          child: _uploadedIconUrl != null
+                              ? Image.network(_uploadedIconUrl!, fit: BoxFit.cover)
+                              : const Icon(Icons.apps, color: AppConstants.primaryGreen),
+                        ),
+                        const SizedBox(width: AppConstants.paddingM),
+                        ElevatedButton.icon(
+                          onPressed: _isUploadingIcon ? null : () => _pickAndUploadIcon(field),
+                          icon: _isUploadingIcon
+                              ? const SizedBox(width: 16, height: 16, child: CircularProgressIndicator(strokeWidth: 2, valueColor: AlwaysStoppedAnimation<Color>(Colors.white)))
+                              : const Icon(Icons.upload_file),
+                          label: Text(_uploadedIconUrl == null ? 'Télécharger une icône' : 'Remplacer'),
+                          style: ElevatedButton.styleFrom(backgroundColor: AppConstants.teal),
+                        ),
+                      ],
+                    ),
+                    if (field.hasError)
+                      Padding(
+                        padding: const EdgeInsets.only(top: 8.0),
+                        child: Text(field.errorText!, style: const TextStyle(color: Colors.red)),
+                      ),
+                  ],
+                );
               },
             ),
             const SizedBox(height: AppConstants.paddingM),
@@ -353,7 +434,7 @@ class _PublishAppScreenState extends State<PublishAppScreen> {
             style: Theme.of(context).textTheme.headlineSmall,
           ),
           const SizedBox(height: AppConstants.paddingL),
-          
+
           FormBuilderDropdown<AppType>(
             name: 'appType',
             decoration: const InputDecoration(
@@ -367,7 +448,7 @@ class _PublishAppScreenState extends State<PublishAppScreen> {
                 .toList(),
           ),
           const SizedBox(height: AppConstants.paddingM),
-          
+
           FormBuilderCheckboxGroup<Platform>(
             name: 'platforms',
             decoration: const InputDecoration(
@@ -381,7 +462,7 @@ class _PublishAppScreenState extends State<PublishAppScreen> {
                 .toList(),
           ),
           const SizedBox(height: AppConstants.paddingM),
-          
+
           FormBuilderTextField(
             name: 'currentVersion',
             decoration: const InputDecoration(
@@ -391,7 +472,7 @@ class _PublishAppScreenState extends State<PublishAppScreen> {
             initialValue: '1.0.0',
           ),
           const SizedBox(height: AppConstants.paddingM),
-          
+
           FormBuilderTextField(
             name: 'technicalRequirements',
             decoration: const InputDecoration(
@@ -416,7 +497,7 @@ class _PublishAppScreenState extends State<PublishAppScreen> {
             style: Theme.of(context).textTheme.headlineSmall,
           ),
           const SizedBox(height: AppConstants.paddingL),
-          
+
           FormBuilderDropdown<PricingModel>(
             name: 'pricingModel',
             decoration: const InputDecoration(
@@ -430,7 +511,7 @@ class _PublishAppScreenState extends State<PublishAppScreen> {
                 .toList(),
           ),
           const SizedBox(height: AppConstants.paddingM),
-          
+
           FormBuilderTextField(
             name: 'pricing',
             decoration: const InputDecoration(
@@ -439,13 +520,13 @@ class _PublishAppScreenState extends State<PublishAppScreen> {
             ),
           ),
           const SizedBox(height: AppConstants.paddingM),
-          
+
           FormBuilderCheckbox(
             name: 'hasFreeTrial',
             title: const Text('Offre un essai gratuit'),
           ),
           const SizedBox(height: AppConstants.paddingM),
-          
+
           FormBuilderTextField(
             name: 'trialDays',
             decoration: const InputDecoration(
@@ -470,7 +551,7 @@ class _PublishAppScreenState extends State<PublishAppScreen> {
             style: Theme.of(context).textTheme.headlineSmall,
           ),
           const SizedBox(height: AppConstants.paddingL),
-          
+
           FormBuilderTextField(
             name: 'businessValue',
             decoration: const InputDecoration(
@@ -480,7 +561,7 @@ class _PublishAppScreenState extends State<PublishAppScreen> {
             maxLines: 2,
           ),
           const SizedBox(height: AppConstants.paddingM),
-          
+
           FormBuilderTextField(
             name: 'keyFeatures',
             decoration: const InputDecoration(
@@ -490,7 +571,7 @@ class _PublishAppScreenState extends State<PublishAppScreen> {
             maxLines: 3,
           ),
           const SizedBox(height: AppConstants.paddingM),
-          
+
           FormBuilderCheckboxGroup<String>(
             name: 'businessSectors',
             decoration: const InputDecoration(
@@ -506,7 +587,7 @@ class _PublishAppScreenState extends State<PublishAppScreen> {
             ],
           ),
           const SizedBox(height: AppConstants.paddingM),
-          
+
           FormBuilderCheckboxGroup<SupportType>(
             name: 'supportOptions',
             decoration: const InputDecoration(
@@ -584,6 +665,7 @@ class _PublishAppScreenState extends State<PublishAppScreen> {
         curve: Curves.easeInOut,
       );
     }
+    
   }
 
   void _previousStep() {
@@ -595,7 +677,7 @@ class _PublishAppScreenState extends State<PublishAppScreen> {
 
   bool _validateCurrentStep() {
 
-    
+
 
 
     log('formket currentState ${_formKey.currentState}');

@@ -6,7 +6,7 @@ import 'package:http_parser/http_parser.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ApiService {
-  static const String baseUrl = 'http://localhost:8011/api'; // Change this to your actual API URL
+  static const String baseUrl = 'https://noujoumstore.com/api'; // Change this to your actual API URL
   
   static String? _token;
   
