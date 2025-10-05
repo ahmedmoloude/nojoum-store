@@ -10,24 +10,25 @@ class AppThemes {
       useMaterial3: true,
       brightness: Brightness.light,
       
-      // Color scheme
+      // Color scheme - Updated for logo-inspired palette
       colorScheme: ColorScheme.fromSeed(
-        seedColor: AppConstants.primaryBlue,
+        seedColor: AppConstants.primaryGold,
         brightness: Brightness.light,
-        primary: AppConstants.primaryBlue,
-        secondary: AppConstants.teal,
+        primary: AppConstants.primaryGold,
+        secondary: AppConstants.mauritanianGreen,
         surface: AppConstants.surfaceColor,
         background: AppConstants.backgroundColor,
         error: AppConstants.errorColor,
+        tertiary: AppConstants.primaryOrange,
       ),
-      
-      // Primary colors
-      primaryColor: AppConstants.primaryBlue,
-      primaryColorDark: AppConstants.primaryBlue,
-      primaryColorLight: AppConstants.royalBlue,
-      
-      // Accent color
-      hintColor: AppConstants.orange,
+
+      // Primary colors - Updated to golden theme
+      primaryColor: AppConstants.primaryGold,
+      primaryColorDark: AppConstants.deepGold,
+      primaryColorLight: AppConstants.lightGold,
+
+      // Accent color - Updated to orange
+      hintColor: AppConstants.primaryOrange,
       
       // Background colors
       scaffoldBackgroundColor: AppConstants.backgroundColor,
@@ -35,10 +36,10 @@ class AppThemes {
       cardColor: AppConstants.cardColor,
       dividerColor: AppConstants.dividerColor,
       
-      // App bar theme
+      // App bar theme - Updated for golden theme
       appBarTheme: const AppBarTheme(
         elevation: AppConstants.elevationM,
-        backgroundColor: AppConstants.primaryBlue,
+        backgroundColor: AppConstants.primaryGold,
         foregroundColor: AppConstants.whiteTextColor,
         titleTextStyle: TextStyle(
           color: AppConstants.whiteTextColor,
@@ -49,7 +50,7 @@ class AppThemes {
           color: AppConstants.whiteTextColor,
         ),
         systemOverlayStyle: SystemUiOverlayStyle(
-          statusBarColor: AppConstants.primaryBlue,
+          statusBarColor: AppConstants.primaryGold,
           statusBarIconBrightness: Brightness.light,
         ),
       ),
@@ -75,10 +76,10 @@ class AppThemes {
         ),
       ),
       
-      // Elevated button theme
+      // Elevated button theme - Updated for golden theme
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
-          backgroundColor: AppConstants.primaryBlue,
+          backgroundColor: AppConstants.primaryGold,
           foregroundColor: AppConstants.whiteTextColor,
           elevation: AppConstants.elevationS,
           padding: const EdgeInsets.symmetric(
@@ -97,12 +98,12 @@ class AppThemes {
         ),
       ),
       
-      // Outlined button theme
+      // Outlined button theme - Updated for golden theme
       outlinedButtonTheme: OutlinedButtonThemeData(
         style: OutlinedButton.styleFrom(
-          foregroundColor: AppConstants.primaryBlue,
+          foregroundColor: AppConstants.primaryGold,
           side: const BorderSide(
-            color: AppConstants.primaryBlue,
+            color: AppConstants.primaryGold,
             width: 1.5,
           ),
           padding: const EdgeInsets.symmetric(
@@ -121,10 +122,10 @@ class AppThemes {
         ),
       ),
       
-      // Text button theme
+      // Text button theme - Updated for golden theme
       textButtonTheme: TextButtonThemeData(
         style: TextButton.styleFrom(
-          foregroundColor: AppConstants.primaryBlue,
+          foregroundColor: AppConstants.primaryGold,
           padding: const EdgeInsets.symmetric(
             horizontal: AppConstants.paddingM,
             vertical: AppConstants.paddingS,
@@ -136,9 +137,9 @@ class AppThemes {
         ),
       ),
       
-      // Floating action button theme
+      // Floating action button theme - Updated for orange theme
       floatingActionButtonTheme: const FloatingActionButtonThemeData(
-        backgroundColor: AppConstants.orange,
+        backgroundColor: AppConstants.primaryOrange,
         foregroundColor: AppConstants.whiteTextColor,
         elevation: AppConstants.elevationM,
       ),
@@ -186,11 +187,11 @@ class AppThemes {
         ),
       ),
       
-      // Chip theme
+      // Chip theme - Updated for golden theme
       chipTheme: const ChipThemeData(
         backgroundColor: AppConstants.backgroundColor,
-        selectedColor: AppConstants.primaryBlue,
-        secondarySelectedColor: AppConstants.royalBlue,
+        selectedColor: AppConstants.primaryGold,
+        secondarySelectedColor: AppConstants.deepGold,
         labelStyle: TextStyle(
           color: AppConstants.primaryTextColor,
         ),

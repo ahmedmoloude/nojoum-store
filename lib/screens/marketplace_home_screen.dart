@@ -51,14 +51,14 @@ class _MarketplaceHomeScreenState extends State<MarketplaceHomeScreen> {
             expandedHeight: 210,
             floating: false,
             pinned: true,
-            backgroundColor: AppConstants.primaryBlue,
+            backgroundColor: AppConstants.primaryGold,
             flexibleSpace: FlexibleSpaceBar(
               background: Container(
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
-                    colors: [AppConstants.backgroundColor, AppConstants.royalBlue],
+                    colors: [AppConstants.backgroundColor, AppConstants.primaryGold],
                   ),
                 ),
                 child: Column(
@@ -200,21 +200,21 @@ class _MarketplaceHomeScreenState extends State<MarketplaceHomeScreen> {
               child: Container(
                 padding: EdgeInsets.symmetric(vertical: AppConstants.paddingM),
                 decoration: BoxDecoration(
-                  color: _isBrowseMode ? AppConstants.primaryBlue : Colors.transparent,
+                  color: _isBrowseMode ? AppConstants.primaryGold : Colors.transparent,
                   borderRadius: BorderRadius.circular(AppConstants.borderRadiusL),
                 ),
                 child: Column(
                   children: [
                     Icon(
                       Icons.apps,
-                      color: _isBrowseMode ? AppConstants.whiteTextColor : AppConstants.primaryBlue,
+                      color: _isBrowseMode ? AppConstants.whiteTextColor : AppConstants.primaryGold,
                       size: AppConstants.iconSizeL,
                     ),
                     SizedBox(height: AppConstants.paddingS),
                     Text(
                       'Parcourir les Apps',
                       style: theme.textTheme.titleMedium?.copyWith(
-                        color: _isBrowseMode ? AppConstants.whiteTextColor : AppConstants.primaryBlue,
+                        color: _isBrowseMode ? AppConstants.whiteTextColor : AppConstants.primaryGold,
                         fontWeight: FontWeight.w600,
                       ),
                       textAlign: TextAlign.center,
@@ -230,21 +230,21 @@ class _MarketplaceHomeScreenState extends State<MarketplaceHomeScreen> {
               child: Container(
                 padding: EdgeInsets.symmetric(vertical: AppConstants.paddingM),
                 decoration: BoxDecoration(
-                  color: !_isBrowseMode ? AppConstants.teal : Colors.transparent,
+                  color: !_isBrowseMode ? AppConstants.mauritanianGreen : Colors.transparent,
                   borderRadius: BorderRadius.circular(AppConstants.borderRadiusL),
                 ),
                 child: Column(
                   children: [
                     Icon(
                       Icons.publish,
-                      color: !_isBrowseMode ? AppConstants.whiteTextColor : AppConstants.teal,
+                      color: !_isBrowseMode ? AppConstants.whiteTextColor : AppConstants.mauritanianGreen,
                       size: AppConstants.iconSizeL,
                     ),
                     SizedBox(height: AppConstants.paddingS),
                     Text(
                       'Publier mon App',
                       style: theme.textTheme.titleMedium?.copyWith(
-                        color: !_isBrowseMode ? AppConstants.whiteTextColor : AppConstants.teal,
+                        color: !_isBrowseMode ? AppConstants.whiteTextColor : AppConstants.mauritanianGreen,
                         fontWeight: FontWeight.w600,
                       ),
                       textAlign: TextAlign.center,
@@ -265,7 +265,7 @@ class _MarketplaceHomeScreenState extends State<MarketplaceHomeScreen> {
       padding: EdgeInsets.all(AppConstants.paddingL),
       decoration: BoxDecoration(
         gradient: LinearGradient(
-          colors: [AppConstants.teal, AppConstants.cyan],
+          colors: [AppConstants.mauritanianGreen, AppConstants.lightGreen],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),
@@ -309,7 +309,7 @@ class _MarketplaceHomeScreenState extends State<MarketplaceHomeScreen> {
             },
             style: ElevatedButton.styleFrom(
               backgroundColor: AppConstants.whiteTextColor,
-              foregroundColor: AppConstants.teal,
+              foregroundColor: AppConstants.mauritanianGreen,
               padding: EdgeInsets.symmetric(
                 horizontal: AppConstants.paddingL,
                 vertical: AppConstants.paddingM,
@@ -379,7 +379,7 @@ class _MarketplaceHomeScreenState extends State<MarketplaceHomeScreen> {
                   Text(
                     entry.value,
                     style: theme.textTheme.headlineSmall?.copyWith(
-                      color: AppConstants.primaryBlue,
+                      color: AppConstants.primaryGold,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -548,12 +548,12 @@ class _MarketplaceHomeScreenState extends State<MarketplaceHomeScreen> {
                     Container(
                       padding: EdgeInsets.all(AppConstants.paddingM),
                       decoration: BoxDecoration(
-                        color: AppConstants.successGreen.withOpacity(0.1),
+                        color: AppConstants.mauritanianGreen.withOpacity(0.1),
                         borderRadius: BorderRadius.circular(AppConstants.borderRadiusM),
                       ),
                       child: Icon(
                         story['icon'] as IconData,
-                        color: AppConstants.successGreen,
+                        color: AppConstants.mauritanianGreen,
                         size: AppConstants.iconSizeL,
                       ),
                     ),
@@ -596,22 +596,22 @@ class _MarketplaceHomeScreenState extends State<MarketplaceHomeScreen> {
       margin: EdgeInsets.all(AppConstants.paddingM),
       padding: EdgeInsets.all(AppConstants.paddingL),
       decoration: BoxDecoration(
-        color: AppConstants.primaryBlue.withOpacity(0.1),
+        color: AppConstants.primaryGold.withOpacity(0.1),
         borderRadius: BorderRadius.circular(AppConstants.borderRadiusL),
-        border: Border.all(color: AppConstants.primaryBlue.withOpacity(0.2)),
+        border: Border.all(color: AppConstants.primaryGold.withOpacity(0.2)),
       ),
       child: Column(
         children: [
           Icon(
             Icons.email_outlined,
             size: AppConstants.iconSizeL,
-            color: AppConstants.primaryBlue,
+            color: AppConstants.primaryGold,
           ),
           SizedBox(height: AppConstants.paddingM),
           Text(
             'Restez informé',
             style: theme.textTheme.headlineSmall?.copyWith(
-              color: AppConstants.primaryBlue,
+              color: AppConstants.primaryGold,
               fontWeight: FontWeight.bold,
             ),
           ),

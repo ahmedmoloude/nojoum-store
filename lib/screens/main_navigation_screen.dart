@@ -64,7 +64,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
           });
         },
         type: BottomNavigationBarType.fixed,
-        selectedItemColor: AppConstants.primaryBlue,
+        selectedItemColor: AppConstants.primaryGold,
         unselectedItemColor: AppConstants.secondaryTextColor,
         items: _navItems,
       ),

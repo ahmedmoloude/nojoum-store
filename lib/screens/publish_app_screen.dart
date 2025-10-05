@@ -12,6 +12,7 @@ import '../services/auth_service.dart';
 import '../services/app_service.dart';
 import '../utils/constants.dart';
 import 'auth/login_screen.dart';
+import 'subscription_packages_screen.dart';
 
 /// Multi-step app publishing screen for developers
 class PublishAppScreen extends StatefulWidget {
@@ -114,6 +115,53 @@ class _PublishAppScreenState extends State<PublishAppScreen> {
               }
             },
             child: const Text('Se connecter'),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void _showSubscriptionRequiredDialog() {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) => AlertDialog(
+        title: Row(
+          children: [
+            Icon(
+              Icons.card_membership,
+              color: AppConstants.primaryGold,
+            ),
+            const SizedBox(width: 8),
+            const Text('Abonnement requis'),
+          ],
+        ),
+        content: const Text(
+          'Vous devez avoir un abonnement actif ou être en période d\'essai gratuit '
+          'pour publier une application. Souhaitez-vous voir les options d\'abonnement ?',
+        ),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+              Navigator.of(context).pop(); // Go back to previous screen
+            },
+            child: const Text('Annuler'),
+          ),
+          ElevatedButton(
+            onPressed: () async {
+              Navigator.of(context).pop();
+              // Navigate to subscription packages
+              await Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const SubscriptionPackagesScreen()),
+              );
+            },
+            style: ElevatedButton.styleFrom(
+              backgroundColor: AppConstants.primaryGold,
+              foregroundColor: AppConstants.whiteTextColor,
+            ),
+            child: const Text('Voir les abonnements'),
           ),
         ],
       ),
@@ -963,15 +1011,23 @@ class _PublishAppScreenState extends State<PublishAppScreen> {
         );
       }
     } catch (e) {
-
       log('error $e');
-            if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text('Erreur lors de la publication: ${e.toString()}'),
-            backgroundColor: Colors.red,
-          ),
-        );
+
+      if (mounted) {
+        // Check if it's a subscription-related error
+        final errorString = e.toString().toLowerCase();
+        if (errorString.contains('subscription') ||
+            errorString.contains('abonnement') ||
+            errorString.contains('subscription_required')) {
+          _showSubscriptionRequiredDialog();
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text('Erreur lors de la publication: ${e.toString()}'),
+              backgroundColor: Colors.red,
+            ),
+          );
+        }
       }
     } finally {
       if (mounted) {

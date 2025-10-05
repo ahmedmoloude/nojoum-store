@@ -8,24 +8,46 @@ class AppConstants {
   static const String appTaglineArabic = 'اكتشف وانشر الحلول الرقمية الموريتانية';
   static const String appVersion = '1.0.0';
 
-  static const Color primaryGreen = Color(0xFF00A651);
-  static const Color darkGreen = Color(0xFF007937);
-  static const Color primaryYellow = Color(0xFFFFC107);
-  static const Color accentYellow = Color(0xFFFFE082);
-  // Professional Marketplace Colors
-  static const Color primaryBlue = Color(0xFF0d47a1);
-  static const Color royalBlue = Color(0xFF1976d2);
-  static const Color teal = Color(0xFF00695c);
-  static const Color cyan = Color(0xFF00bcd4);
-  static const Color orange = Color(0xFFff9800);
-  static const Color deepOrange = Color(0xFFff5722);
-  static const Color successGreen = Color(0xFF4caf50);
-  
-  // Additional theme colors
-  static const Color backgroundColor = Color(0xFFeceff1);
-  static const Color surfaceColor = Color(0xFFFFFFFF);
-  static const Color cardColor = Color(0xFFFFFFFF);
-  static const Color dividerColor = Color(0xFFE0E0E0);
+  // Logo-inspired Color Palette
+  // Primary Golden Colors (from trophy and crescent)
+  static const Color primaryGold = Color(0xFFFFB000);        // Main golden yellow
+  static const Color goldenYellow = Color(0xFFF4B942);       // Lighter golden tone
+  static const Color deepGold = Color(0xFFE6A000);           // Darker golden shade
+  static const Color lightGold = Color(0xFFFFC947);          // Light golden accent
+
+  // Secondary Orange Colors (from shop awning)
+  static const Color primaryOrange = Color(0xFFE67E22);      // Main orange
+  static const Color deepOrange = Color(0xFFD35400);         // Deep orange
+  static const Color lightOrange = Color(0xFFF39C12);        // Light orange accent
+
+  // Mauritanian Green (from flag)
+  static const Color mauritanianGreen = Color(0xFF228B22);   // Forest green from flag
+  static const Color darkGreen = Color(0xFF2E8B57);          // Sea green variant
+  static const Color lightGreen = Color(0xFF32CD32);         // Lime green accent
+
+  // Supporting Colors
+  static const Color richRed = Color(0xFFC0392B);            // Rich red accent
+  static const Color creamBeige = Color(0xFFF5F5DC);         // Cream/beige background
+  static const Color warmGray = Color(0xFF7F8C8D);           // Warm gray
+
+  // Legacy colors for backward compatibility (mapped to new palette)
+  static const Color primaryBlue = primaryGold;              // Map to golden
+  static const Color royalBlue = deepGold;                   // Map to deep gold
+  static const Color teal = mauritanianGreen;                // Map to Mauritanian green
+  static const Color cyan = lightGreen;                      // Map to light green
+  static const Color orange = primaryOrange;                 // Map to primary orange
+  static const Color successGreen = mauritanianGreen;        // Map to Mauritanian green
+
+  // Additional legacy mappings for removed colors
+  static const Color primaryGreen = mauritanianGreen;        // Map to Mauritanian green
+  static const Color primaryYellow = goldenYellow;           // Map to golden yellow
+  static const Color accentYellow = lightGold;               // Map to light gold
+
+  // Updated theme colors for logo-inspired palette
+  static const Color backgroundColor = Color(0xFFFAF8F5);    // Warm cream background
+  static const Color surfaceColor = Color(0xFFFFFFFF);       // Pure white for cards
+  static const Color cardColor = Color(0xFFFFFEFC);          // Slightly warm white for cards
+  static const Color dividerColor = Color(0xFFE8E6E3);       // Warm gray divider
   
   // Text colors
   static const Color primaryTextColor = Color(0xFF212121);
@@ -39,23 +61,42 @@ class AppConstants {
   static const Color warningColor = Color(0xFFFF9800);
   static const Color infoColor = Color(0xFF2196F3);
   
-  // Gradient colors
+  // Gradient colors - Updated for new color palette
   static const LinearGradient primaryGradient = LinearGradient(
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,
-    colors: [primaryGreen, darkGreen],
+    colors: [mauritanianGreen, darkGreen],
   );
-  
+
   static const LinearGradient accentGradient = LinearGradient(
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,
-    colors: [primaryYellow, accentYellow],
+    colors: [goldenYellow, lightGold],
+  );
+
+  // New gradients for the logo-inspired theme
+  static const LinearGradient goldGradient = LinearGradient(
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+    colors: [primaryGold, deepGold],
+  );
+
+  static const LinearGradient orangeGradient = LinearGradient(
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+    colors: [primaryOrange, deepOrange],
+  );
+
+  static const LinearGradient mauritanianGradient = LinearGradient(
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+    colors: [mauritanianGreen, darkGreen],
   );
   
   static const LinearGradient backgroundGradient = LinearGradient(
     begin: Alignment.topCenter,
     end: Alignment.bottomCenter,
-    colors: [Color(0xFFF8F9FA), Color(0xFFE9ECEF)],
+    colors: [Color(0xFFFAF8F5), Color(0xFFF0EDE8)],  // Warm cream gradient
   );
 
   // Spacing and sizing

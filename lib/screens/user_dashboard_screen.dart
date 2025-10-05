@@ -5,9 +5,11 @@ import '../services/auth_service.dart';
 import '../services/app_service.dart';
 import '../utils/constants.dart';
 import '../widgets/app_card.dart';
+import '../widgets/subscription_status_widget.dart';
 import 'app_detail_screen.dart';
 import 'auth/login_screen.dart';
 import 'publish_app_screen.dart';
+import 'payment_history_screen.dart';
 
 class UserDashboardScreen extends StatefulWidget {
   const UserDashboardScreen({super.key});
@@ -111,7 +113,7 @@ class _UserDashboardScreenState extends State<UserDashboardScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Mon Tableau de Bord'),
-        backgroundColor: AppConstants.primaryBlue,
+        backgroundColor: AppConstants.primaryGold,
         foregroundColor: AppConstants.whiteTextColor,
         actions: [
           IconButton(
@@ -139,17 +141,17 @@ class _UserDashboardScreenState extends State<UserDashboardScreen> {
           ),
         ],
       ),
-      body: Column(
+      body: ListView(
+        shrinkWrap: true,
         children: [
-          // User Info Card
           Container(
             width: double.infinity,
             margin: const EdgeInsets.all(AppConstants.paddingM),
             padding: const EdgeInsets.all(AppConstants.paddingL),
             decoration: BoxDecoration(
-              color: AppConstants.primaryBlue.withOpacity(0.1),
+              color: AppConstants.primaryGold.withOpacity(0.1),
               borderRadius: BorderRadius.circular(AppConstants.borderRadiusM),
-              border: Border.all(color: AppConstants.primaryBlue.withOpacity(0.2)),
+              border: Border.all(color: AppConstants.primaryGold.withOpacity(0.2)),
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -158,7 +160,7 @@ class _UserDashboardScreenState extends State<UserDashboardScreen> {
                   children: [
                     CircleAvatar(
                       radius: 30,
-                      backgroundColor: AppConstants.primaryBlue,
+                      backgroundColor: AppConstants.primaryGold,
                       child: Text(
                         _currentUser!.name.isNotEmpty ? _currentUser!.name[0].toUpperCase() : 'U',
                         style: const TextStyle(
@@ -213,6 +215,14 @@ class _UserDashboardScreenState extends State<UserDashboardScreen> {
             ),
           ),
 
+          // Subscription Status
+          Container(
+            margin: const EdgeInsets.symmetric(horizontal: AppConstants.paddingM),
+            child: const SubscriptionStatusWidget(),
+          ),
+
+          const SizedBox(height: AppConstants.paddingM),
+
           // Quick Actions
           Container(
             margin: const EdgeInsets.symmetric(horizontal: AppConstants.paddingM),
@@ -232,7 +242,25 @@ class _UserDashboardScreenState extends State<UserDashboardScreen> {
                     icon: const Icon(Icons.add),
                     label: const Text('Publier une App'),
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: AppConstants.teal,
+                      backgroundColor: AppConstants.mauritanianGreen,
+                      foregroundColor: Colors.white,
+                      padding: const EdgeInsets.symmetric(vertical: AppConstants.paddingM),
+                    ),
+                  ),
+                ),
+                const SizedBox(width: AppConstants.paddingM),
+                Expanded(
+                  child: ElevatedButton.icon(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => const PaymentHistoryScreen()),
+                      );
+                    },
+                    icon: const Icon(Icons.receipt_long),
+                    label: const Text('Paiements'),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: AppConstants.primaryGold,
                       foregroundColor: Colors.white,
                       padding: const EdgeInsets.symmetric(vertical: AppConstants.paddingM),
                     ),
