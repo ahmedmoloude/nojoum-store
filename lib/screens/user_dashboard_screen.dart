@@ -10,6 +10,8 @@ import 'app_detail_screen.dart';
 import 'auth/login_screen.dart';
 import 'publish_app_screen.dart';
 import 'payment_history_screen.dart';
+import 'subscription_packages_screen.dart';
+import 'category_test_screen.dart';
 
 class UserDashboardScreen extends StatefulWidget {
   const UserDashboardScreen({super.key});
@@ -218,7 +220,17 @@ class _UserDashboardScreenState extends State<UserDashboardScreen> {
           // Subscription Status
           Container(
             margin: const EdgeInsets.symmetric(horizontal: AppConstants.paddingM),
-            child: const SubscriptionStatusWidget(),
+            child: SubscriptionStatusWidget(
+              onNavigateToPackages: () {
+                debugPrint('UserDashboardScreen: Navigating to subscription packages');
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const SubscriptionPackagesScreen(),
+                  ),
+                );
+              },
+            ),
           ),
 
           const SizedBox(height: AppConstants.paddingM),

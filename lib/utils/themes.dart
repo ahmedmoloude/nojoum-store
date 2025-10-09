@@ -65,16 +65,16 @@ class AppThemes {
       // ),
       
       // Card theme
-      cardTheme: const CardTheme(
-        color: AppConstants.cardColor,
-        elevation: AppConstants.elevationS,
-        margin: EdgeInsets.all(AppConstants.marginS),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(
-            Radius.circular(AppConstants.borderRadiusM),
-          ),
-        ),
-      ),
+      // cardTheme: const CardTheme(
+      //   color: AppConstants.cardColor,
+      //   elevation: AppConstants.elevationS,
+      //   margin: EdgeInsets.all(AppConstants.marginS),
+      //   shape: RoundedRectangleBorder(
+      //     borderRadius: BorderRadius.all(
+      //       Radius.circular(AppConstants.borderRadiusM),
+      //     ),
+      //   ),
+      // ),
       
       // Elevated button theme - Updated for golden theme
       elevatedButtonTheme: ElevatedButtonThemeData(

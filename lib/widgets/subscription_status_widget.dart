@@ -5,7 +5,12 @@ import '../utils/constants.dart';
 import '../screens/subscription_packages_screen.dart';
 
 class SubscriptionStatusWidget extends StatefulWidget {
-  const SubscriptionStatusWidget({super.key});
+  final VoidCallback? onNavigateToPackages;
+
+  const SubscriptionStatusWidget({
+    super.key,
+    this.onNavigateToPackages,
+  });
 
   @override
   State<SubscriptionStatusWidget> createState() => _SubscriptionStatusWidgetState();
@@ -16,6 +21,7 @@ class _SubscriptionStatusWidgetState extends State<SubscriptionStatusWidget> {
   Map<String, dynamic>? _subscriptionStatus;
   bool _isLoading = true;
   String? _error;
+  bool _isNavigating = false;
 
   @override
   void initState() {
@@ -236,14 +242,26 @@ class _SubscriptionStatusWidgetState extends State<SubscriptionStatusWidget> {
               SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
-                  onPressed: () => _navigateToPackages(),
+                  onPressed: _isNavigating ? null : () {
+                    debugPrint('SubscriptionStatusWidget: Button pressed - "Passer à un abonnement payant"');
+                    _navigateToPackages();
+                  },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: AppConstants.primaryGold,
                     foregroundColor: AppConstants.whiteTextColor,
                   ),
-                  child: Text(isGlobalFreeTrial
-                      ? 'Profitez de l\'essai gratuit global'
-                      : 'Passer à un abonnement payant'),
+                  child: _isNavigating
+                      ? const SizedBox(
+                          height: 20,
+                          width: 20,
+                          child: CircularProgressIndicator(
+                            strokeWidth: 2,
+                            valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                          ),
+                        )
+                      : Text(isGlobalFreeTrial
+                          ? 'Profitez de l\'essai gratuit global'
+                          : 'Passer à un abonnement payant'),
                 ),
               ),
               const SizedBox(height: AppConstants.paddingS),
@@ -265,12 +283,24 @@ class _SubscriptionStatusWidgetState extends State<SubscriptionStatusWidget> {
           SizedBox(
             width: double.infinity,
             child: ElevatedButton(
-              onPressed: () => _navigateToPackages(),
+              onPressed: _isNavigating ? null : () {
+                debugPrint('SubscriptionStatusWidget: Button pressed - "Choisir un abonnement"');
+                _navigateToPackages();
+              },
               style: ElevatedButton.styleFrom(
                 backgroundColor: AppConstants.primaryOrange,
                 foregroundColor: AppConstants.whiteTextColor,
               ),
-              child: Text(isFreeTrial ? 'Choisir un abonnement' : 'Renouveler l\'abonnement'),
+              child: _isNavigating
+                  ? const SizedBox(
+                      height: 20,
+                      width: 20,
+                      child: CircularProgressIndicator(
+                        strokeWidth: 2,
+                        valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                      ),
+                    )
+                  : Text(isFreeTrial ? 'Choisir un abonnement' : 'Renouveler l\'abonnement'),
             ),
           ),
         ] else ...[
@@ -279,12 +309,24 @@ class _SubscriptionStatusWidgetState extends State<SubscriptionStatusWidget> {
             children: [
               Expanded(
                 child: OutlinedButton(
-                  onPressed: () => _navigateToPackages(),
+                  onPressed: _isNavigating ? null : () {
+                    debugPrint('SubscriptionStatusWidget: Button pressed - "Étendre"');
+                    _navigateToPackages();
+                  },
                   style: OutlinedButton.styleFrom(
                     foregroundColor: AppConstants.primaryGold,
                     side: BorderSide(color: AppConstants.primaryGold),
                   ),
-                  child: const Text('Étendre'),
+                  child: _isNavigating
+                      ? const SizedBox(
+                          height: 20,
+                          width: 20,
+                          child: CircularProgressIndicator(
+                            strokeWidth: 2,
+                            valueColor: AlwaysStoppedAnimation<Color>(AppConstants.primaryGold),
+                          ),
+                        )
+                      : const Text('Étendre'),
                 ),
               ),
               const SizedBox(width: AppConstants.paddingM),
@@ -354,12 +396,24 @@ class _SubscriptionStatusWidgetState extends State<SubscriptionStatusWidget> {
         SizedBox(
           width: double.infinity,
           child: ElevatedButton(
-            onPressed: () => _navigateToPackages(),
+            onPressed: _isNavigating ? null : () {
+              debugPrint('SubscriptionStatusWidget: Button pressed - "Choisir un abonnement" (no subscription)');
+              _navigateToPackages();
+            },
             style: ElevatedButton.styleFrom(
               backgroundColor: AppConstants.primaryGold,
               foregroundColor: AppConstants.whiteTextColor,
             ),
-            child: const Text('Choisir un abonnement'),
+            child: _isNavigating
+                ? const SizedBox(
+                    height: 20,
+                    width: 20,
+                    child: CircularProgressIndicator(
+                      strokeWidth: 2,
+                      valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                    ),
+                  )
+                : const Text('Choisir un abonnement'),
           ),
         ),
       ],
@@ -385,11 +439,133 @@ class _SubscriptionStatusWidgetState extends State<SubscriptionStatusWidget> {
   }
 
   void _navigateToPackages() {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => const SubscriptionPackagesScreen(),
-      ),
-    );
+    // Check if widget is still mounted before navigation
+    if (!mounted) {
+      debugPrint('SubscriptionStatusWidget: Widget not mounted, cannot navigate');
+      return;
+    }
+
+    // Prevent multiple rapid navigation attempts
+    if (_isNavigating) {
+      debugPrint('SubscriptionStatusWidget: Navigation already in progress, ignoring');
+      return;
+    }
+
+    // Add debug logging to track navigation attempts
+    debugPrint('SubscriptionStatusWidget: Attempting navigation to packages');
+
+    setState(() {
+      _isNavigating = true;
+    });
+
+    // Use callback if provided, otherwise use built-in navigation
+    if (widget.onNavigateToPackages != null) {
+      debugPrint('SubscriptionStatusWidget: Using provided callback for navigation');
+      try {
+        widget.onNavigateToPackages!();
+        if (mounted) {
+          setState(() {
+            _isNavigating = false;
+          });
+        }
+      } catch (e) {
+        debugPrint('SubscriptionStatusWidget: Callback navigation error: $e');
+        if (mounted) {
+          setState(() {
+            _isNavigating = false;
+          });
+        }
+      }
+    } else {
+      // Try immediate navigation first, then fallback to post-frame callback
+      _performNavigation();
+    }
+  }
+
+  void _performNavigation() {
+    if (!mounted) {
+      debugPrint('SubscriptionStatusWidget: Widget unmounted before navigation');
+      return;
+    }
+
+    try {
+      // Try direct navigation first
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const SubscriptionPackagesScreen(),
+        ),
+      ).then((result) {
+        debugPrint('SubscriptionStatusWidget: Direct navigation completed with result: $result');
+        if (mounted) {
+          setState(() {
+            _isNavigating = false;
+          });
+        }
+      }).catchError((error) {
+        debugPrint('SubscriptionStatusWidget: Direct navigation error: $error');
+        // Try with root navigator as fallback
+        _performRootNavigation();
+      });
+    } catch (e) {
+      debugPrint('SubscriptionStatusWidget: Direct navigation exception: $e');
+      // Try with root navigator as fallback
+      _performRootNavigation();
+    }
+  }
+
+  void _performRootNavigation() {
+    if (!mounted) {
+      debugPrint('SubscriptionStatusWidget: Widget unmounted before root navigation');
+      return;
+    }
+
+    try {
+      // Use root navigator to bypass IndexedStack issues
+      Navigator.of(context, rootNavigator: true).push(
+        MaterialPageRoute(
+          builder: (context) => const SubscriptionPackagesScreen(),
+        ),
+      ).then((result) {
+        debugPrint('SubscriptionStatusWidget: Root navigation completed with result: $result');
+        if (mounted) {
+          setState(() {
+            _isNavigating = false;
+          });
+        }
+      }).catchError((error) {
+        debugPrint('SubscriptionStatusWidget: Root navigation error: $error');
+        if (mounted) {
+          setState(() {
+            _isNavigating = false;
+          });
+          _showNavigationError('Erreur de navigation: $error');
+        }
+      });
+    } catch (e) {
+      debugPrint('SubscriptionStatusWidget: Root navigation exception: $e');
+      if (mounted) {
+        setState(() {
+          _isNavigating = false;
+        });
+        _showNavigationError('Impossible de naviguer vers les abonnements');
+      }
+    }
+  }
+
+  void _showNavigationError(String message) {
+    if (!mounted) return;
+
+    try {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(message),
+          backgroundColor: Colors.red,
+          duration: const Duration(seconds: 3),
+        ),
+      );
+    } catch (e) {
+      debugPrint('SubscriptionStatusWidget: Error showing snackbar: $e');
+    }
   }
 }

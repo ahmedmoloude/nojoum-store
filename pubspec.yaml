@@ -52,11 +52,18 @@ dependencies:
   flutter_html: ^3.0.0            # Latest stable version (note: consider html_widget ^0.15.0 as alternative)
   table_calendar: ^3.1.2          # For demo scheduling (updated from 3.0.9)
   flutter_form_builder: ^9.4.1    # For complex forms (updated from 9.1.1)
-  
+  flutter_launcher_icons: ^0.13.1
+
   # API and networking dependencies
   http: ^1.2.2                    # For HTTP requests
   dio: ^5.7.0                     # Advanced HTTP client
   json_annotation: ^4.9.0        # For JSON serialization
+
+flutter_launcher_icons:
+  android: true
+  ios: false
+  image_path: "assets/images/noujoum_store_logo.png"
+
 
 dev_dependencies:
   flutter_test:

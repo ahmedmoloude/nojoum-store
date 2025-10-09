@@ -9,6 +9,7 @@ class AppCategory {
   final IconData icon;
   final Color color;
   final List<String> subcategories;
+  final int appCount;
 
   const AppCategory({
     required this.id,
@@ -18,6 +19,7 @@ class AppCategory {
     required this.icon,
     required this.color,
     required this.subcategories,
+    this.appCount = 0,
   });
 
   @override
@@ -44,6 +46,7 @@ class AppCategory {
       icon: _parseIcon(json['icon']),
       color: _parseColor(json['color']),
       subcategories: List<String>.from(json['subcategories'] ?? []),
+      appCount: json['apps_count'] ?? 0,
     );
   }
 
@@ -90,6 +93,7 @@ class AppCategories {
     icon: Icons.local_hospital,
     color: Colors.red,
     subcategories: ['Médecine', 'Pharmacie', 'Fitness', 'Nutrition'],
+    appCount: 0,
   );
 
   static const business = AppCategory(
@@ -100,6 +104,7 @@ class AppCategories {
     icon: Icons.business,
     color: Colors.blue,
     subcategories: ['Gestion', 'CRM', 'Comptabilité', 'Logistique'],
+    appCount: 0,
   );
 
   static const education = AppCategory(
@@ -110,6 +115,7 @@ class AppCategories {
     icon: Icons.school,
     color: Colors.blue,
     subcategories: ['E-learning', 'Langues', 'Sciences', 'Histoire'],
+    appCount: 0,
   );
 
   static const agriculture = AppCategory(
@@ -120,6 +126,7 @@ class AppCategories {
     icon: Icons.agriculture,
     color: Colors.green,
     subcategories: ['Élevage', 'Cultures', 'Météo', 'Marchés'],
+    appCount: 0,
   );
 
   static const transport = AppCategory(
@@ -130,6 +137,7 @@ class AppCategories {
     icon: Icons.directions_car,
     color: Colors.orange,
     subcategories: ['Taxi', 'Livraison', 'Transport Public', 'Logistique'],
+    appCount: 0,
   );
 
   static const finance = AppCategory(
@@ -140,6 +148,7 @@ class AppCategories {
     icon: Icons.account_balance,
     color: Colors.indigo,
     subcategories: ['Banque Mobile', 'Budget', 'Investissement', 'Commerce'],
+    appCount: 0,
   );
 
   static const government = AppCategory(
@@ -150,6 +159,7 @@ class AppCategories {
     icon: Icons.account_balance_wallet,
     color: Colors.purple,
     subcategories: ['Documents', 'Impôts', 'État Civil', 'Citoyenneté'],
+    appCount: 0,
   );
 
   static const entertainment = AppCategory(
@@ -160,6 +170,7 @@ class AppCategories {
     icon: Icons.games,
     color: Colors.pink,
     subcategories: ['Jeux', 'Musique', 'Culture', 'Sport'],
+    appCount: 0,
   );
 
   static const businessManagement = AppCategory(
@@ -170,6 +181,7 @@ class AppCategories {
     icon: Icons.business_center,
     color: Colors.teal,
     subcategories: ['Gestion des stocks', 'Systèmes CRM', 'Logiciels de comptabilité', 'Gestion de projet', 'Gestion RH', 'Systèmes POS'],
+    appCount: 0,
   );
 
   static const healthcare = AppCategory(
@@ -180,6 +192,7 @@ class AppCategories {
     icon: Icons.local_hospital,
     color: Colors.red,
     subcategories: ['Gestion des patients', 'Systèmes de pharmacie', 'Dossiers médicaux', 'Télémédecine', 'Suivi de santé', 'Gestion d\'assurance'],
+    appCount: 0,
   );
 
   static const retailEcommerce = AppCategory(
@@ -190,6 +203,7 @@ class AppCategories {
     icon: Icons.shopping_cart,
     color: Colors.orange,
     subcategories: ['Boutiques en ligne', 'Systèmes d\'inventaire', 'Gestion clientèle', 'Traitement des paiements', 'Suivi de livraison', 'Outils marketing'],
+    appCount: 0,
   );
 
   static const news = AppCategory(
@@ -200,6 +214,7 @@ class AppCategories {
     icon: Icons.newspaper,
     color: Colors.brown,
     subcategories: ['Actualités', 'Politique', 'Sport', 'Culture'],
+    appCount: 0,
   );
 
   static const utilities = AppCategory(
@@ -210,6 +225,7 @@ class AppCategories {
     icon: Icons.build,
     color: Colors.grey,
     subcategories: ['Calculatrices', 'Convertisseurs', 'Calendrier', 'Outils'],
+    appCount: 0,
   );
 
   /// Get all available categories

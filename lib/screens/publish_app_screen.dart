@@ -10,6 +10,7 @@ import '../models/mauritanian_app.dart';
 import '../models/app_category.dart';
 import '../services/auth_service.dart';
 import '../services/app_service.dart';
+import '../services/category_service.dart';
 import '../utils/constants.dart';
 import 'auth/login_screen.dart';
 import 'subscription_packages_screen.dart';
@@ -27,6 +28,12 @@ class _PublishAppScreenState extends State<PublishAppScreen> {
   final ImagePicker _imagePicker = ImagePicker();
   String? _uploadedIconUrl;
   bool _isUploadingIcon = false;
+  List<String> _uploadedScreenshotUrls = [];
+  bool _isUploadingScreenshots = false;
+
+  // Categories from API
+  List<AppCategory> _categories = [];
+  bool _isLoadingCategories = true;
 
   Future<void> _pickAndUploadIcon(FormFieldState<String> field) async {
     try {
@@ -47,7 +54,7 @@ class _PublishAppScreenState extends State<PublishAppScreen> {
       }
 
       setState(() {
-        _uploadedIconUrl = url;
+        _uploadedIconUrl = 'https://noujoumstore.com' + url;
       });
       field.didChange(url);
 
@@ -67,6 +74,65 @@ class _PublishAppScreenState extends State<PublishAppScreen> {
     }
   }
 
+  Future<void> _pickAndUploadScreenshots(FormFieldState<List<String>> field) async {
+    try {
+      final List<XFile> picked = await _imagePicker.pickMultiImage(
+        maxWidth: 1024,
+        imageQuality: 85,
+      );
+      if (picked.isEmpty) return;
+
+      // Limit to 10 screenshots total
+      if (_uploadedScreenshotUrls.length + picked.length > 10) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Maximum 10 captures d\'écran autorisées'),
+            backgroundColor: Colors.orange,
+          ),
+        );
+        return;
+      }
+
+      setState(() => _isUploadingScreenshots = true);
+
+      List<String> newUrls = [];
+      for (final pickedFile in picked) {
+        final file = File(pickedFile.path);
+        final resp = await ApiService.uploadFile(file, fields: {'folder': 'app-screenshots'});
+        final url = (resp['data'] ?? {})['url']?.toString();
+        if (url != null && url.isNotEmpty) {
+          newUrls.add( 'https://noujoumstore.com' + url);
+        }
+      }
+
+      setState(() {
+        _uploadedScreenshotUrls.addAll(newUrls);
+      });
+      field.didChange(_uploadedScreenshotUrls);
+
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('${newUrls.length} capture(s) d\'écran téléchargée(s) avec succès')),
+        );
+      }
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Échec du téléchargement: $e'), backgroundColor: Colors.red),
+        );
+      }
+    } finally {
+      if (mounted) setState(() => _isUploadingScreenshots = false);
+    }
+  }
+
+  void _removeScreenshot(int index, FormFieldState<List<String>> field) {
+    setState(() {
+      _uploadedScreenshotUrls.removeAt(index);
+    });
+    field.didChange(_uploadedScreenshotUrls);
+  }
+
   final GlobalKey<FormBuilderState> _formKey = GlobalKey<FormBuilderState>();
   int _currentStep = 0;
   final int _totalSteps = 4;
@@ -75,6 +141,28 @@ class _PublishAppScreenState extends State<PublishAppScreen> {
   void initState() {
     super.initState();
     _checkAuthentication();
+    _loadCategories();
+  }
+
+  Future<void> _loadCategories() async {
+    try {
+      final categories = await CategoryService.getCategories();
+      if (mounted) {
+        setState(() {
+          _categories = categories;
+          _isLoadingCategories = false;
+        });
+      }
+    } catch (e) {
+      log('Error loading categories: $e');
+      if (mounted) {
+        setState(() {
+          _isLoadingCategories = false;
+          // Fallback to static categories if API fails
+          _categories = AppCategories.all;
+        });
+      }
+    }
   }
 
   void _checkAuthentication() {
@@ -328,24 +416,31 @@ class _PublishAppScreenState extends State<PublishAppScreen> {
             ),
             const SizedBox(height: AppConstants.paddingM),
 
-            FormBuilderDropdown<String>(
-              name: 'category',
-              decoration: const InputDecoration(
-                labelText: 'Catégorie principale *',
-              ),
-              items: AppCategories.all
-                  .map((category) => DropdownMenuItem(
-                        value: category.id,
-                        child: Text(category.name),
-                      ))
-                  .toList(),
-              validator: (value) {
-                if (value == null || value.isEmpty) {
-                  return 'Veuillez sélectionner une catégorie';
-                }
-                return null;
-              },
-            ),
+            _isLoadingCategories
+                ? const Center(
+                    child: Padding(
+                      padding: EdgeInsets.all(16.0),
+                      child: CircularProgressIndicator(),
+                    ),
+                  )
+                : FormBuilderDropdown<String>(
+                    name: 'category',
+                    decoration: const InputDecoration(
+                      labelText: 'Catégorie principale *',
+                    ),
+                    items: _categories
+                        .map((category) => DropdownMenuItem(
+                              value: category.id,
+                              child: Text(category.name),
+                            ))
+                        .toList(),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Veuillez sélectionner une catégorie';
+                      }
+                      return null;
+                    },
+                  ),
             const SizedBox(height: AppConstants.paddingM),
 
             FormBuilderDropdown<String>(
@@ -421,18 +516,105 @@ class _PublishAppScreenState extends State<PublishAppScreen> {
             ),
             const SizedBox(height: AppConstants.paddingM),
 
-            FormBuilderTextField(
+            FormBuilderField<List<String>>(
               name: 'screenshots',
-              decoration: const InputDecoration(
-                labelText: 'URLs des captures d\'écran *',
-                hintText: 'Séparez les URLs par des virgules',
-              ),
-              maxLines: 3,
               validator: (value) {
-                if (value == null || value.isEmpty) {
+                if (_uploadedScreenshotUrls.isEmpty) {
                   return 'Au moins une capture d\'écran est requise';
                 }
                 return null;
+              },
+              builder: (field) {
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Captures d\'écran *',
+                      style: Theme.of(context).textTheme.bodyMedium,
+                    ),
+                    const SizedBox(height: 8),
+
+                    // Upload button
+                    ElevatedButton.icon(
+                      onPressed: _isUploadingScreenshots ? null : () => _pickAndUploadScreenshots(field),
+                      icon: _isUploadingScreenshots
+                          ? const SizedBox(width: 16, height: 16, child: CircularProgressIndicator(strokeWidth: 2, valueColor: AlwaysStoppedAnimation<Color>(Colors.white)))
+                          : const Icon(Icons.add_photo_alternate),
+                      label: Text(_uploadedScreenshotUrls.isEmpty ? 'Ajouter des captures d\'écran' : 'Ajouter plus de captures'),
+                      style: ElevatedButton.styleFrom(backgroundColor: AppConstants.teal),
+                    ),
+
+                    const SizedBox(height: 12),
+
+                    // Display uploaded screenshots
+                    if (_uploadedScreenshotUrls.isNotEmpty) ...[
+                      Text(
+                        '${_uploadedScreenshotUrls.length} capture(s) d\'écran téléchargée(s)',
+                        style: Theme.of(context).textTheme.bodySmall?.copyWith(color: Colors.green),
+                      ),
+                      const SizedBox(height: 8),
+                      SizedBox(
+                        height: 100,
+                        child: ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          itemCount: _uploadedScreenshotUrls.length,
+                          itemBuilder: (context, index) {
+                            return Container(
+                              margin: const EdgeInsets.only(right: 8),
+                              child: Stack(
+                                children: [
+                                  Container(
+                                    width: 80,
+                                    height: 100,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(AppConstants.borderRadiusS),
+                                      border: Border.all(color: Colors.grey.shade300),
+                                    ),
+                                    clipBehavior: Clip.antiAlias,
+                                    child: Image.network(
+                                      _uploadedScreenshotUrls[index],
+                                      fit: BoxFit.cover,
+                                      errorBuilder: (context, error, stackTrace) => Container(
+                                        color: Colors.grey.shade200,
+                                        child: const Icon(Icons.image, color: Colors.grey),
+                                      ),
+                                    ),
+                                  ),
+                                  Positioned(
+                                    top: 4,
+                                    right: 4,
+                                    child: GestureDetector(
+                                      onTap: () => _removeScreenshot(index, field),
+                                      child: Container(
+                                        width: 20,
+                                        height: 20,
+                                        decoration: const BoxDecoration(
+                                          color: Colors.red,
+                                          shape: BoxShape.circle,
+                                        ),
+                                        child: const Icon(
+                                          Icons.close,
+                                          size: 14,
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            );
+                          },
+                        ),
+                      ),
+                    ],
+
+                    if (field.hasError)
+                      Padding(
+                        padding: const EdgeInsets.only(top: 8.0),
+                        child: Text(field.errorText!, style: const TextStyle(color: Colors.red)),
+                      ),
+                  ],
+                );
               },
             ),
             const SizedBox(height: AppConstants.paddingM),
@@ -765,7 +947,6 @@ class _PublishAppScreenState extends State<PublishAppScreen> {
     final category = formData['category'];
     final targetAudience = formData['targetAudience'];
     final iconUrl = formData['iconUrl']?.toString().trim();
-    final screenshots = formData['screenshots']?.toString().trim();
     final subcategory = formData['subcategory']?.toString().trim();
     final tags = formData['tags']?.toString().trim();
 
@@ -785,15 +966,21 @@ class _PublishAppScreenState extends State<PublishAppScreen> {
       _showValidationError('Veuillez sélectionner une catégorie');
       return false;
     }
+    // Validate that the category ID is valid
+    final categoryId = int.tryParse(category.toString());
+    if (categoryId == null || categoryId <= 0) {
+      _showValidationError('Catégorie invalide sélectionnée');
+      return false;
+    }
     if (targetAudience == null || targetAudience.toString().isEmpty) {
       _showValidationError('Veuillez sélectionner le public cible');
       return false;
     }
     if (iconUrl == null || iconUrl.isEmpty) {
-      _showValidationError('Veuillez saisir l\'URL de l\'icône');
+      _showValidationError('Veuillez télécharger l\'icône de l\'application');
       return false;
     }
-    if (screenshots == null || screenshots.isEmpty) {
+    if (_uploadedScreenshotUrls.isEmpty) {
       _showValidationError('Veuillez ajouter au moins une capture d\'écran');
       return false;
     }
@@ -870,26 +1057,7 @@ class _PublishAppScreenState extends State<PublishAppScreen> {
     );
   }
 
-  // Helper method to convert category name to category ID
-  int? _getCategoryId(String? categoryName) {
-    if (categoryName == null) return null;
 
-    // Map category names to IDs (you may need to adjust these based on your actual categories)
-    final categoryMap = {
-      'entertainment': 1,
-      'productivity': 2,
-      'education': 3,
-      'business': 4,
-      'health': 5,
-      'finance': 6,
-      'social': 7,
-      'utilities': 8,
-      'games': 9,
-      'news': 10,
-    };
-
-    return categoryMap[categoryName.toLowerCase()];
-  }
 
   bool _isSubmitting = false;
 
@@ -936,12 +1104,6 @@ class _PublishAppScreenState extends State<PublishAppScreen> {
       final appTypeString = enumToString(formData['appType']);
       final pricingModelString = enumToString(formData['pricingModel']);
 
-      // Helper function to parse screenshots URLs
-      List<String> parseScreenshots(String? screenshots) {
-        if (screenshots == null || screenshots.isEmpty) return [];
-        return screenshots.split(',').map((e) => e.trim()).where((e) => e.isNotEmpty).toList();
-      }
-
       // Helper function to parse tags
       List<String> parseTags(String? tags) {
         if (tags == null || tags.isEmpty) return [];
@@ -953,14 +1115,14 @@ class _PublishAppScreenState extends State<PublishAppScreen> {
         'tagline': formData['tagline'] ?? '',
         'description': formData['description'] ?? '',
         'detailed_description': formData['detailedDescription'] ?? formData['description'],
-        'category_id': _getCategoryId(formData['category']),
+        'category_id': int.tryParse(formData['category']?.toString() ?? '0') ?? 0,
         'subcategory': formData['subcategory'] ?? '',
         'tags': parseTags(formData['tags']),
         'app_type': appTypeString.isNotEmpty ? appTypeString : 'mobile',
         'supported_platforms': enumListToStringList(formData['platforms'] as List<dynamic>?),
         'current_version': formData['currentVersion'] ?? '1.0.0',
         'icon_url': formData['iconUrl'] ?? '',
-        'screenshots': parseScreenshots(formData['screenshots']),
+        'screenshots': _uploadedScreenshotUrls,
         'demo_videos': formData['demoVideos'],
         'live_demo': formData['liveDemo'],
         'download_link': formData['downloadLink'],

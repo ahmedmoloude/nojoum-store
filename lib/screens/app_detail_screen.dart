@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import '../models/mauritanian_app.dart';
 import '../utils/constants.dart';
 
@@ -46,10 +47,26 @@ class AppDetailScreen extends StatelessWidget {
                     borderRadius: BorderRadius.circular(AppConstants.borderRadiusM),
                     color: AppConstants.primaryGreen.withOpacity(0.1),
                   ),
-                  child: const Icon(
-                    Icons.apps,
-                    size: AppConstants.iconSizeXL,
-                    color: AppConstants.primaryGreen,
+                  clipBehavior: Clip.antiAlias,
+                  child: CachedNetworkImage(
+                    imageUrl: app.iconUrl.startsWith('http') ? app.iconUrl : 'https://noujoumstore.com' + app.iconUrl,
+                    fit: BoxFit.cover,
+                    placeholder: (context, url) => Container(
+                      color: AppConstants.primaryGreen.withOpacity(0.1),
+                      child: const Icon(
+                        Icons.apps,
+                        size: AppConstants.iconSizeXL,
+                        color: AppConstants.primaryGreen,
+                      ),
+                    ),
+                    errorWidget: (context, url, error) => Container(
+                      color: AppConstants.primaryGreen.withOpacity(0.1),
+                      child: const Icon(
+                        Icons.apps,
+                        size: AppConstants.iconSizeXL,
+                        color: AppConstants.primaryGreen,
+                      ),
+                    ),
                   ),
                 ),
                 const SizedBox(width: AppConstants.paddingM),
@@ -88,10 +105,7 @@ class AppDetailScreen extends StatelessWidget {
                             color: AppConstants.secondaryTextColor,
                           ),
                           const SizedBox(width: AppConstants.paddingXS),
-                          Text(
-                            '${app.downloadCount}+',
-                            style: Theme.of(context).textTheme.bodySmall,
-                          ),
+                         
                         ],
                       ),
                     ],
@@ -103,31 +117,8 @@ class AppDetailScreen extends StatelessWidget {
             const SizedBox(height: AppConstants.paddingL),
             
             // Contact buttons
-            Row(
-              children: [
-                Expanded(
-                  child: ElevatedButton.icon(
-                    onPressed: () {
-                      // TODO: Implement email contact
-                    },
-                    icon: const Icon(Icons.email),
-                    label: const Text('Email'),
-                  ),
-                ),
-                const SizedBox(width: AppConstants.paddingM),
-                Expanded(
-                  child: OutlinedButton.icon(
-                    onPressed: () {
-                      // TODO: Implement phone contact
-                    },
-                    icon: const Icon(Icons.phone),
-                    label: const Text('Appeler'),
-                  ),
-                ),
-              ],
-            ),
-            
-            const SizedBox(height: AppConstants.paddingL),
+     
+
             
             // Description
             Text(
@@ -152,6 +143,32 @@ class AppDetailScreen extends StatelessWidget {
             _buildInfoRow('Public cible', app.targetAudience),
             _buildInfoRow('Type de développeur', app.developerType),
             _buildInfoRow('Date d\'ajout', app.dateAdded.toString().split(' ')[0]),
+
+
+            const SizedBox(height: AppConstants.paddingL),
+                   Row(
+              children: [
+                Expanded(
+                  child: ElevatedButton.icon(
+                    onPressed: () {
+                      // TODO: Implement email contact
+                    },
+                    icon: const Icon(Icons.email),
+                    label: const Text('Email'),
+                  ),
+                ),
+                const SizedBox(width: AppConstants.paddingM),
+                Expanded(
+                  child: OutlinedButton.icon(
+                    onPressed: () {
+                      // TODO: Implement phone contact
+                    },
+                    icon: const Icon(Icons.phone),
+                    label: const Text('Appeler'),
+                  ),
+                ),
+              ],
+            ),
           ],
         ),
       ),

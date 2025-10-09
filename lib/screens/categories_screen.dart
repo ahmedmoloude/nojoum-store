@@ -1,6 +1,8 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
-import '../data/app_repository.dart';
 import '../models/app_category.dart';
+import '../services/category_service.dart';
 import '../utils/constants.dart';
 import '../widgets/category_chip.dart';
 import 'catalog_screen.dart';
@@ -19,7 +21,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
   @override
   void initState() {
     super.initState();
-    _categoriesFuture = AppRepository.getCategories();
+    _categoriesFuture = CategoryService.getCategories();
   }
 
   @override
@@ -57,7 +59,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                   ElevatedButton(
                     onPressed: () {
                       setState(() {
-                        _categoriesFuture = AppRepository.getCategories();
+                        _categoriesFuture = CategoryService.getCategories();
                       });
                     },
                     child: Text('Réessayer'),
@@ -91,6 +93,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
           }
 
           final categories = snapshot.data!;
+          log('Found ${categories.length} categories');
           return GridView.builder(
             padding: const EdgeInsets.all(AppConstants.paddingM),
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -106,7 +109,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
               return CategoryChip(
                 category: category,
                 showCount: true,
-                appCount: 0, // App count will be handled by the API response
+                appCount: category.appCount, // Dynamic app count from API
                 onTap: () {
                   Navigator.push(
                     context,

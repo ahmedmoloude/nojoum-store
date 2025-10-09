@@ -295,7 +295,7 @@ class AppCard extends StatelessWidget {
       child: ClipRRect(
         borderRadius: BorderRadius.circular(AppConstants.borderRadiusM),
         child: CachedNetworkImage(
-          imageUrl: app.iconUrl,
+          imageUrl: app.iconUrl.startsWith('http') ? app.iconUrl : 'https://noujoumstore.com' + app.iconUrl,
           fit: BoxFit.cover,
           placeholder: (context, url) => Container(
             color: AppConstants.primaryGreen.withOpacity(0.1),

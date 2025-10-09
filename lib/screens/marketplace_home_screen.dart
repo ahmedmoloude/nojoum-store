@@ -82,12 +82,6 @@ class _MarketplaceHomeScreenState extends State<MarketplaceHomeScreen> {
                   MaterialPageRoute(builder: (context) => SearchScreen()),
                 ),
               ),
-              IconButton(
-                icon: Icon(Icons.person_outline),
-                onPressed: () {
-                  // TODO: Navigate to user profile/dashboard
-                },
-              ),
             ],
           ),
 
@@ -461,6 +455,8 @@ class _MarketplaceHomeScreenState extends State<MarketplaceHomeScreen> {
           final category = categories[index];
           return CategoryChip(
             category: category,
+            showCount: true,
+            appCount: category.appCount,
             onTap: () => Navigator.push(
               context,
               MaterialPageRoute(
