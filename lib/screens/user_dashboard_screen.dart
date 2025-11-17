@@ -6,6 +6,8 @@ import '../services/app_service.dart';
 import '../utils/constants.dart';
 import '../widgets/app_card.dart';
 import '../widgets/subscription_status_widget.dart';
+import '../widgets/language_switcher.dart';
+import '../l10n/app_localizations.dart';
 import 'app_detail_screen.dart';
 import 'auth/login_screen.dart';
 import 'publish_app_screen.dart';
@@ -62,20 +64,23 @@ class _UserDashboardScreenState extends State<UserDashboardScreen> {
   Future<void> _logout() async {
     final confirmed = await showDialog<bool>(
       context: context,
-      builder: (context) => AlertDialog(
-        title: const Text('Déconnexion'),
-        content: const Text('Êtes-vous sûr de vouloir vous déconnecter ?'),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.of(context).pop(false),
-            child: const Text('Annuler'),
-          ),
-          TextButton(
-            onPressed: () => Navigator.of(context).pop(true),
-            child: const Text('Déconnexion'),
-          ),
-        ],
-      ),
+      builder: (context) {
+        final l10n = AppLocalizations.of(context)!;
+        return AlertDialog(
+          title: Text(l10n.logout),
+          content: Text(l10n.logoutConfirmation),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(false),
+              child: Text(l10n.cancel),
+            ),
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(true),
+              child: Text(l10n.logout),
+            ),
+          ],
+        );
+      },
     );
 
     if (confirmed == true) {
@@ -107,6 +112,7 @@ class _UserDashboardScreenState extends State<UserDashboardScreen> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final l10n = AppLocalizations.of(context)!;
 
     if (_currentUser == null) {
       return _buildNotLoggedInView(theme);
@@ -114,7 +120,7 @@ class _UserDashboardScreenState extends State<UserDashboardScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Mon Tableau de Bord'),
+        title: Text(l10n.myDashboard),
         backgroundColor: AppConstants.primaryGold,
         foregroundColor: AppConstants.whiteTextColor,
         actions: [
@@ -129,13 +135,13 @@ class _UserDashboardScreenState extends State<UserDashboardScreen> {
               }
             },
             itemBuilder: (context) => [
-              const PopupMenuItem(
+              PopupMenuItem(
                 value: 'logout',
                 child: Row(
                   children: [
-                    Icon(Icons.logout),
-                    SizedBox(width: 8),
-                    Text('Déconnexion'),
+                    const Icon(Icons.logout),
+                    const SizedBox(width: 8),
+                    Text(l10n.logout),
                   ],
                 ),
               ),
@@ -143,17 +149,17 @@ class _UserDashboardScreenState extends State<UserDashboardScreen> {
           ),
         ],
       ),
-      body: ListView(
-        shrinkWrap: true,
-        children: [
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
           Container(
             width: double.infinity,
             margin: const EdgeInsets.all(AppConstants.paddingM),
             padding: const EdgeInsets.all(AppConstants.paddingL),
             decoration: BoxDecoration(
-              color: AppConstants.primaryGold.withOpacity(0.1),
+              color: AppConstants.primaryGold.withValues(alpha: 0.1),
               borderRadius: BorderRadius.circular(AppConstants.borderRadiusM),
-              border: Border.all(color: AppConstants.primaryGold.withOpacity(0.2)),
+              border: Border.all(color: AppConstants.primaryGold.withValues(alpha: 0.2)),
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -199,8 +205,8 @@ class _UserDashboardScreenState extends State<UserDashboardScreen> {
                                 ),
                                 const SizedBox(width: 4),
                                 Text(
-                                  'Compte vérifié',
-                                  style: TextStyle(
+                                  l10n.verifiedAccount,
+                                  style: const TextStyle(
                                     color: AppConstants.successGreen,
                                     fontSize: 12,
                                     fontWeight: FontWeight.w500,
@@ -235,6 +241,37 @@ class _UserDashboardScreenState extends State<UserDashboardScreen> {
 
           const SizedBox(height: AppConstants.paddingM),
 
+          // Language Settings
+          Container(
+            margin: const EdgeInsets.symmetric(horizontal: AppConstants.paddingM),
+            child: Card(
+              child: Padding(
+                padding: const EdgeInsets.all(AppConstants.paddingM),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        const Icon(Icons.language, color: AppConstants.primaryBlue),
+                        const SizedBox(width: AppConstants.paddingS),
+                        Text(
+                          AppLocalizations.of(context)!.language,
+                          style: theme.textTheme.titleMedium?.copyWith(
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: AppConstants.paddingM),
+                    const LanguageSwitcher(showTitle: false, isCompact: false),
+                  ],
+                ),
+              ),
+            ),
+          ),
+
+          const SizedBox(height: AppConstants.paddingM),
+
           // Quick Actions
           Container(
             margin: const EdgeInsets.symmetric(horizontal: AppConstants.paddingM),
@@ -252,7 +289,7 @@ class _UserDashboardScreenState extends State<UserDashboardScreen> {
                       }
                     },
                     icon: const Icon(Icons.add),
-                    label: const Text('Publier une App'),
+                    label: Text(l10n.publishApp),
                     style: ElevatedButton.styleFrom(
                       backgroundColor: AppConstants.mauritanianGreen,
                       foregroundColor: Colors.white,
@@ -270,7 +307,7 @@ class _UserDashboardScreenState extends State<UserDashboardScreen> {
                       );
                     },
                     icon: const Icon(Icons.receipt_long),
-                    label: const Text('Paiements'),
+                    label: Text(l10n.payments),
                     style: ElevatedButton.styleFrom(
                       backgroundColor: AppConstants.primaryGold,
                       foregroundColor: Colors.white,
@@ -285,8 +322,7 @@ class _UserDashboardScreenState extends State<UserDashboardScreen> {
           const SizedBox(height: AppConstants.paddingM),
 
           // User Apps Section
-          Expanded(
-            child: FutureBuilder<List<MauritanianApp>>(
+          FutureBuilder<List<MauritanianApp>>(
               future: _userAppsFuture,
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
@@ -305,8 +341,8 @@ class _UserDashboardScreenState extends State<UserDashboardScreen> {
                         ),
                         const SizedBox(height: AppConstants.paddingM),
                         Text(
-                          'Erreur lors du chargement de vos applications',
-                          style: TextStyle(
+                          l10n.errorLoadingYourApps,
+                          style: const TextStyle(
                             fontSize: 16,
                             color: AppConstants.secondaryTextColor,
                           ),
@@ -315,7 +351,7 @@ class _UserDashboardScreenState extends State<UserDashboardScreen> {
                         const SizedBox(height: AppConstants.paddingM),
                         ElevatedButton(
                           onPressed: _refreshUserApps,
-                          child: const Text('Réessayer'),
+                          child: Text(l10n.retry),
                         ),
                       ],
                     ),
@@ -336,16 +372,16 @@ class _UserDashboardScreenState extends State<UserDashboardScreen> {
                         ),
                         const SizedBox(height: AppConstants.paddingM),
                         Text(
-                          'Aucune application publiée',
-                          style: TextStyle(
+                          l10n.noAppsPublished,
+                          style: const TextStyle(
                             fontSize: 18,
                             color: AppConstants.secondaryTextColor,
                           ),
                         ),
                         const SizedBox(height: AppConstants.paddingS),
                         Text(
-                          'Commencez par publier votre première application',
-                          style: TextStyle(
+                          l10n.startByPublishingFirstApp,
+                          style: const TextStyle(
                             color: AppConstants.secondaryTextColor,
                           ),
                           textAlign: TextAlign.center,
@@ -362,7 +398,7 @@ class _UserDashboardScreenState extends State<UserDashboardScreen> {
                             }
                           },
                           icon: const Icon(Icons.add),
-                          label: const Text('Publier une App'),
+                          label: Text(l10n.publishApp),
                           style: ElevatedButton.styleFrom(
                             backgroundColor: AppConstants.teal,
                             foregroundColor: Colors.white,
@@ -379,51 +415,52 @@ class _UserDashboardScreenState extends State<UserDashboardScreen> {
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: AppConstants.paddingM),
                       child: Text(
-                        'Mes Applications (${userApps.length})',
+                        l10n.myApps(userApps.length),
                         style: theme.textTheme.headlineSmall?.copyWith(
                           fontWeight: FontWeight.bold,
                         ),
                       ),
                     ),
                     const SizedBox(height: AppConstants.paddingM),
-                    Expanded(
-                      child: ListView.builder(
-                        padding: const EdgeInsets.symmetric(horizontal: AppConstants.paddingM),
-                        itemCount: userApps.length,
-                        itemBuilder: (context, index) {
-                          final app = userApps[index];
-                          return Container(
-                            margin: const EdgeInsets.only(bottom: AppConstants.paddingM),
-                            child: AppCard(
-                              app: app,
-                              showFeaturedBadge: true,
-                              onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => AppDetailScreen(app: app),
-                                  ),
-                                );
-                              },
-                            ),
-                          );
-                        },
-                      ),
+                    ListView.builder(
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      padding: const EdgeInsets.symmetric(horizontal: AppConstants.paddingM),
+                      itemCount: userApps.length,
+                      itemBuilder: (context, index) {
+                        final app = userApps[index];
+                        return Container(
+                          margin: const EdgeInsets.only(bottom: AppConstants.paddingM),
+                          child: AppCard(
+                            app: app,
+                            showFeaturedBadge: true,
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => AppDetailScreen(app: app),
+                                ),
+                              );
+                            },
+                          ),
+                        );
+                      },
                     ),
                   ],
                 );
               },
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
 
   Widget _buildNotLoggedInView(ThemeData theme) {
+    final l10n = AppLocalizations.of(context)!;
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Mon Compte'),
+        title: Text(l10n.myAccount),
         backgroundColor: AppConstants.primaryBlue,
         foregroundColor: AppConstants.whiteTextColor,
       ),
@@ -440,7 +477,7 @@ class _UserDashboardScreenState extends State<UserDashboardScreen> {
               ),
               const SizedBox(height: AppConstants.paddingL),
               Text(
-                'Connectez-vous pour accéder à votre tableau de bord',
+                l10n.loginToAccessDashboard,
                 style: theme.textTheme.headlineSmall?.copyWith(
                   color: AppConstants.primaryTextColor,
                 ),
@@ -448,7 +485,7 @@ class _UserDashboardScreenState extends State<UserDashboardScreen> {
               ),
               const SizedBox(height: AppConstants.paddingM),
               Text(
-                'Gérez vos applications publiées et suivez leurs performances',
+                l10n.managePublishedApps,
                 style: theme.textTheme.bodyMedium?.copyWith(
                   color: AppConstants.secondaryTextColor,
                 ),
@@ -465,9 +502,9 @@ class _UserDashboardScreenState extends State<UserDashboardScreen> {
                     vertical: AppConstants.paddingM,
                   ),
                 ),
-                child: const Text(
-                  'Se connecter',
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+                child: Text(
+                  l10n.loginButton,
+                  style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
                 ),
               ),
             ],

@@ -8,7 +8,7 @@
 PRODUCT_NAME = noujoum_store
 
 // The application's bundle identifier
-PRODUCT_BUNDLE_IDENTIFIER = com.example.noujoumStore
+PRODUCT_BUNDLE_IDENTIFIER = com.gestiona.noujoumStore
 
 // The copyright displayed in application information
-PRODUCT_COPYRIGHT = Copyright © 2025 com.example. All rights reserved.
+PRODUCT_COPYRIGHT = Copyright © 2025 com.gestiona. All rights reserved.

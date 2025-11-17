@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import '../models/app_category.dart';
 import '../services/category_service.dart';
 import '../utils/constants.dart';
+import '../l10n/app_localizations.dart';
+
 import '../widgets/category_chip.dart';
 import 'catalog_screen.dart';
 
@@ -28,7 +30,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(AppConstants.categories),
+        title: Text(AppLocalizations.of(context)!.categories),
       ),
       body: FutureBuilder<List<AppCategory>>(
         future: _categoriesFuture,
@@ -49,7 +51,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                   ),
                   SizedBox(height: AppConstants.paddingM),
                   Text(
-                    'Erreur lors du chargement des catégories',
+                    AppLocalizations.of(context)!.errorLoadingCategories,
                     style: TextStyle(
                       fontSize: 18,
                       color: AppConstants.secondaryTextColor,
@@ -62,7 +64,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                         _categoriesFuture = CategoryService.getCategories();
                       });
                     },
-                    child: Text('Réessayer'),
+                    child: Text(AppLocalizations.of(context)!.retry),
                   ),
                 ],
               ),
@@ -70,7 +72,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
           }
 
           if (!snapshot.hasData || snapshot.data!.isEmpty) {
-            return const Center(
+            return Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -81,7 +83,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                   ),
                   SizedBox(height: AppConstants.paddingM),
                   Text(
-                    'Aucune catégorie disponible',
+                    AppLocalizations.of(context)!.noCategoriesAvailable,
                     style: TextStyle(
                       fontSize: 18,
                       color: AppConstants.secondaryTextColor,

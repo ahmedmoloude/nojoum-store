@@ -4,6 +4,7 @@ import 'package:image_picker/image_picker.dart';
 import '../models/subscription_package.dart';
 import '../services/subscription_service.dart';
 import '../utils/constants.dart';
+import '../l10n/app_localizations.dart';
 
 class PaymentScreen extends StatefulWidget {
   final SubscriptionPackage package;
@@ -49,7 +50,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('Erreur de chargement des informations de paiement: $e'),
+            content: Text(AppLocalizations.of(context)!.errorLoadingPaymentInfo(e.toString())),
             backgroundColor: Colors.red,
           ),
         );
@@ -75,7 +76,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('Erreur lors de la sélection de l\'image: $e'),
+            content: Text(AppLocalizations.of(context)!.errorSelectingImage(e.toString())),
             backgroundColor: Colors.red,
           ),
         );
@@ -86,8 +87,8 @@ class _PaymentScreenState extends State<PaymentScreen> {
   Future<void> _submitPayment() async {
     if (_transactionImage == null) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Veuillez sélectionner une image de la transaction'),
+        SnackBar(
+          content: Text(AppLocalizations.of(context)!.pleaseSelectTransactionImage),
           backgroundColor: Colors.red,
         ),
       );
@@ -110,8 +111,8 @@ class _PaymentScreenState extends State<PaymentScreen> {
 
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Transaction soumise avec succès! Elle sera examinée par notre équipe.'),
+          SnackBar(
+            content: Text(AppLocalizations.of(context)!.paymentSubmittedSuccess),
             backgroundColor: Colors.green,
           ),
         );
@@ -123,7 +124,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('Erreur lors de la soumission: $e'),
+            content: Text(AppLocalizations.of(context)!.errorSubmitting(e.toString())),
             backgroundColor: Colors.red,
           ),
         );
@@ -141,7 +142,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Paiement'),
+        title: Text(AppLocalizations.of(context)!.payment),
         backgroundColor: AppConstants.primaryGold,
         foregroundColor: AppConstants.whiteTextColor,
       ),
@@ -179,7 +180,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Résumé de l\'abonnement',
+            AppLocalizations.of(context)!.subscriptionSummaryTitle,
             style: Theme.of(context).textTheme.headlineSmall?.copyWith(
               fontWeight: FontWeight.bold,
               color: AppConstants.primaryGold,
@@ -190,7 +191,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                'Package:',
+                AppLocalizations.of(context)!.packageLabel,
                 style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                   fontWeight: FontWeight.w500,
                 ),
@@ -208,7 +209,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                'Durée:',
+                AppLocalizations.of(context)!.durationLabel,
                 style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                   fontWeight: FontWeight.w500,
                 ),
@@ -224,7 +225,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                'Prix:',
+                AppLocalizations.of(context)!.priceLabel,
                 style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                   fontWeight: FontWeight.w500,
                 ),
@@ -263,7 +264,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
               ),
               const SizedBox(width: AppConstants.paddingS),
               Text(
-                'Instructions de paiement',
+                AppLocalizations.of(context)!.paymentInstructionsTitle,
                 style: Theme.of(context).textTheme.titleMedium?.copyWith(
                   fontWeight: FontWeight.bold,
                   color: AppConstants.primaryOrange,
@@ -273,15 +274,15 @@ class _PaymentScreenState extends State<PaymentScreen> {
           ),
           const SizedBox(height: AppConstants.paddingM),
           if (_paymentInfo['bankName']?.isNotEmpty == true) ...[
-            _buildInfoRow('Banque:', _paymentInfo['bankName']!),
+            _buildInfoRow(AppLocalizations.of(context)!.bankLabel, _paymentInfo['bankName']!),
             const SizedBox(height: AppConstants.paddingS),
           ],
           if (_paymentInfo['accountNumber']?.isNotEmpty == true) ...[
-            _buildInfoRow('Numéro de compte:', _paymentInfo['accountNumber']!),
+            _buildInfoRow(AppLocalizations.of(context)!.accountNumberLabel, _paymentInfo['accountNumber']!),
             const SizedBox(height: AppConstants.paddingS),
           ],
           if (_paymentInfo['phoneNumber']?.isNotEmpty == true) ...[
-            _buildInfoRow('Téléphone:', _paymentInfo['phoneNumber']!),
+            _buildInfoRow(AppLocalizations.of(context)!.phoneLabel, _paymentInfo['phoneNumber']!),
             const SizedBox(height: AppConstants.paddingS),
           ],
           if (_paymentInfo['instructions']?.isNotEmpty == true) ...[
@@ -326,14 +327,14 @@ class _PaymentScreenState extends State<PaymentScreen> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'Preuve de transaction *',
+          AppLocalizations.of(context)!.transactionProofRequired,
           style: Theme.of(context).textTheme.titleMedium?.copyWith(
             fontWeight: FontWeight.bold,
           ),
         ),
         const SizedBox(height: AppConstants.paddingS),
         Text(
-          'Téléchargez une photo de votre reçu de virement bancaire',
+          AppLocalizations.of(context)!.uploadReceiptHint,
           style: Theme.of(context).textTheme.bodyMedium?.copyWith(
             color: AppConstants.secondaryTextColor,
           ),
@@ -373,14 +374,14 @@ class _PaymentScreenState extends State<PaymentScreen> {
                       ),
                       const SizedBox(height: AppConstants.paddingS),
                       Text(
-                        'Appuyez pour sélectionner une image',
+                        AppLocalizations.of(context)!.tapToSelectImage,
                         style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                           color: AppConstants.secondaryTextColor,
                         ),
                       ),
                       const SizedBox(height: AppConstants.paddingXS),
                       Text(
-                        'JPG, PNG (max 5MB)',
+                        AppLocalizations.of(context)!.imageTypesHint,
                         style: Theme.of(context).textTheme.bodySmall?.copyWith(
                           color: AppConstants.secondaryTextColor,
                         ),
@@ -398,7 +399,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'Date de paiement *',
+          AppLocalizations.of(context)!.paymentDateRequired,
           style: Theme.of(context).textTheme.titleMedium?.copyWith(
             fontWeight: FontWeight.bold,
           ),
@@ -449,7 +450,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'Notes (optionnel)',
+          AppLocalizations.of(context)!.notesOptional,
           style: Theme.of(context).textTheme.titleMedium?.copyWith(
             fontWeight: FontWeight.bold,
           ),
@@ -459,7 +460,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
           controller: _notesController,
           maxLines: 3,
           decoration: InputDecoration(
-            hintText: 'Ajoutez des notes sur votre transaction...',
+            hintText: AppLocalizations.of(context)!.notesHint,
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(AppConstants.borderRadiusM),
             ),
@@ -497,9 +498,9 @@ class _PaymentScreenState extends State<PaymentScreen> {
                   valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
                 ),
               )
-            : const Text(
-                'Soumettre le paiement',
-                style: TextStyle(
+            : Text(
+                AppLocalizations.of(context)!.submitPayment,
+                style: const TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.w600,
                 ),

@@ -4,6 +4,7 @@ import '../models/mauritanian_app.dart';
 import '../utils/constants.dart';
 import '../widgets/app_card.dart';
 import 'app_detail_screen.dart';
+import '../l10n/app_localizations.dart';
 
 /// Screen for searching applications
 class SearchScreen extends StatefulWidget {
@@ -59,7 +60,7 @@ class _SearchScreenState extends State<SearchScreen> {
         // Show error message
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('Erreur lors de la recherche: ${e.toString()}'),
+            content: Text(AppLocalizations.of(context)!.errorSearching(e.toString())),
             backgroundColor: Colors.red,
           ),
         );
@@ -74,10 +75,10 @@ class _SearchScreenState extends State<SearchScreen> {
         title: TextField(
           controller: _searchController,
           autofocus: true,
-          decoration: const InputDecoration(
-            hintText: 'Rechercher des applications...',
+          decoration: InputDecoration(
+            hintText: AppLocalizations.of(context)!.searchMauritanianApps,
             border: InputBorder.none,
-            hintStyle: TextStyle(color: AppConstants.whiteTextColor),
+            hintStyle: const TextStyle(color: AppConstants.whiteTextColor),
           ),
           style: const TextStyle(color: AppConstants.whiteTextColor),
           onChanged: _performSearch,
@@ -105,28 +106,28 @@ class _SearchScreenState extends State<SearchScreen> {
     }
 
     if (_searchController.text.isEmpty) {
-      return const Center(
+      return Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(
+            const Icon(
               Icons.search,
               size: 64,
               color: AppConstants.secondaryTextColor,
             ),
-            SizedBox(height: AppConstants.paddingM),
+            const SizedBox(height: AppConstants.paddingM),
             Text(
-              'Recherchez des applications mauritaniennes',
-              style: TextStyle(
+              AppLocalizations.of(context)!.searchMauritanianApps,
+              style: const TextStyle(
                 fontSize: 18,
                 color: AppConstants.secondaryTextColor,
               ),
               textAlign: TextAlign.center,
             ),
-            SizedBox(height: AppConstants.paddingS),
+            const SizedBox(height: AppConstants.paddingS),
             Text(
-              'Tapez le nom d\'une application, développeur ou catégorie',
-              style: TextStyle(
+              AppLocalizations.of(context)!.typeAppNameDeveloperCategory,
+              style: const TextStyle(
                 fontSize: 14,
                 color: AppConstants.hintTextColor,
               ),
@@ -148,16 +149,16 @@ class _SearchScreenState extends State<SearchScreen> {
               color: AppConstants.secondaryTextColor,
             ),
             const SizedBox(height: AppConstants.paddingM),
-            const Text(
-              AppConstants.noResults,
-              style: TextStyle(
+            Text(
+              AppLocalizations.of(context)!.noResults,
+              style: const TextStyle(
                 fontSize: 18,
                 color: AppConstants.secondaryTextColor,
               ),
             ),
             const SizedBox(height: AppConstants.paddingS),
             Text(
-              'Aucune application trouvée pour "${_searchController.text}"',
+              AppLocalizations.of(context)!.noResultsForQuery(_searchController.text),
               style: const TextStyle(
                 fontSize: 14,
                 color: AppConstants.hintTextColor,
@@ -165,9 +166,9 @@ class _SearchScreenState extends State<SearchScreen> {
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: AppConstants.paddingM),
-            const Text(
-              AppConstants.tryDifferentSearch,
-              style: TextStyle(
+            Text(
+              AppLocalizations.of(context)!.tryDifferentSearch,
+              style: const TextStyle(
                 fontSize: 14,
                 color: AppConstants.hintTextColor,
               ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../services/auth_service.dart';
 import '../utils/constants.dart';
+import '../l10n/app_localizations.dart';
 import 'marketplace_home_screen.dart';
 import 'user_dashboard_screen.dart';
 import 'categories_screen.dart';
@@ -30,24 +31,27 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
     const UserDashboardScreen(),
   ];
 
-  List<BottomNavigationBarItem> get _navItems => [
-    const BottomNavigationBarItem(
-      icon: Icon(Icons.home),
-      label: 'Accueil',
-    ),
-    const BottomNavigationBarItem(
-      icon: Icon(Icons.category),
-      label: 'Catégories',
-    ),
-    const BottomNavigationBarItem(
-      icon: Icon(Icons.search),
-      label: 'Recherche',
-    ),
-    const BottomNavigationBarItem(
-      icon: Icon(Icons.person),
-      label: 'Mon Compte',
-    ),
-  ];
+  List<BottomNavigationBarItem> _getNavItems(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+    return [
+      BottomNavigationBarItem(
+        icon: const Icon(Icons.home),
+        label: l10n.home,
+      ),
+      BottomNavigationBarItem(
+        icon: const Icon(Icons.category),
+        label: l10n.categories,
+      ),
+      BottomNavigationBarItem(
+        icon: const Icon(Icons.search),
+        label: l10n.search,
+      ),
+      BottomNavigationBarItem(
+        icon: const Icon(Icons.person),
+        label: l10n.profile,
+      ),
+    ];
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -66,7 +70,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
         type: BottomNavigationBarType.fixed,
         selectedItemColor: AppConstants.primaryGold,
         unselectedItemColor: AppConstants.secondaryTextColor,
-        items: _navItems,
+        items: _getNavItems(context),
       ),
     );
   }

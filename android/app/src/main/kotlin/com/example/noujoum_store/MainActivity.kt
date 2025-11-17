@@ -1,4 +1,4 @@
-package com.example.noujoum_store
+package com.gestiona.noujoum_store
 
 import io.flutter.embedding.android.FlutterActivity
 

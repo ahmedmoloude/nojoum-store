@@ -6,6 +6,8 @@ class CategoryService {
   static Future<List<AppCategory>> getCategories() async {
     final response = await ApiService.get('/categories');
     final List<dynamic> categoriesData = response['data'] ?? [];
+
+    print('Categories data: $categoriesData');
     return categoriesData.map((json) => AppCategory.fromApiJson(json)).toList();
   }
   

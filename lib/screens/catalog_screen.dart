@@ -3,6 +3,7 @@ import '../data/app_repository.dart';
 import '../models/mauritanian_app.dart';
 import '../utils/constants.dart';
 import '../widgets/app_card.dart';
+import '../l10n/app_localizations.dart';
 import 'app_detail_screen.dart';
 
 /// Screen displaying all applications in a grid/list view
@@ -55,9 +56,6 @@ class _CatalogScreenState extends State<CatalogScreen> {
       case 'rating_desc':
         sortedApps.sort((a, b) => b.rating.compareTo(a.rating));
         break;
-      case 'downloads_desc':
-        sortedApps.sort((a, b) => b.downloads.compareTo(a.downloads));
-        break;
       case 'date_desc':
         sortedApps.sort((a, b) => b.publishDate.compareTo(a.publishDate));
         break;
@@ -72,7 +70,7 @@ class _CatalogScreenState extends State<CatalogScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(_getScreenTitle()),
+        title: Text(_getScreenTitle(context)),
         actions: [
           IconButton(
             icon: Icon(_isGridView ? Icons.list : Icons.grid_view),
@@ -91,29 +89,29 @@ class _CatalogScreenState extends State<CatalogScreen> {
               });
             },
             itemBuilder: (context) => [
-              const PopupMenuItem(
+              PopupMenuItem(
                 value: 'name_asc',
-                child: Text('Nom (A-Z)'),
+                child: Text(AppLocalizations.of(context)!.sortNameAsc),
               ),
-              const PopupMenuItem(
+              PopupMenuItem(
                 value: 'name_desc',
-                child: Text('Nom (Z-A)'),
+                child: Text(AppLocalizations.of(context)!.sortNameDesc),
               ),
-              const PopupMenuItem(
+              PopupMenuItem(
                 value: 'rating_desc',
-                child: Text('Mieux noté'),
+                child: Text(AppLocalizations.of(context)!.sortTopRated),
               ),
-              const PopupMenuItem(
+              PopupMenuItem(
                 value: 'downloads_desc',
-                child: Text('Plus téléchargé'),
+                child: Text(AppLocalizations.of(context)!.sortMostDownloaded),
               ),
-              const PopupMenuItem(
+              PopupMenuItem(
                 value: 'date_desc',
-                child: Text('Plus récent'),
+                child: Text(AppLocalizations.of(context)!.sortNewest),
               ),
-              const PopupMenuItem(
+              PopupMenuItem(
                 value: 'date_asc',
-                child: Text('Plus ancien'),
+                child: Text(AppLocalizations.of(context)!.sortOldest),
               ),
             ],
           ),
@@ -138,8 +136,8 @@ class _CatalogScreenState extends State<CatalogScreen> {
                   ),
                   SizedBox(height: AppConstants.paddingM),
                   Text(
-                    'Erreur lors du chargement des applications',
-                    style: TextStyle(
+                    AppLocalizations.of(context)!.errorLoadingApps,
+                    style: const TextStyle(
                       fontSize: 18,
                       color: AppConstants.secondaryTextColor,
                     ),
@@ -151,7 +149,7 @@ class _CatalogScreenState extends State<CatalogScreen> {
                         _loadApps();
                       });
                     },
-                    child: Text('Réessayer'),
+                    child: Text(AppLocalizations.of(context)!.retry),
                   ),
                 ],
               ),
@@ -159,7 +157,7 @@ class _CatalogScreenState extends State<CatalogScreen> {
           }
 
           if (!snapshot.hasData || snapshot.data!.isEmpty) {
-            return const Center(
+            return Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -170,8 +168,8 @@ class _CatalogScreenState extends State<CatalogScreen> {
                   ),
                   SizedBox(height: AppConstants.paddingM),
                   Text(
-                    AppConstants.noResults,
-                    style: TextStyle(
+                    AppLocalizations.of(context)!.noResults,
+                    style: const TextStyle(
                       fontSize: 18,
                       color: AppConstants.secondaryTextColor,
                     ),
@@ -190,13 +188,13 @@ class _CatalogScreenState extends State<CatalogScreen> {
     );
   }
 
-  String _getScreenTitle() {
+  String _getScreenTitle(BuildContext context) {
     if (widget.initialFilter == 'featured') {
-      return AppConstants.featuredApps;
+      return AppLocalizations.of(context)!.featuredApps;
     } else if (widget.initialCategory != null) {
-      return 'Catégorie: ${widget.initialCategory}';
+      return '${AppLocalizations.of(context)!.categoryLabel}: ${widget.initialCategory}';
     } else {
-      return AppConstants.allApps;
+      return AppLocalizations.of(context)!.allApps;
     }
   }
 

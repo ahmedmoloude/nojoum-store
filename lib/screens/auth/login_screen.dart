@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../../services/auth_service.dart';
 import '../../services/api_service.dart';
 import '../../utils/constants.dart';
+import '../../l10n/app_localizations.dart';
 import 'register_screen.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -39,19 +40,21 @@ class _LoginScreenState extends State<LoginScreen> {
       );
 
       if (mounted) {
+        final l10n = AppLocalizations.of(context)!;
         Navigator.of(context).pop(true); // Return success
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Connexion réussie!'),
+          SnackBar(
+            content: Text(l10n.loginSuccessful),
             backgroundColor: Colors.green,
           ),
         );
       }
     } catch (e) {
       if (mounted) {
+        final l10n = AppLocalizations.of(context)!;
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('Erreur de connexion: ${e.toString()}'),
+            content: Text(l10n.loginError(e.toString())),
             backgroundColor: Colors.red,
           ),
         );
@@ -68,10 +71,11 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final l10n = AppLocalizations.of(context)!;
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Connexion'),
+        title: Text(l10n.login),
         backgroundColor: AppConstants.primaryBlue,
         foregroundColor: Colors.white,
       ),
@@ -98,7 +102,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 const SizedBox(height: AppConstants.paddingL),
                 
                 Text(
-                  'Connectez-vous pour publier vos applications',
+                  l10n.loginSubtitle,
                   style: theme.textTheme.bodyLarge,
                   textAlign: TextAlign.center,
                 ),
@@ -109,17 +113,17 @@ class _LoginScreenState extends State<LoginScreen> {
                 TextFormField(
                   controller: _emailController,
                   keyboardType: TextInputType.emailAddress,
-                  decoration: const InputDecoration(
-                    labelText: 'Email',
-                    prefixIcon: Icon(Icons.email),
-                    border: OutlineInputBorder(),
+                  decoration: InputDecoration(
+                    labelText: l10n.email,
+                    prefixIcon: const Icon(Icons.email),
+                    border: const OutlineInputBorder(),
                   ),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'Veuillez saisir votre email';
+                      return l10n.pleaseEnterEmail;
                     }
                     if (!value.contains('@')) {
-                      return 'Veuillez saisir un email valide';
+                      return l10n.pleaseEnterValidEmail;
                     }
                     return null;
                   },
@@ -132,7 +136,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   controller: _passwordController,
                   obscureText: _obscurePassword,
                   decoration: InputDecoration(
-                    labelText: 'Mot de passe',
+                    labelText: l10n.password,
                     prefixIcon: const Icon(Icons.lock),
                     suffixIcon: IconButton(
                       icon: Icon(
@@ -148,7 +152,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'Veuillez saisir votre mot de passe';
+                      return l10n.pleaseEnterPassword;
                     }
                     return null;
                   },
@@ -173,7 +177,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
                           ),
                         )
-                      : const Text('Se connecter'),
+                      : Text(l10n.loginButton),
                 ),
                 
                 const SizedBox(height: AppConstants.paddingM),
@@ -182,7 +186,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Text('Pas encore de compte? '),
+                    Text('${l10n.noAccountYet} '),
                     TextButton(
                       onPressed: () {
                         Navigator.push(
@@ -192,7 +196,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                         );
                       },
-                      child: const Text('Créer un compte'),
+                      child: Text(l10n.createAccount),
                     ),
                   ],
                 ),
@@ -204,7 +208,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   onPressed: () {
                     Navigator.of(context).pop(false); // Return to app without login
                   },
-                  child: const Text('Continuer sans compte'),
+                  child: Text(l10n.continueWithoutAccount),
                 ),
               ],
             ),

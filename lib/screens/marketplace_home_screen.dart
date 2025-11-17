@@ -7,6 +7,7 @@ import '../utils/constants.dart';
 import '../widgets/app_card.dart';
 import '../widgets/category_chip.dart';
 import '../widgets/ad_banner_widget.dart';
+import '../l10n/app_localizations.dart';
 import 'app_detail_screen.dart';
 import 'catalog_screen.dart';
 import 'categories_screen.dart';
@@ -121,7 +122,7 @@ class _MarketplaceHomeScreenState extends State<MarketplaceHomeScreen> {
                     if (!snapshot.hasData || snapshot.data!.isEmpty) return SizedBox();
                     return Column(
                       children: [
-                        _buildSectionHeader('Applications en vedette', 'Voir tout', theme, () {
+                        _buildSectionHeader(AppLocalizations.of(context)!.featuredApps, AppLocalizations.of(context)!.viewAll, theme, () {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
@@ -142,7 +143,7 @@ class _MarketplaceHomeScreenState extends State<MarketplaceHomeScreen> {
                     if (!snapshot.hasData) return SizedBox();
                     return Column(
                       children: [
-                        _buildSectionHeader('Catégories populaires', 'Voir tout', theme, () {
+                        _buildSectionHeader(AppLocalizations.of(context)!.popularCategories, AppLocalizations.of(context)!.viewAll, theme, () {
                           Navigator.push(
                             context,
                             MaterialPageRoute(builder: (context) => CategoriesScreen()),
@@ -206,7 +207,7 @@ class _MarketplaceHomeScreenState extends State<MarketplaceHomeScreen> {
                     ),
                     SizedBox(height: AppConstants.paddingS),
                     Text(
-                      'Parcourir les Apps',
+                      AppLocalizations.of(context)!.browseApps,
                       style: theme.textTheme.titleMedium?.copyWith(
                         color: _isBrowseMode ? AppConstants.whiteTextColor : AppConstants.primaryGold,
                         fontWeight: FontWeight.w600,
@@ -236,7 +237,7 @@ class _MarketplaceHomeScreenState extends State<MarketplaceHomeScreen> {
                     ),
                     SizedBox(height: AppConstants.paddingS),
                     Text(
-                      'Publier mon App',
+                      AppLocalizations.of(context)!.publishMyApp,
                       style: theme.textTheme.titleMedium?.copyWith(
                         color: !_isBrowseMode ? AppConstants.whiteTextColor : AppConstants.mauritanianGreen,
                         fontWeight: FontWeight.w600,
@@ -269,9 +270,9 @@ class _MarketplaceHomeScreenState extends State<MarketplaceHomeScreen> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            _isBrowseMode 
-              ? 'Découvrez les meilleures solutions digitales mauritaniennes'
-              : 'Partagez votre innovation avec la Mauritanie',
+            _isBrowseMode
+              ? AppLocalizations.of(context)!.discoverBestSolutions
+              : AppLocalizations.of(context)!.shareYourInnovation,
             style: theme.textTheme.headlineSmall?.copyWith(
               color: AppConstants.whiteTextColor,
               fontWeight: FontWeight.bold,
@@ -280,8 +281,8 @@ class _MarketplaceHomeScreenState extends State<MarketplaceHomeScreen> {
           SizedBox(height: AppConstants.paddingM),
           Text(
             _isBrowseMode
-              ? 'Trouvez des applications et logiciels créés par des développeurs locaux pour répondre à vos besoins.'
-              : 'Rejoignez notre marketplace et connectez-vous avec des clients potentiels à travers le pays.',
+              ? AppLocalizations.of(context)!.findAppsCreatedByLocalDevelopers
+              : AppLocalizations.of(context)!.joinMarketplaceConnectWithClients,
             style: theme.textTheme.bodyMedium?.copyWith(
               color: AppConstants.whiteTextColor.withOpacity(0.9),
             ),
@@ -310,8 +311,8 @@ class _MarketplaceHomeScreenState extends State<MarketplaceHomeScreen> {
               ),
             ),
             child: Text(
-              _isBrowseMode ? 'Explorer maintenant' : 'Commencer à publier',
-              style: TextStyle(fontWeight: FontWeight.w600),
+              _isBrowseMode ? AppLocalizations.of(context)!.exploreNow : AppLocalizations.of(context)!.startPublishing,
+              style: const TextStyle(fontWeight: FontWeight.w600),
             ),
           ),
         ],
@@ -335,11 +336,11 @@ class _MarketplaceHomeScreenState extends State<MarketplaceHomeScreen> {
             Icon(Icons.ads_click, size: 32, color: Colors.grey[400]),
             SizedBox(height: 8),
             Text(
-              'Espace publicitaire',
+              AppLocalizations.of(context)!.adSpaceTitle,
               style: TextStyle(color: Colors.grey[600], fontSize: 14),
             ),
             Text(
-              'Bannières rotatives',
+              AppLocalizations.of(context)!.adSpaceSubtitle,
               style: TextStyle(color: Colors.grey[500], fontSize: 12),
             ),
           ],
@@ -472,7 +473,7 @@ class _MarketplaceHomeScreenState extends State<MarketplaceHomeScreen> {
   Widget _buildSponsoredSection(ThemeData theme) {
     return Column(
       children: [
-        _buildSectionHeader('Applications sponsorisées', 'Voir tout', theme, () {}),
+        _buildSectionHeader(AppLocalizations.of(context)!.sponsoredAppsTitle, AppLocalizations.of(context)!.viewAll, theme, () {}),
         Container(
           margin: EdgeInsets.symmetric(horizontal: AppConstants.paddingM),
           height: 100,
@@ -488,7 +489,7 @@ class _MarketplaceHomeScreenState extends State<MarketplaceHomeScreen> {
                 Icon(Icons.star, size: 32, color: Colors.orange[400]),
                 SizedBox(height: 8),
                 Text(
-              'Applications sponsorisées',
+              AppLocalizations.of(context)!.sponsoredAppsTitle,
                   style: TextStyle(color: Colors.orange[700], fontSize: 14),
                 ),
               ],
@@ -500,22 +501,23 @@ class _MarketplaceHomeScreenState extends State<MarketplaceHomeScreen> {
   }
 
   Widget _buildSuccessStories(ThemeData theme) {
+    final l10n = AppLocalizations.of(context)!;
     final stories = [
       {
-        'title': 'Hôpital local adopte MauriHealth',
-        'description': 'Amélioration de 40% des soins patients',
+        'title': l10n.hospitalAdoptsMauriHealth,
+        'description': l10n.patientCareImprovement,
         'icon': Icons.local_hospital,
       },
       {
-        'title': 'PME augmente ses ventes de 60%',
-        'description': 'Grâce à Sahara Inventory',
+        'title': l10n.smeIncreasesSales,
+        'description': l10n.thanksSaharaInventory,
         'icon': Icons.trending_up,
       },
     ];
 
     return Column(
       children: [
-        _buildSectionHeader('Histoires de succès', '', theme, () {}),
+        _buildSectionHeader(l10n.successStories, '', theme, () {}),
         Container(
           height: 120,
           child: ListView.builder(
@@ -605,7 +607,7 @@ class _MarketplaceHomeScreenState extends State<MarketplaceHomeScreen> {
           ),
           SizedBox(height: AppConstants.paddingM),
           Text(
-            'Restez informé',
+            AppLocalizations.of(context)!.newsletterStayInformed,
             style: theme.textTheme.headlineSmall?.copyWith(
               color: AppConstants.primaryGold,
               fontWeight: FontWeight.bold,
@@ -613,7 +615,7 @@ class _MarketplaceHomeScreenState extends State<MarketplaceHomeScreen> {
           ),
           SizedBox(height: AppConstants.paddingS),
           Text(
-            'Recevez les dernières nouveautés du marketplace mauritanien',
+            AppLocalizations.of(context)!.newsletterSubtitle,
             style: theme.textTheme.bodyMedium?.copyWith(
               color: AppConstants.secondaryTextColor,
             ),
@@ -625,7 +627,7 @@ class _MarketplaceHomeScreenState extends State<MarketplaceHomeScreen> {
               Expanded(
                 child: TextField(
                   decoration: InputDecoration(
-                    hintText: 'Votre email',
+                    hintText: AppLocalizations.of(context)!.yourEmailHint,
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(AppConstants.borderRadiusM),
                     ),
@@ -641,7 +643,7 @@ class _MarketplaceHomeScreenState extends State<MarketplaceHomeScreen> {
                 onPressed: () {
                   // TODO: Implement newsletter signup
                 },
-                child: Text('S\'inscrire'),
+                child: Text(AppLocalizations.of(context)!.signUp),
               ),
             ],
           ),
@@ -651,22 +653,23 @@ class _MarketplaceHomeScreenState extends State<MarketplaceHomeScreen> {
   }
 
   Future<Map<String, String>> _getMarketplaceStats() async {
+    final l10n = AppLocalizations.of(context)!;
     try {
       // Get marketplace statistics from API
       final stats = await AppService.getStats();
 
       return {
-        'Apps disponibles': '${stats['total_apps'] ?? 0}+',
-        'Développeurs actifs': '${stats['total_developers'] ?? 0}+',
+        l10n.appsAvailableCount: '${stats['total_apps'] ?? 0}+',
+        l10n.activeDevelopersCount: '${stats['total_developers'] ?? 0}+',
       };
 
-      
+
     } catch (e) {
       // Fallback to default values if API fails
       return {
-        'Apps disponibles': '',
-        'Développeurs actifs': '',
-        'Clients satisfaits': '',
+        l10n.appsAvailableCount: '',
+        l10n.activeDevelopersCount: '',
+        l10n.satisfiedClients: '',
       };
     }
   }

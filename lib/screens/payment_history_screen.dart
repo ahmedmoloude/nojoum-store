@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../models/payment_transaction.dart';
 import '../services/subscription_service.dart';
 import '../utils/constants.dart';
+import '../l10n/app_localizations.dart';
 
 class PaymentHistoryScreen extends StatefulWidget {
   const PaymentHistoryScreen({super.key});
@@ -47,7 +48,7 @@ class _PaymentHistoryScreenState extends State<PaymentHistoryScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Historique des paiements'),
+        title: Text(AppLocalizations.of(context)!.paymentHistory),
         backgroundColor: AppConstants.primaryGold,
         foregroundColor: AppConstants.whiteTextColor,
       ),
@@ -71,7 +72,7 @@ class _PaymentHistoryScreenState extends State<PaymentHistoryScreen> {
           ),
           const SizedBox(height: AppConstants.paddingM),
           Text(
-            'Erreur de chargement',
+            AppLocalizations.of(context)!.error,
             style: Theme.of(context).textTheme.headlineSmall,
           ),
           const SizedBox(height: AppConstants.paddingS),
@@ -85,7 +86,7 @@ class _PaymentHistoryScreenState extends State<PaymentHistoryScreen> {
           const SizedBox(height: AppConstants.paddingL),
           ElevatedButton(
             onPressed: _loadTransactions,
-            child: const Text('Réessayer'),
+            child: Text(AppLocalizations.of(context)!.retry),
           ),
         ],
       ),
@@ -105,14 +106,14 @@ class _PaymentHistoryScreenState extends State<PaymentHistoryScreen> {
             ),
             const SizedBox(height: AppConstants.paddingM),
             Text(
-              'Aucune transaction',
+              AppLocalizations.of(context)!.noTransactions,
               style: Theme.of(context).textTheme.headlineSmall?.copyWith(
                 color: AppConstants.secondaryTextColor,
               ),
             ),
             const SizedBox(height: AppConstants.paddingS),
             Text(
-              'Vous n\'avez pas encore effectué de paiement.',
+              AppLocalizations.of(context)!.noPaymentsYet,
               textAlign: TextAlign.center,
               style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                 color: AppConstants.secondaryTextColor,
@@ -175,14 +176,14 @@ class _PaymentHistoryScreenState extends State<PaymentHistoryScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        transaction.package?.name ?? 'Package inconnu',
+                        transaction.package?.name ?? AppLocalizations.of(context)!.unknownPackage,
                         style: Theme.of(context).textTheme.titleMedium?.copyWith(
                           fontWeight: FontWeight.bold,
                         ),
                       ),
                       const SizedBox(height: AppConstants.paddingXS),
                       Text(
-                        'Réf: ${transaction.transactionReference}',
+                        '${AppLocalizations.of(context)!.reference}: ${transaction.transactionReference}',
                         style: Theme.of(context).textTheme.bodySmall?.copyWith(
                           color: AppConstants.secondaryTextColor,
                         ),
@@ -196,9 +197,9 @@ class _PaymentHistoryScreenState extends State<PaymentHistoryScreen> {
                     vertical: AppConstants.paddingS,
                   ),
                   decoration: BoxDecoration(
-                    color: statusColor.withOpacity(0.1),
+                    color: statusColor.withValues(alpha: 0.1),
                     borderRadius: BorderRadius.circular(AppConstants.borderRadiusM),
-                    border: Border.all(color: statusColor.withOpacity(0.3)),
+                    border: Border.all(color: statusColor.withValues(alpha: 0.3)),
                   ),
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
@@ -226,7 +227,7 @@ class _PaymentHistoryScreenState extends State<PaymentHistoryScreen> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  'Montant:',
+                  '${AppLocalizations.of(context)!.amount}:',
                   style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                     fontWeight: FontWeight.w500,
                   ),
@@ -245,7 +246,7 @@ class _PaymentHistoryScreenState extends State<PaymentHistoryScreen> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  'Date de soumission:',
+                  '${AppLocalizations.of(context)!.submissionDate}:',
                   style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                     fontWeight: FontWeight.w500,
                   ),
@@ -262,7 +263,7 @@ class _PaymentHistoryScreenState extends State<PaymentHistoryScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    'Date de paiement:',
+                    '${AppLocalizations.of(context)!.paymentDate}:',
                     style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                       fontWeight: FontWeight.w500,
                     ),
@@ -280,7 +281,7 @@ class _PaymentHistoryScreenState extends State<PaymentHistoryScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    'Date de révision:',
+                    '${AppLocalizations.of(context)!.reviewDate}:',
                     style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                       fontWeight: FontWeight.w500,
                     ),
@@ -295,7 +296,7 @@ class _PaymentHistoryScreenState extends State<PaymentHistoryScreen> {
             if (transaction.userNotes?.isNotEmpty == true) ...[
               const SizedBox(height: AppConstants.paddingM),
               Text(
-                'Vos notes:',
+                '${AppLocalizations.of(context)!.yourNotes}:',
                 style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                   fontWeight: FontWeight.w500,
                 ),
@@ -311,7 +312,7 @@ class _PaymentHistoryScreenState extends State<PaymentHistoryScreen> {
             if (transaction.adminNotes?.isNotEmpty == true) ...[
               const SizedBox(height: AppConstants.paddingM),
               Text(
-                'Notes de l\'admin:',
+                '${AppLocalizations.of(context)!.adminNotes}:',
                 style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                   fontWeight: FontWeight.w500,
                 ),
@@ -320,9 +321,9 @@ class _PaymentHistoryScreenState extends State<PaymentHistoryScreen> {
               Container(
                 padding: const EdgeInsets.all(AppConstants.paddingM),
                 decoration: BoxDecoration(
-                  color: statusColor.withOpacity(0.05),
+                  color: statusColor.withValues(alpha: 0.05),
                   borderRadius: BorderRadius.circular(AppConstants.borderRadiusM),
-                  border: Border.all(color: statusColor.withOpacity(0.2)),
+                  border: Border.all(color: statusColor.withValues(alpha: 0.2)),
                 ),
                 child: Text(
                   transaction.adminNotes!,
@@ -342,7 +343,7 @@ class _PaymentHistoryScreenState extends State<PaymentHistoryScreen> {
                     foregroundColor: AppConstants.richRed,
                     side: BorderSide(color: AppConstants.richRed),
                   ),
-                  child: const Text('Annuler la transaction'),
+                  child: Text(AppLocalizations.of(context)!.cancelTransaction),
                 ),
               ),
             ],
@@ -356,19 +357,19 @@ class _PaymentHistoryScreenState extends State<PaymentHistoryScreen> {
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Confirmer l\'annulation'),
-        content: const Text('Êtes-vous sûr de vouloir annuler cette transaction?'),
+        title: Text(AppLocalizations.of(context)!.confirmCancellation),
+        content: Text(AppLocalizations.of(context)!.areYouSureCancelTransaction),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(context).pop(false),
-            child: const Text('Non'),
+            child: Text(AppLocalizations.of(context)!.no),
           ),
           TextButton(
             onPressed: () => Navigator.of(context).pop(true),
             style: TextButton.styleFrom(
               foregroundColor: AppConstants.richRed,
             ),
-            child: const Text('Oui, annuler'),
+            child: Text(AppLocalizations.of(context)!.yesCancel),
           ),
         ],
       ),
@@ -380,8 +381,8 @@ class _PaymentHistoryScreenState extends State<PaymentHistoryScreen> {
         
         if (mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Text('Transaction annulée avec succès'),
+            SnackBar(
+              content: Text(AppLocalizations.of(context)!.transactionCancelledSuccess),
               backgroundColor: Colors.green,
             ),
           );
@@ -391,7 +392,7 @@ class _PaymentHistoryScreenState extends State<PaymentHistoryScreen> {
         if (mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
-              content: Text('Erreur lors de l\'annulation: $e'),
+              content: Text(AppLocalizations.of(context)!.errorCancelling(e.toString())),
               backgroundColor: Colors.red,
             ),
           );

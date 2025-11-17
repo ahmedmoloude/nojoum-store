@@ -1,0 +1,1728 @@
+{
+  "@@locale": "en",
+  
+  "appName": "Noujoum Store",
+  "@appName": {
+    "description": "The name of the application"
+  },
+  
+  "appDescription": "Mauritanian innovation at your fingertips",
+  "@appDescription": {
+    "description": "The description of the application"
+  },
+
+  "welcomeTitle": "Welcome to Noujoum Store",
+  "@welcomeTitle": {
+    "description": "Welcome title on home screen"
+  },
+
+  "welcomeSubtitle": "Discover the best Mauritanian applications",
+  "@welcomeSubtitle": {
+    "description": "Welcome subtitle on home screen"
+  },
+
+  "featuredApps": "Featured Applications",
+  "@featuredApps": {
+    "description": "Featured apps section title"
+  },
+
+  "allApps": "All Applications",
+  "@allApps": {
+    "description": "All apps section title"
+  },
+
+  "categories": "Categories",
+  "@categories": {
+    "description": "Categories section title"
+  },
+
+  "search": "Search",
+  "@search": {
+    "description": "Search button/field label"
+  },
+
+  "filter": "Filter",
+  "@filter": {
+    "description": "Filter button label"
+  },
+
+  "sort": "Sort",
+  "@sort": {
+    "description": "Sort button label"
+  },
+
+  "contactDeveloper": "Contact Developer",
+  "@contactDeveloper": {
+    "description": "Contact developer button"
+  },
+
+  "share": "Share",
+  "@share": {
+    "description": "Share button"
+  },
+
+  "addToFavorites": "Add to Favorites",
+  "@addToFavorites": {
+    "description": "Add to favorites button"
+  },
+
+  "removeFromFavorites": "Remove from Favorites",
+  "@removeFromFavorites": {
+    "description": "Remove from favorites button"
+  },
+
+  "noResults": "No results found",
+  "@noResults": {
+    "description": "No search results message"
+  },
+
+  "tryDifferentSearch": "Try a different search",
+  "@tryDifferentSearch": {
+    "description": "Try different search suggestion"
+  },
+
+  "loading": "Loading...",
+  "@loading": {
+    "description": "Loading indicator text"
+  },
+
+  "error": "Error",
+  "@error": {
+    "description": "Generic error message"
+  },
+
+  "retry": "Retry",
+  "@retry": {
+    "description": "Retry button"
+  },
+
+  "email": "Email",
+  "@email": {
+    "description": "Email label"
+  },
+
+  "phone": "Phone",
+  "@phone": {
+    "description": "Phone label"
+  },
+
+  "website": "Website",
+  "@website": {
+    "description": "Website label"
+  },
+
+  "whatsapp": "WhatsApp",
+  "@whatsapp": {
+    "description": "WhatsApp label"
+  },
+
+  "developer": "Developer",
+  "@developer": {
+    "description": "Developer label"
+  },
+
+  "category": "Category",
+  "@category": {
+    "description": "Category label"
+  },
+
+  "rating": "Rating",
+  "@rating": {
+    "description": "Rating label"
+  },
+
+  "downloads": "Downloads",
+  "@downloads": {
+    "description": "Downloads label"
+  },
+
+  "dateAdded": "Date Added",
+  "@dateAdded": {
+    "description": "Date added label"
+  },
+
+  "screenshots": "Screenshots",
+  "@screenshots": {
+    "description": "Screenshots section title"
+  },
+
+  "description": "Description",
+  "@description": {
+    "description": "Description section title"
+  },
+
+  "tags": "Tags",
+  "@tags": {
+    "description": "Tags section title"
+  },
+
+  "home": "Home",
+  "@home": {
+    "description": "Home navigation tab"
+  },
+
+  "catalog": "Catalog",
+  "@catalog": {
+    "description": "Catalog navigation tab"
+  },
+
+  "favorites": "Favorites",
+  "@favorites": {
+    "description": "Favorites navigation tab"
+  },
+
+  "profile": "Profile",
+  "@profile": {
+    "description": "Profile navigation tab"
+  },
+
+  "errorLoadingApps": "Error loading applications",
+  "@errorLoadingApps": {
+    "description": "Error message when apps fail to load"
+  },
+
+  "errorContactingDeveloper": "Error contacting developer",
+  "@errorContactingDeveloper": {
+    "description": "Error message when contacting developer fails"
+  },
+
+  "errorSharingApp": "Error sharing application",
+  "@errorSharingApp": {
+    "description": "Error message when sharing fails"
+  },
+
+  "errorAddingToFavorites": "Error adding to favorites",
+  "@errorAddingToFavorites": {
+    "description": "Error message when adding to favorites fails"
+  },
+
+  "addedToFavorites": "Added to favorites",
+  "@addedToFavorites": {
+    "description": "Success message when added to favorites"
+  },
+
+  "removedFromFavorites": "Removed from favorites",
+  "@removedFromFavorites": {
+    "description": "Success message when removed from favorites"
+  },
+
+  "appShared": "Application shared",
+  "@appShared": {
+    "description": "Success message when app is shared"
+  },
+
+  "login": "Login",
+  "@login": {
+    "description": "Login screen title"
+  },
+
+  "loginSubtitle": "Connect to publish your applications",
+  "@loginSubtitle": {
+    "description": "Login screen subtitle"
+  },
+
+  "password": "Password",
+  "@password": {
+    "description": "Password field label"
+  },
+
+  "loginButton": "Login",
+  "@loginButton": {
+    "description": "Login button text"
+  },
+
+  "noAccountYet": "Don't have an account yet?",
+  "@noAccountYet": {
+    "description": "No account text on login screen"
+  },
+
+  "createAccount": "Create Account",
+  "@createAccount": {
+    "description": "Create account button text"
+  },
+
+  "continueWithoutAccount": "Continue without account",
+  "@continueWithoutAccount": {
+    "description": "Continue without account button"
+  },
+
+  "register": "Register",
+  "@register": {
+    "description": "Register screen title"
+  },
+
+  "name": "Name",
+  "@name": {
+    "description": "Name field label"
+  },
+
+  "confirmPassword": "Confirm Password",
+  "@confirmPassword": {
+    "description": "Confirm password field label"
+  },
+
+  "companyName": "Company Name",
+  "@companyName": {
+    "description": "Company name field label"
+  },
+
+  "bio": "Bio",
+  "@bio": {
+    "description": "Bio field label"
+  },
+
+  "registerButton": "Register",
+  "@registerButton": {
+    "description": "Register button text"
+  },
+
+  "alreadyHaveAccount": "Already have an account?",
+  "@alreadyHaveAccount": {
+    "description": "Already have account text on register screen"
+  },
+
+  "discoverBestSolutions": "Discover the best Mauritanian digital solutions",
+  "@discoverBestSolutions": {
+    "description": "Browse mode hero title"
+  },
+
+  "shareYourInnovation": "Share your innovation with Mauritania",
+  "@shareYourInnovation": {
+    "description": "Publish mode hero title"
+  },
+
+  "findAppsCreatedByLocalDevelopers": "Find applications and software created by local developers to meet your needs.",
+  "@findAppsCreatedByLocalDevelopers": {
+    "description": "Browse mode hero description"
+  },
+
+  "joinMarketplaceConnectWithClients": "Join our marketplace and connect with potential clients across the country.",
+  "@joinMarketplaceConnectWithClients": {
+    "description": "Publish mode hero description"
+  },
+
+  "exploreNow": "Explore Now",
+  "@exploreNow": {
+    "description": "Explore now button"
+  },
+
+  "startPublishing": "Start Publishing",
+  "@startPublishing": {
+    "description": "Start publishing button"
+  },
+
+  "appsAvailable": "Apps Available",
+  "@appsAvailable": {
+    "description": "Apps available stats label"
+  },
+
+  "activeDevelopers": "Active Developers",
+  "@activeDevelopers": {
+    "description": "Active developers stats label"
+  },
+
+  "searchMauritanianApps": "Search Mauritanian applications",
+  "@searchMauritanianApps": {
+    "description": "Search placeholder text"
+  },
+
+  "typeAppNameDeveloperCategory": "Type an application name, developer or category",
+  "@typeAppNameDeveloperCategory": {
+    "description": "Search hint text"
+  },
+
+  "language": "Language",
+  "@language": {
+    "description": "Language selection label"
+  },
+
+  "arabic": "العربية",
+  "@arabic": {
+    "description": "Arabic language name in Arabic"
+  },
+
+  "french": "Français",
+  "@french": {
+    "description": "French language name in French"
+  },
+
+  "settings": "Settings",
+  "@settings": {
+    "description": "Settings screen title"
+  },
+
+  "pleaseEnterEmail": "Please enter your email",
+  "@pleaseEnterEmail": {
+    "description": "Email validation message"
+  },
+
+  "pleaseEnterValidEmail": "Please enter a valid email",
+  "@pleaseEnterValidEmail": {
+    "description": "Valid email validation message"
+  },
+
+  "pleaseEnterPassword": "Please enter your password",
+  "@pleaseEnterPassword": {
+    "description": "Password validation message"
+  },
+
+  "loginSuccessful": "Login successful!",
+  "@loginSuccessful": {
+    "description": "Login success message"
+  },
+
+  "loginError": "Login error: {error}",
+  "@loginError": {
+    "description": "Login error message",
+    "placeholders": {
+      "error": {
+        "type": "String",
+        "description": "The error message"
+      }
+    }
+  },
+
+  "myDashboard": "My Dashboard",
+  "@myDashboard": {
+    "description": "Dashboard screen title"
+  },
+
+  "logout": "Logout",
+  "@logout": {
+    "description": "Logout button"
+  },
+
+  "logoutConfirmation": "Are you sure you want to logout?",
+  "@logoutConfirmation": {
+    "description": "Logout confirmation message"
+  },
+
+  "cancel": "Cancel",
+  "@cancel": {
+    "description": "Cancel button"
+  },
+
+  "verifiedAccount": "Verified Account",
+  "@verifiedAccount": {
+    "description": "Verified account status"
+  },
+
+  "publishApp": "Publish App",
+  "@publishApp": {
+    "description": "Publish app button"
+  },
+
+  "payments": "Payments",
+  "@payments": {
+    "description": "Payments button"
+  },
+
+  "errorLoadingYourApps": "Error loading your applications",
+  "@errorLoadingYourApps": {
+    "description": "Error loading user apps"
+  },
+
+  "noAppsPublished": "No applications published",
+  "@noAppsPublished": {
+    "description": "No apps published message"
+  },
+
+  "startByPublishingFirstApp": "Start by publishing your first application",
+  "@startByPublishingFirstApp": {
+    "description": "Suggestion to publish first app"
+  },
+
+  "myApps": "My Applications ({count})",
+  "@myApps": {
+    "description": "My apps section title",
+    "placeholders": {
+      "count": {
+        "type": "int",
+        "description": "Number of apps"
+      }
+    }
+  },
+
+  "myAccount": "My Account",
+  "@myAccount": {
+    "description": "My account screen title"
+  },
+
+  "loginToAccessDashboard": "Login to access your dashboard",
+  "@loginToAccessDashboard": {
+    "description": "Login prompt message"
+  },
+
+  "managePublishedApps": "Manage your published applications and track their performance",
+  "@managePublishedApps": {
+    "description": "Dashboard description"
+  },
+
+  "appDetails": "App Details",
+  "@appDetails": {
+    "description": "App details screen title"
+  },
+
+  "version": "Version",
+  "@version": {
+    "description": "Version label"
+  },
+
+  "size": "Size",
+  "@size": {
+    "description": "Size label"
+  },
+
+  "lastUpdated": "Last Updated",
+  "@lastUpdated": {
+    "description": "Last updated label"
+  },
+
+  "requirements": "Requirements",
+  "@requirements": {
+    "description": "Requirements section"
+  },
+
+  "permissions": "Permissions",
+  "@permissions": {
+    "description": "Permissions section"
+  },
+
+  "reviews": "Reviews",
+  "@reviews": {
+    "description": "Reviews section"
+  },
+
+  "relatedApps": "Related Apps",
+  "@relatedApps": {
+    "description": "Related apps section"
+  },
+
+  "paymentHistory": "Payment History",
+  "@paymentHistory": {
+    "description": "Payment history screen title"
+  },
+
+  "noPaymentHistory": "No payment history",
+  "@noPaymentHistory": {
+    "description": "No payment history message"
+  },
+
+  "makeFirstPayment": "Make your first payment to see history here",
+  "@makeFirstPayment": {
+    "description": "First payment suggestion"
+  },
+
+  "subscriptionPackages": "Subscription Packages",
+  "@subscriptionPackages": {
+    "description": "Subscription packages screen title"
+  },
+
+  "choosePackage": "Choose a package that suits your needs",
+  "@choosePackage": {
+    "description": "Package selection subtitle"
+  },
+
+  "month": "month",
+  "@month": {
+    "description": "Month unit"
+  },
+
+  "months": "months",
+  "@months": {
+    "description": "Months unit"
+  },
+
+  "selectPackage": "Select Package",
+  "@selectPackage": {
+    "description": "Select package button"
+  },
+
+  "basicInfo": "Basic Information",
+  "@basicInfo": {
+    "description": "Basic info section title"
+  },
+
+  "appName": "Application Name",
+  "@appName": {
+    "description": "App name field label"
+  },
+
+  "tagline": "Tagline",
+  "@tagline": {
+    "description": "Tagline field label"
+  },
+
+  "shortDescription": "Short Description",
+  "@shortDescription": {
+    "description": "Short description field label"
+  },
+
+  "detailedDescription": "Detailed Description",
+  "@detailedDescription": {
+    "description": "Detailed description field label"
+  },
+
+  "appNameRequired": "Application name is required",
+  "@appNameRequired": {
+    "description": "App name validation message"
+  },
+
+  "taglineRequired": "Tagline is required",
+  "@taglineRequired": {
+    "description": "Tagline validation message"
+  },
+
+  "descriptionRequired": "Description is required",
+  "@descriptionRequired": {
+    "description": "Description validation message"
+  },
+
+  "next": "Next",
+  "@next": {
+    "description": "Next button"
+  },
+
+  "previous": "Previous",
+  "@previous": {
+    "description": "Previous button"
+  },
+
+  "submit": "Submit",
+  "@submit": {
+    "description": "Submit button"
+  },
+
+  "browseApps": "Browse Apps",
+  "@browseApps": {
+    "description": "Browse apps mode"
+  },
+
+  "publishApps": "Publish Apps",
+  "@publishApps": {
+    "description": "Publish apps mode"
+  },
+
+  "publishMyApp": "Publish My App",
+  "@publishMyApp": {
+    "description": "Publish my app button"
+  },
+
+  "adSpaceTitle": "Advertise Here",
+  "@adSpaceTitle": {
+    "description": "Ad space title"
+  },
+
+  "adSpaceSubtitle": "Promote your app to thousands of users",
+  "@adSpaceSubtitle": {
+    "description": "Ad space subtitle"
+  },
+
+  "sponsoredAppsTitle": "Sponsored Apps",
+  "@sponsoredAppsTitle": {
+    "description": "Sponsored apps section title"
+  },
+
+  "successStories": "Success Stories",
+  "@successStories": {
+    "description": "Success stories section title"
+  },
+
+  "hospitalAdoptsMauriHealth": "Local hospital adopts MauriHealth",
+  "@hospitalAdoptsMauriHealth": {
+    "description": "Success story title"
+  },
+
+  "patientCareImprovement": "40% improvement in patient care",
+  "@patientCareImprovement": {
+    "description": "Success story description"
+  },
+
+  "smeIncreasesSales": "SME increases sales by 60%",
+  "@smeIncreasesSales": {
+    "description": "Success story title"
+  },
+
+  "thanksSaharaInventory": "Thanks to Sahara Inventory",
+  "@thanksSaharaInventory": {
+    "description": "Success story description"
+  },
+
+  "newsletterStayInformed": "Stay informed about new Mauritanian apps",
+  "@newsletterStayInformed": {
+    "description": "Newsletter section title"
+  },
+
+  "newsletterSubtitle": "Get weekly updates on the latest innovations",
+  "@newsletterSubtitle": {
+    "description": "Newsletter subtitle"
+  },
+
+  "signUp": "Sign Up",
+  "@signUp": {
+    "description": "Sign up button"
+  },
+
+  "appsAvailableCount": "Apps Available",
+  "@appsAvailableCount": {
+    "description": "Apps available count label"
+  },
+
+  "activeDevelopersCount": "Active Developers",
+  "@activeDevelopersCount": {
+    "description": "Active developers count label"
+  },
+
+  "satisfiedClients": "Satisfied Clients",
+  "@satisfiedClients": {
+    "description": "Satisfied clients count label"
+  },
+
+  "sortNameAsc": "Name A-Z",
+  "@sortNameAsc": {
+    "description": "Sort by name ascending"
+  },
+
+  "sortNameDesc": "Name Z-A",
+  "@sortNameDesc": {
+    "description": "Sort by name descending"
+  },
+
+  "sortTopRated": "Top Rated",
+  "@sortTopRated": {
+    "description": "Sort by rating"
+  },
+
+  "sortMostDownloaded": "Most Downloaded",
+  "@sortMostDownloaded": {
+    "description": "Sort by downloads"
+  },
+
+  "sortNewest": "Newest",
+  "@sortNewest": {
+    "description": "Sort by newest"
+  },
+
+  "sortOldest": "Oldest",
+  "@sortOldest": {
+    "description": "Sort by oldest"
+  },
+
+  "appInfo": "App Information",
+  "@appInfo": {
+    "description": "App information section title"
+  },
+
+  "category": "Category",
+  "@category": {
+    "description": "App category label"
+  },
+
+  "targetAudience": "Target Audience",
+  "@targetAudience": {
+    "description": "Target audience label"
+  },
+
+  "developerType": "Developer Type",
+  "@developerType": {
+    "description": "Developer type label"
+  },
+
+  "dateAdded": "Date Added",
+  "@dateAdded": {
+    "description": "Date added label"
+  },
+
+  "noEmailAvailable": "No email available",
+  "@noEmailAvailable": {
+    "description": "No email available message"
+  },
+
+  "contactEmailSubject": "Contact about {appName}",
+  "@contactEmailSubject": {
+    "description": "Email subject for contacting about app",
+    "placeholders": {
+      "appName": {
+        "type": "String"
+      }
+    }
+  },
+
+  "emailOpenError": "Could not open email app",
+  "@emailOpenError": {
+    "description": "Error opening email app"
+  },
+
+  "noPhoneAvailable": "No phone number available",
+  "@noPhoneAvailable": {
+    "description": "No phone available message"
+  },
+
+  "callOpenError": "Could not open phone app",
+  "@callOpenError": {
+    "description": "Error opening phone app"
+  },
+
+  "call": "Call",
+  "@call": {
+    "description": "Call button"
+  },
+
+  "unknownPackage": "Unknown Package",
+  "@unknownPackage": {
+    "description": "Unknown package label"
+  },
+
+  "reference": "Ref",
+  "@reference": {
+    "description": "Reference label"
+  },
+
+  "amount": "Amount",
+  "@amount": {
+    "description": "Amount label"
+  },
+
+  "submissionDate": "Submission Date",
+  "@submissionDate": {
+    "description": "Submission date label"
+  },
+
+  "paymentDate": "Payment Date",
+  "@paymentDate": {
+    "description": "Payment date label"
+  },
+
+  "reviewDate": "Review Date",
+  "@reviewDate": {
+    "description": "Review date label"
+  },
+
+  "yourNotes": "Your Notes",
+  "@yourNotes": {
+    "description": "Your notes label"
+  },
+
+  "adminNotes": "Admin Notes",
+  "@adminNotes": {
+    "description": "Admin notes label"
+  },
+
+  "cancelTransaction": "Cancel Transaction",
+  "@cancelTransaction": {
+    "description": "Cancel transaction button"
+  },
+
+  "confirmCancellation": "Confirm Cancellation",
+  "@confirmCancellation": {
+    "description": "Confirm cancellation dialog title"
+  },
+
+  "areYouSureCancelTransaction": "Are you sure you want to cancel this transaction?",
+  "@areYouSureCancelTransaction": {
+    "description": "Cancel transaction confirmation message"
+  },
+
+  "no": "No",
+  "@no": {
+    "description": "No button"
+  },
+
+  "yesCancel": "Yes, Cancel",
+  "@yesCancel": {
+    "description": "Yes cancel button"
+  },
+
+  "transactionCancelledSuccess": "Transaction cancelled successfully",
+  "@transactionCancelledSuccess": {
+    "description": "Transaction cancelled success message"
+  },
+
+  "errorCancelling": "Error cancelling transaction: {error}",
+  "@errorCancelling": {
+    "description": "Error cancelling transaction message",
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+
+  "retry": "Retry",
+  "@retry": {
+    "description": "Retry button"
+  },
+
+  "uploadFailed": "Upload failed: {error}",
+  "@uploadFailed": {
+    "description": "Upload failed message",
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+
+  "iconUploadedSuccess": "Icon uploaded successfully",
+  "@iconUploadedSuccess": {
+    "description": "Icon uploaded success message"
+  },
+
+  "maxScreenshotsLimit": "Maximum 5 screenshots allowed",
+  "@maxScreenshotsLimit": {
+    "description": "Max screenshots limit message"
+  },
+
+  "screenshotsUploadedCount": "{count} screenshot(s) uploaded successfully",
+  "@screenshotsUploadedCount": {
+    "description": "Screenshots uploaded count message",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+
+  "uploadFailedGeneric": "Upload failed: {error}",
+  "@uploadFailedGeneric": {
+    "description": "Generic upload failed message",
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+
+  "loginRequiredTitle": "Login Required",
+  "@loginRequiredTitle": {
+    "description": "Login required dialog title"
+  },
+
+  "loginRequiredContent": "You need to be logged in to publish an app. Would you like to login now?",
+  "@loginRequiredContent": {
+    "description": "Login required dialog content"
+  },
+
+  "subscriptionRequiredTitle": "Subscription Required",
+  "@subscriptionRequiredTitle": {
+    "description": "Subscription required dialog title"
+  },
+
+  "subscriptionRequiredContent": "You need an active subscription to publish apps. Would you like to view subscription packages?",
+  "@subscriptionRequiredContent": {
+    "description": "Subscription required dialog content"
+  },
+
+  "viewSubscriptions": "View Subscriptions",
+  "@viewSubscriptions": {
+    "description": "View subscriptions button"
+  },
+
+  "publishAppTitle": "Publish App",
+  "@publishAppTitle": {
+    "description": "Publish app screen title"
+  },
+
+  "stepProgress": "Step {current} of {total}",
+  "@stepProgress": {
+    "description": "Step progress indicator",
+    "placeholders": {
+      "current": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+
+  "stepBasicInfo": "Basic Information",
+  "@stepBasicInfo": {
+    "description": "Basic info step title"
+  },
+
+  "stepTechnicalDetails": "Technical Details",
+  "@stepTechnicalDetails": {
+    "description": "Technical details step title"
+  },
+
+  "stepPricing": "Pricing & License",
+  "@stepPricing": {
+    "description": "Pricing step title"
+  },
+
+  "stepBusinessDetails": "Business Details",
+  "@stepBusinessDetails": {
+    "description": "Business details step title"
+  },
+
+  "appNameLabel": "Application Name *",
+  "@appNameLabel": {
+    "description": "App name field label"
+  },
+
+  "appNameHint": "Ex: MauriCRM Pro",
+  "@appNameHint": {
+    "description": "App name field hint"
+  },
+
+  "appNameRequired": "Application name is required",
+  "@appNameRequired": {
+    "description": "App name required validation"
+  },
+
+  "taglineLabel": "Tagline *",
+  "@taglineLabel": {
+    "description": "Tagline field label"
+  },
+
+  "taglineHint": "Ex: Professional client management system",
+  "@taglineHint": {
+    "description": "Tagline field hint"
+  },
+
+  "taglineRequired": "Tagline is required",
+  "@taglineRequired": {
+    "description": "Tagline required validation"
+  },
+
+  "shortDescriptionLabel": "Short Description *",
+  "@shortDescriptionLabel": {
+    "description": "Short description field label"
+  },
+
+  "shortDescriptionHint": "Briefly describe your application...",
+  "@shortDescriptionHint": {
+    "description": "Short description field hint"
+  },
+
+  "shortDescriptionRequired": "Description is required",
+  "@shortDescriptionRequired": {
+    "description": "Short description required validation"
+  },
+
+  "mainCategoryLabel": "Main Category *",
+  "@mainCategoryLabel": {
+    "description": "Main category field label"
+  },
+
+  "selectCategoryValidation": "Please select a category",
+  "@selectCategoryValidation": {
+    "description": "Select category validation message"
+  },
+
+  "targetAudienceLabel": "Target Audience *",
+  "@targetAudienceLabel": {
+    "description": "Target audience field label"
+  },
+
+  "individuals": "Individuals",
+  "@individuals": {
+    "description": "Individuals target audience"
+  },
+
+  "smallBusiness": "Small Businesses",
+  "@smallBusiness": {
+    "description": "Small business target audience"
+  },
+
+  "enterprise": "Large Enterprises",
+  "@enterprise": {
+    "description": "Enterprise target audience"
+  },
+
+  "government": "Government",
+  "@government": {
+    "description": "Government target audience"
+  },
+
+  "selectTargetAudienceValidation": "Please select target audience",
+  "@selectTargetAudienceValidation": {
+    "description": "Select target audience validation"
+  },
+
+  "appIconLabel": "Application Icon *",
+  "@appIconLabel": {
+    "description": "App icon field label"
+  },
+
+  "uploadIcon": "Upload Icon",
+  "@uploadIcon": {
+    "description": "Upload icon button"
+  },
+
+  "replace": "Replace",
+  "@replace": {
+    "description": "Replace button"
+  },
+
+  "uploadIconValidation": "Please upload application icon",
+  "@uploadIconValidation": {
+    "description": "Upload icon validation"
+  },
+
+  "screenshotsLabel": "Screenshots *",
+  "@screenshotsLabel": {
+    "description": "Screenshots field label"
+  },
+
+  "addScreenshots": "Add Screenshots",
+  "@addScreenshots": {
+    "description": "Add screenshots button"
+  },
+
+  "addMoreScreenshots": "Add More Screenshots",
+  "@addMoreScreenshots": {
+    "description": "Add more screenshots button"
+  },
+
+  "screenshotsUploadedStatus": "{count} screenshot(s) uploaded",
+  "@screenshotsUploadedStatus": {
+    "description": "Screenshots uploaded status",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+
+  "screenshotsRequired": "At least one screenshot is required",
+  "@screenshotsRequired": {
+    "description": "Screenshots required validation"
+  },
+
+  "subcategoryLabel": "Subcategory *",
+  "@subcategoryLabel": {
+    "description": "Subcategory field label"
+  },
+
+  "subcategoryHint": "Ex: CRM, Accounting, etc.",
+  "@subcategoryHint": {
+    "description": "Subcategory field hint"
+  },
+
+  "subcategoryRequired": "Subcategory is required",
+  "@subcategoryRequired": {
+    "description": "Subcategory required validation"
+  },
+
+  "tagsLabel": "Tags *",
+  "@tagsLabel": {
+    "description": "Tags field label"
+  },
+
+  "tagsHint": "Separate tags with commas (ex: management, client, sales)",
+  "@tagsHint": {
+    "description": "Tags field hint"
+  },
+
+  "tagsRequired": "At least one tag is required",
+  "@tagsRequired": {
+    "description": "Tags required validation"
+  },
+
+  "yourEmailHint": "Your email",
+  "@yourEmailHint": {
+    "description": "Email input hint"
+  },
+
+  "ok": "OK",
+  "@ok": {
+    "description": "OK button"
+  },
+
+  "publishApplication": "Publish Application",
+  "@publishApplication": {
+    "description": "Publish application button"
+  },
+
+  "pleaseFixFormErrors": "Please fix form errors",
+  "@pleaseFixFormErrors": {
+    "description": "Fix form errors message"
+  },
+
+  "appPublishedTitle": "App Published",
+  "@appPublishedTitle": {
+    "description": "App published dialog title"
+  },
+
+  "appPublishedContent": "Your app has been submitted for review and will be published once approved.",
+  "@appPublishedContent": {
+    "description": "App published dialog content"
+  },
+
+  "errorPublishing": "Error publishing app: {error}",
+  "@errorPublishing": {
+    "description": "Error publishing app message",
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+
+  "appTypeLabel": "Application Type *",
+  "@appTypeLabel": {
+    "description": "App type field label"
+  },
+
+  "selectAppTypeValidation": "Please select an application type",
+  "@selectAppTypeValidation": {
+    "description": "App type validation message"
+  },
+
+  "platformsLabel": "Platforms *",
+  "@platformsLabel": {
+    "description": "Platforms field label"
+  },
+
+  "selectPlatformValidation": "Please select at least one platform",
+  "@selectPlatformValidation": {
+    "description": "Platform validation message"
+  },
+
+  "versionLabel": "Version *",
+  "@versionLabel": {
+    "description": "Version field label"
+  },
+
+  "versionHint": "Ex: 1.0.0",
+  "@versionHint": {
+    "description": "Version field hint"
+  },
+
+  "versionRequired": "Version is required",
+  "@versionRequired": {
+    "description": "Version required validation"
+  },
+
+  "systemRequirementsLabel": "System Requirements",
+  "@systemRequirementsLabel": {
+    "description": "System requirements field label"
+  },
+
+  "systemRequirementsHint": "Ex: Android 5.0+, iOS 12.0+",
+  "@systemRequirementsHint": {
+    "description": "System requirements field hint"
+  },
+
+  "validationAppNameRequired": "Please enter the application name",
+  "@validationAppNameRequired": {
+    "description": "App name validation error"
+  },
+
+  "validationTaglineRequired": "Please enter the application tagline",
+  "@validationTaglineRequired": {
+    "description": "Tagline validation error"
+  },
+
+  "validationDescriptionRequired": "Please enter the application description",
+  "@validationDescriptionRequired": {
+    "description": "Description validation error"
+  },
+
+  "validationCategoryRequired": "Please select a category",
+  "@validationCategoryRequired": {
+    "description": "Category validation error"
+  },
+
+  "validationInvalidCategory": "Invalid category selected",
+  "@validationInvalidCategory": {
+    "description": "Invalid category error"
+  },
+
+  "validationTargetAudienceRequired": "Please select the target audience",
+  "@validationTargetAudienceRequired": {
+    "description": "Target audience validation error"
+  },
+
+  "validationIconRequired": "Please upload the application icon",
+  "@validationIconRequired": {
+    "description": "Icon validation error"
+  },
+
+  "validationScreenshotsRequired": "Please add at least one screenshot",
+  "@validationScreenshotsRequired": {
+    "description": "Screenshots validation error"
+  },
+
+  "validationSubcategoryRequired": "Please enter the subcategory",
+  "@validationSubcategoryRequired": {
+    "description": "Subcategory validation error"
+  },
+
+  "validationTagsRequired": "Please add at least one tag",
+  "@validationTagsRequired": {
+    "description": "Tags validation error"
+  },
+
+  "validationAppTypeRequired": "Please select the application type",
+  "@validationAppTypeRequired": {
+    "description": "App type validation error"
+  },
+
+  "validationPlatformsRequired": "Please select at least one platform",
+  "@validationPlatformsRequired": {
+    "description": "Platforms validation error"
+  },
+
+  "validationVersionRequired": "Please enter the application version",
+  "@validationVersionRequired": {
+    "description": "Version validation error"
+  },
+
+  "validationLicenseTypeRequired": "Please select the license type",
+  "@validationLicenseTypeRequired": {
+    "description": "License type validation error"
+  },
+
+  "validationPricingModelRequired": "Please select the pricing model",
+  "@validationPricingModelRequired": {
+    "description": "Pricing model validation error"
+  },
+
+  "validationBusinessValueRequired": "Please enter the business value",
+  "@validationBusinessValueRequired": {
+    "description": "Business value validation error"
+  },
+
+  "validationKeyFeaturesRequired": "Please add at least one key feature",
+  "@validationKeyFeaturesRequired": {
+    "description": "Key features validation error"
+  },
+
+  "appTypeMobile": "Mobile Application",
+  "@appTypeMobile": {
+    "description": "Mobile app type"
+  },
+
+  "appTypeWeb": "Web Application",
+  "@appTypeWeb": {
+    "description": "Web app type"
+  },
+
+  "appTypeDesktop": "Desktop Application",
+  "@appTypeDesktop": {
+    "description": "Desktop app type"
+  },
+
+  "appTypeSaas": "SaaS / Cloud",
+  "@appTypeSaas": {
+    "description": "SaaS app type"
+  },
+
+  "appTypeApi": "API / Service",
+  "@appTypeApi": {
+    "description": "API app type"
+  },
+
+  "appTypePlugin": "Plugin / Extension",
+  "@appTypePlugin": {
+    "description": "Plugin app type"
+  },
+
+  "appTypeTemplate": "Template / Model",
+  "@appTypeTemplate": {
+    "description": "Template app type"
+  },
+
+  "pricingModelFree": "Free",
+  "@pricingModelFree": {
+    "description": "Free pricing model"
+  },
+
+  "pricingModelFreemium": "Freemium",
+  "@pricingModelFreemium": {
+    "description": "Freemium pricing model"
+  },
+
+  "pricingModelPaid": "Paid",
+  "@pricingModelPaid": {
+    "description": "Paid pricing model"
+  },
+
+  "pricingModelEnterprise": "Enterprise",
+  "@pricingModelEnterprise": {
+    "description": "Enterprise pricing model"
+  },
+
+  "pricingModelCustom": "Custom",
+  "@pricingModelCustom": {
+    "description": "Custom pricing model"
+  },
+
+  "supportTypeEmail": "Email",
+  "@supportTypeEmail": {
+    "description": "Email support type"
+  },
+
+  "supportTypePhone": "Phone",
+  "@supportTypePhone": {
+    "description": "Phone support type"
+  },
+
+  "supportTypeChat": "Online Chat",
+  "@supportTypeChat": {
+    "description": "Chat support type"
+  },
+
+  "supportTypeTraining": "Training",
+  "@supportTypeTraining": {
+    "description": "Training support type"
+  },
+
+  "supportTypeDocumentation": "Documentation",
+  "@supportTypeDocumentation": {
+    "description": "Documentation support type"
+  },
+
+  "categoryLabel": "Category",
+  "@categoryLabel": {
+    "description": "Category label"
+  },
+
+  "errorLoadingCategories": "Error loading categories",
+  "@errorLoadingCategories": {
+    "description": "Error loading categories message"
+  },
+
+  "noCategoriesAvailable": "No categories available",
+  "@noCategoriesAvailable": {
+    "description": "No categories available message"
+  },
+
+  "viewAll": "View All",
+  "@viewAll": {
+    "description": "View all button"
+  },
+
+  "popularCategories": "Popular Categories",
+  "@popularCategories": {
+    "description": "Popular categories section title"
+  },
+
+  "featured": "Featured",
+  "@featured": {
+    "description": "Featured label"
+  },
+
+  "noTransactions": "No transactions",
+  "@noTransactions": {
+    "description": "No transactions message"
+  },
+
+  "noPaymentsYet": "No payments yet",
+  "@noPaymentsYet": {
+    "description": "No payments yet message"
+  },
+
+  "errorLoadingPaymentInfo": "Error loading payment info: {error}",
+  "@errorLoadingPaymentInfo": {
+    "description": "Error loading payment info",
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+
+  "errorSelectingImage": "Error selecting image: {error}",
+  "@errorSelectingImage": {
+    "description": "Error selecting image",
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+
+  "pleaseSelectTransactionImage": "Please select transaction image",
+  "@pleaseSelectTransactionImage": {
+    "description": "Please select transaction image message"
+  },
+
+  "paymentSubmittedSuccess": "Payment submitted successfully",
+  "@paymentSubmittedSuccess": {
+    "description": "Payment submitted success message"
+  },
+
+  "errorSubmitting": "Error submitting: {error}",
+  "@errorSubmitting": {
+    "description": "Error submitting",
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+
+  "payment": "Payment",
+  "@payment": {
+    "description": "Payment title"
+  },
+
+  "subscriptionSummaryTitle": "Subscription Summary",
+  "@subscriptionSummaryTitle": {
+    "description": "Subscription summary title"
+  },
+
+  "packageLabel": "Package",
+  "@packageLabel": {
+    "description": "Package label"
+  },
+
+  "durationLabel": "Duration",
+  "@durationLabel": {
+    "description": "Duration label"
+  },
+
+  "priceLabel": "Price",
+  "@priceLabel": {
+    "description": "Price label"
+  },
+
+  "paymentInstructionsTitle": "Payment Instructions",
+  "@paymentInstructionsTitle": {
+    "description": "Payment instructions title"
+  },
+
+  "bankLabel": "Bank",
+  "@bankLabel": {
+    "description": "Bank label"
+  },
+
+  "accountNumberLabel": "Account Number",
+  "@accountNumberLabel": {
+    "description": "Account number label"
+  },
+
+  "phoneLabel": "Phone",
+  "@phoneLabel": {
+    "description": "Phone label"
+  },
+
+  "transactionProofRequired": "Transaction Proof Required",
+  "@transactionProofRequired": {
+    "description": "Transaction proof required title"
+  },
+
+  "uploadReceiptHint": "Upload receipt or transaction proof",
+  "@uploadReceiptHint": {
+    "description": "Upload receipt hint"
+  },
+
+  "tapToSelectImage": "Tap to select image",
+  "@tapToSelectImage": {
+    "description": "Tap to select image hint"
+  },
+
+  "imageTypesHint": "JPG, PNG, PDF supported",
+  "@imageTypesHint": {
+    "description": "Image types hint"
+  },
+
+  "paymentDateRequired": "Payment Date Required",
+  "@paymentDateRequired": {
+    "description": "Payment date required title"
+  },
+
+  "notesOptional": "Notes (Optional)",
+  "@notesOptional": {
+    "description": "Notes optional title"
+  },
+
+  "notesHint": "Add any additional notes about your payment...",
+  "@notesHint": {
+    "description": "Notes hint"
+  },
+
+  "submitPayment": "Submit Payment",
+  "@submitPayment": {
+    "description": "Submit payment button"
+  },
+
+  "errorSearching": "Error searching: {error}",
+  "@errorSearching": {
+    "description": "Error searching",
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+
+  "noResultsForQuery": "No results found for '{query}'",
+  "@noResultsForQuery": {
+    "description": "No results for query",
+    "placeholders": {
+      "query": {
+        "type": "String"
+      }
+    }
+  },
+
+  "technicalDetails": "Technical Details",
+  "@technicalDetails": {
+    "description": "Technical details section title"
+  },
+
+  "businessInformation": "Business Information",
+  "@businessInformation": {
+    "description": "Business information section title"
+  },
+
+  "supportAndDocumentation": "Support & Documentation",
+  "@supportAndDocumentation": {
+    "description": "Support and documentation section title"
+  },
+
+  "appType": "App Type",
+  "@appType": {
+    "description": "App type label"
+  },
+
+  "platforms": "Platforms",
+  "@platforms": {
+    "description": "Platforms label"
+  },
+
+  "currentVersion": "Current Version",
+  "@currentVersion": {
+    "description": "Current version label"
+  },
+
+  "lastUpdated": "Last Updated",
+  "@lastUpdated": {
+    "description": "Last updated label"
+  },
+
+  "downloads": "Downloads",
+  "@downloads": {
+    "description": "Downloads label"
+  },
+
+  "activeUsers": "Active Users",
+  "@activeUsers": {
+    "description": "Active users label"
+  },
+
+  "businessValue": "Business Value",
+  "@businessValue": {
+    "description": "Business value label"
+  },
+
+  "keyFeatures": "Key Features",
+  "@keyFeatures": {
+    "description": "Key features label"
+  },
+
+  "businessSectors": "Business Sectors",
+  "@businessSectors": {
+    "description": "Business sectors label"
+  },
+
+  "technicalRequirements": "Technical Requirements",
+  "@technicalRequirements": {
+    "description": "Technical requirements label"
+  },
+
+  "supportOptions": "Support Options",
+  "@supportOptions": {
+    "description": "Support options label"
+  },
+
+  "languages": "Languages",
+  "@languages": {
+    "description": "Languages label"
+  },
+
+  "documentation": "Documentation",
+  "@documentation": {
+    "description": "Documentation label"
+  },
+
+  "available": "Available",
+  "@available": {
+    "description": "Available status"
+  },
+
+  "notAvailable": "Not Available",
+  "@notAvailable": {
+    "description": "Not available status"
+  },
+
+  "openSource": "Open Source",
+  "@openSource": {
+    "description": "Open source label"
+  },
+
+  "verified": "Verified",
+  "@verified": {
+    "description": "Verified label"
+  },
+
+  "freeTrial": "Free Trial",
+  "@freeTrial": {
+    "description": "Free trial label"
+  },
+
+  "trialDays": "{days} days",
+  "@trialDays": {
+    "description": "Trial days",
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+
+  "viewDocumentation": "View Documentation",
+  "@viewDocumentation": {
+    "description": "View documentation button"
+  },
+
+  "downloadApp": "Download App",
+  "@downloadApp": {
+    "description": "Download app button"
+  },
+
+  "tryDemo": "Try Demo",
+  "@tryDemo": {
+    "description": "Try demo button"
+  },
+
+  "subcategory": "Subcategory",
+  "@subcategory": {
+    "description": "Subcategory label"
+  },
+
+  "tags": "Tags",
+  "@tags": {
+    "description": "Tags label"
+  },
+
+  "publishDate": "Publish Date",
+  "@publishDate": {
+    "description": "Publish date label"
+  },
+
+  "companyName": "Company",
+  "@companyName": {
+    "description": "Company name label"
+  },
+
+  "website": "Website",
+  "@website": {
+    "description": "Website label"
+  },
+
+  "whatsapp": "WhatsApp",
+  "@whatsapp": {
+    "description": "WhatsApp label"
+  },
+
+  "pricing": "Pricing",
+  "@pricing": {
+    "description": "Pricing label"
+  }
+}

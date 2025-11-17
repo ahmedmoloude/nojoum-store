@@ -14,6 +14,7 @@ import '../services/category_service.dart';
 import '../utils/constants.dart';
 import 'auth/login_screen.dart';
 import 'subscription_packages_screen.dart';
+import '../l10n/app_localizations.dart';
 
 /// Multi-step app publishing screen for developers
 class PublishAppScreen extends StatefulWidget {
@@ -60,13 +61,13 @@ class _PublishAppScreenState extends State<PublishAppScreen> {
 
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Icône téléchargée avec succès')),
+          SnackBar(content: Text(AppLocalizations.of(context)!.iconUploadedSuccess)),
         );
       }
     } catch (e) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Échec du téléchargement: $e'), backgroundColor: Colors.red),
+          SnackBar(content: Text(AppLocalizations.of(context)!.uploadFailed(e.toString())), backgroundColor: Colors.red),
         );
       }
     } finally {
@@ -85,8 +86,8 @@ class _PublishAppScreenState extends State<PublishAppScreen> {
       // Limit to 10 screenshots total
       if (_uploadedScreenshotUrls.length + picked.length > 10) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Maximum 10 captures d\'écran autorisées'),
+          SnackBar(
+            content: Text(AppLocalizations.of(context)!.maxScreenshotsLimit),
             backgroundColor: Colors.orange,
           ),
         );
@@ -112,13 +113,13 @@ class _PublishAppScreenState extends State<PublishAppScreen> {
 
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('${newUrls.length} capture(s) d\'écran téléchargée(s) avec succès')),
+          SnackBar(content: Text(AppLocalizations.of(context)!.screenshotsUploadedCount(newUrls.length))),
         );
       }
     } catch (e) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Échec du téléchargement: $e'), backgroundColor: Colors.red),
+          SnackBar(content: Text(AppLocalizations.of(context)!.uploadFailedGeneric(e.toString())), backgroundColor: Colors.red),
         );
       }
     } finally {
@@ -178,10 +179,9 @@ class _PublishAppScreenState extends State<PublishAppScreen> {
       context: context,
       barrierDismissible: false,
       builder: (context) => AlertDialog(
-        title: const Text('Connexion requise'),
-        content: const Text(
-          'Vous devez être connecté pour publier une application. '
-          'Souhaitez-vous vous connecter maintenant ?',
+        title: Text(AppLocalizations.of(context)!.loginRequiredTitle),
+        content: Text(
+          AppLocalizations.of(context)!.loginRequiredContent,
         ),
         actions: [
           TextButton(
@@ -189,7 +189,7 @@ class _PublishAppScreenState extends State<PublishAppScreen> {
               Navigator.of(context).pop();
               Navigator.of(context).pop(); // Go back to previous screen
             },
-            child: const Text('Annuler'),
+            child: Text(AppLocalizations.of(context)!.cancel),
           ),
           ElevatedButton(
             onPressed: () async {
@@ -202,7 +202,7 @@ class _PublishAppScreenState extends State<PublishAppScreen> {
                 Navigator.of(context).pop(); // Go back if login failed
               }
             },
-            child: const Text('Se connecter'),
+            child: Text(AppLocalizations.of(context)!.loginButton),
           ),
         ],
       ),
@@ -221,12 +221,11 @@ class _PublishAppScreenState extends State<PublishAppScreen> {
               color: AppConstants.primaryGold,
             ),
             const SizedBox(width: 8),
-            const Text('Abonnement requis'),
+            Text(AppLocalizations.of(context)!.subscriptionRequiredTitle),
           ],
         ),
-        content: const Text(
-          'Vous devez avoir un abonnement actif ou être en période d\'essai gratuit '
-          'pour publier une application. Souhaitez-vous voir les options d\'abonnement ?',
+        content: Text(
+          AppLocalizations.of(context)!.subscriptionRequiredContent,
         ),
         actions: [
           TextButton(
@@ -234,7 +233,7 @@ class _PublishAppScreenState extends State<PublishAppScreen> {
               Navigator.of(context).pop();
               Navigator.of(context).pop(); // Go back to previous screen
             },
-            child: const Text('Annuler'),
+            child: Text(AppLocalizations.of(context)!.cancel),
           ),
           ElevatedButton(
             onPressed: () async {
@@ -249,7 +248,7 @@ class _PublishAppScreenState extends State<PublishAppScreen> {
               backgroundColor: AppConstants.primaryGold,
               foregroundColor: AppConstants.whiteTextColor,
             ),
-            child: const Text('Voir les abonnements'),
+            child: Text(AppLocalizations.of(context)!.viewSubscriptions),
           ),
         ],
       ),
@@ -268,7 +267,7 @@ class _PublishAppScreenState extends State<PublishAppScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Publier une application'),
+        title: Text(AppLocalizations.of(context)!.publishAppTitle),
         backgroundColor: AppConstants.teal,
         foregroundColor: AppConstants.whiteTextColor,
         elevation: 0,
@@ -340,7 +339,7 @@ class _PublishAppScreenState extends State<PublishAppScreen> {
           ),
           const SizedBox(height: AppConstants.paddingM),
           Text(
-            'Étape ${_currentStep + 1} sur $_totalSteps',
+            AppLocalizations.of(context)!.stepProgress(_currentStep + 1, _totalSteps),
             style: theme.textTheme.titleMedium?.copyWith(
               color: AppConstants.whiteTextColor,
               fontWeight: FontWeight.w600,
@@ -365,20 +364,20 @@ class _PublishAppScreenState extends State<PublishAppScreen> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
             Text(
-              'Informations de base',
+              AppLocalizations.of(context)!.stepBasicInfo,
               style: Theme.of(context).textTheme.headlineSmall,
             ),
             const SizedBox(height: AppConstants.paddingL),
 
             FormBuilderTextField(
               name: 'appName',
-              decoration: const InputDecoration(
-                labelText: 'Nom de l\'application *',
-                hintText: 'Ex: MauriCRM Pro',
+              decoration: InputDecoration(
+                labelText: AppLocalizations.of(context)!.appNameLabel,
+                hintText: AppLocalizations.of(context)!.appNameHint,
               ),
               validator: (value) {
                 if (value == null || value.isEmpty) {
-                  return 'Le nom de l\'application est requis';
+                  return AppLocalizations.of(context)!.appNameRequired;
                 }
                 return null;
               },
@@ -387,13 +386,13 @@ class _PublishAppScreenState extends State<PublishAppScreen> {
 
             FormBuilderTextField(
               name: 'tagline',
-              decoration: const InputDecoration(
-                labelText: 'Slogan *',
-                hintText: 'Ex: Système de gestion client professionnel',
+              decoration: InputDecoration(
+                labelText: AppLocalizations.of(context)!.taglineLabel,
+                hintText: AppLocalizations.of(context)!.taglineHint,
               ),
               validator: (value) {
                 if (value == null || value.isEmpty) {
-                  return 'Le slogan est requis';
+                  return AppLocalizations.of(context)!.taglineRequired;
                 }
                 return null;
               },
@@ -402,14 +401,14 @@ class _PublishAppScreenState extends State<PublishAppScreen> {
 
             FormBuilderTextField(
               name: 'description',
-              decoration: const InputDecoration(
-                labelText: 'Description courte *',
-                hintText: 'Décrivez brièvement votre application...',
+              decoration: InputDecoration(
+                labelText: AppLocalizations.of(context)!.shortDescriptionLabel,
+                hintText: AppLocalizations.of(context)!.shortDescriptionHint,
               ),
               maxLines: 3,
               validator: (value) {
                 if (value == null || value.isEmpty) {
-                  return 'La description est requise';
+                  return AppLocalizations.of(context)!.shortDescriptionRequired;
                 }
                 return null;
               },
@@ -425,8 +424,8 @@ class _PublishAppScreenState extends State<PublishAppScreen> {
                   )
                 : FormBuilderDropdown<String>(
                     name: 'category',
-                    decoration: const InputDecoration(
-                      labelText: 'Catégorie principale *',
+                    decoration: InputDecoration(
+                      labelText: AppLocalizations.of(context)!.mainCategoryLabel,
                     ),
                     items: _categories
                         .map((category) => DropdownMenuItem(
@@ -436,7 +435,7 @@ class _PublishAppScreenState extends State<PublishAppScreen> {
                         .toList(),
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return 'Veuillez sélectionner une catégorie';
+                        return AppLocalizations.of(context)!.selectCategoryValidation;
                       }
                       return null;
                     },
@@ -445,18 +444,18 @@ class _PublishAppScreenState extends State<PublishAppScreen> {
 
             FormBuilderDropdown<String>(
               name: 'targetAudience',
-              decoration: const InputDecoration(
-                labelText: 'Public cible *',
+              decoration: InputDecoration(
+                labelText: AppLocalizations.of(context)!.targetAudienceLabel,
               ),
-              items: const [
-                DropdownMenuItem(value: 'Individual', child: Text('Particuliers')),
-                DropdownMenuItem(value: 'Small Business', child: Text('Petites entreprises')),
-                DropdownMenuItem(value: 'Enterprise', child: Text('Grandes entreprises')),
-                DropdownMenuItem(value: 'Government', child: Text('Gouvernement')),
+              items: [
+                DropdownMenuItem(value: 'Individual', child: Text(AppLocalizations.of(context)!.individuals)),
+                DropdownMenuItem(value: 'Small Business', child: Text(AppLocalizations.of(context)!.smallBusiness)),
+                DropdownMenuItem(value: 'Enterprise', child: Text(AppLocalizations.of(context)!.enterprise)),
+                DropdownMenuItem(value: 'Government', child: Text(AppLocalizations.of(context)!.government)),
               ],
               validator: (value) {
                 if (value == null || value.isEmpty) {
-                  return 'Veuillez sélectionner le public cible';
+                  return AppLocalizations.of(context)!.selectTargetAudienceValidation;
                 }
                 return null;
               },
@@ -467,7 +466,7 @@ class _PublishAppScreenState extends State<PublishAppScreen> {
               name: 'iconUrl',
               validator: (value) {
                 if (value == null || value.isEmpty) {
-                  return 'Veuillez télécharger l\'icône de l\'application';
+                  return AppLocalizations.of(context)!.uploadIconValidation;
                 }
                 return null;
               },
@@ -476,7 +475,7 @@ class _PublishAppScreenState extends State<PublishAppScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Icône de l\'application *',
+                      AppLocalizations.of(context)!.appIconLabel,
                       style: Theme.of(context).textTheme.bodyMedium,
                     ),
                     const SizedBox(height: 8),
@@ -500,7 +499,7 @@ class _PublishAppScreenState extends State<PublishAppScreen> {
                           icon: _isUploadingIcon
                               ? const SizedBox(width: 16, height: 16, child: CircularProgressIndicator(strokeWidth: 2, valueColor: AlwaysStoppedAnimation<Color>(Colors.white)))
                               : const Icon(Icons.upload_file),
-                          label: Text(_uploadedIconUrl == null ? 'Télécharger une icône' : 'Remplacer'),
+                          label: Text(_uploadedIconUrl == null ? AppLocalizations.of(context)!.uploadIcon : AppLocalizations.of(context)!.replace),
                           style: ElevatedButton.styleFrom(backgroundColor: AppConstants.teal),
                         ),
                       ],
@@ -520,7 +519,7 @@ class _PublishAppScreenState extends State<PublishAppScreen> {
               name: 'screenshots',
               validator: (value) {
                 if (_uploadedScreenshotUrls.isEmpty) {
-                  return 'Au moins une capture d\'écran est requise';
+                  return AppLocalizations.of(context)!.screenshotsRequired;
                 }
                 return null;
               },
@@ -529,7 +528,7 @@ class _PublishAppScreenState extends State<PublishAppScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Captures d\'écran *',
+                      AppLocalizations.of(context)!.screenshotsLabel,
                       style: Theme.of(context).textTheme.bodyMedium,
                     ),
                     const SizedBox(height: 8),
@@ -540,7 +539,7 @@ class _PublishAppScreenState extends State<PublishAppScreen> {
                       icon: _isUploadingScreenshots
                           ? const SizedBox(width: 16, height: 16, child: CircularProgressIndicator(strokeWidth: 2, valueColor: AlwaysStoppedAnimation<Color>(Colors.white)))
                           : const Icon(Icons.add_photo_alternate),
-                      label: Text(_uploadedScreenshotUrls.isEmpty ? 'Ajouter des captures d\'écran' : 'Ajouter plus de captures'),
+                      label: Text(_uploadedScreenshotUrls.isEmpty ? AppLocalizations.of(context)!.addScreenshots : AppLocalizations.of(context)!.addMoreScreenshots),
                       style: ElevatedButton.styleFrom(backgroundColor: AppConstants.teal),
                     ),
 
@@ -549,7 +548,7 @@ class _PublishAppScreenState extends State<PublishAppScreen> {
                     // Display uploaded screenshots
                     if (_uploadedScreenshotUrls.isNotEmpty) ...[
                       Text(
-                        '${_uploadedScreenshotUrls.length} capture(s) d\'écran téléchargée(s)',
+                        AppLocalizations.of(context)!.screenshotsUploadedStatus(_uploadedScreenshotUrls.length),
                         style: Theme.of(context).textTheme.bodySmall?.copyWith(color: Colors.green),
                       ),
                       const SizedBox(height: 8),
@@ -660,15 +659,15 @@ class _PublishAppScreenState extends State<PublishAppScreen> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Détails techniques',
+            AppLocalizations.of(context)!.stepTechnicalDetails,
             style: Theme.of(context).textTheme.headlineSmall,
           ),
           const SizedBox(height: AppConstants.paddingL),
 
           FormBuilderDropdown<AppType>(
             name: 'appType',
-            decoration: const InputDecoration(
-              labelText: 'Type d\'application *',
+            decoration: InputDecoration(
+              labelText: AppLocalizations.of(context)!.appTypeLabel,
             ),
             items: AppType.values
                 .map((type) => DropdownMenuItem(
@@ -681,8 +680,8 @@ class _PublishAppScreenState extends State<PublishAppScreen> {
 
           FormBuilderCheckboxGroup<Platform>(
             name: 'platforms',
-            decoration: const InputDecoration(
-              labelText: 'Plateformes supportées *',
+            decoration: InputDecoration(
+              labelText: AppLocalizations.of(context)!.platformsLabel,
             ),
             options: Platform.values
                 .map((platform) => FormBuilderFieldOption(
@@ -695,9 +694,9 @@ class _PublishAppScreenState extends State<PublishAppScreen> {
 
           FormBuilderTextField(
             name: 'currentVersion',
-            decoration: const InputDecoration(
-              labelText: 'Version actuelle',
-              hintText: 'Ex: 1.0.0',
+            decoration: InputDecoration(
+              labelText: AppLocalizations.of(context)!.versionLabel,
+              hintText: AppLocalizations.of(context)!.versionHint,
             ),
             initialValue: '1.0.0',
           ),
@@ -705,9 +704,9 @@ class _PublishAppScreenState extends State<PublishAppScreen> {
 
           FormBuilderTextField(
             name: 'technicalRequirements',
-            decoration: const InputDecoration(
-              labelText: 'Exigences techniques',
-              hintText: 'Ex: Android 8.0+, 2GB RAM minimum',
+            decoration: InputDecoration(
+              labelText: AppLocalizations.of(context)!.systemRequirementsLabel,
+              hintText: AppLocalizations.of(context)!.systemRequirementsHint,
             ),
             maxLines: 2,
           ),
@@ -723,7 +722,7 @@ class _PublishAppScreenState extends State<PublishAppScreen> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Tarification et licence',
+            AppLocalizations.of(context)!.stepPricing,
             style: Theme.of(context).textTheme.headlineSmall,
           ),
           const SizedBox(height: AppConstants.paddingL),
@@ -777,7 +776,7 @@ class _PublishAppScreenState extends State<PublishAppScreen> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Détails commerciaux',
+            AppLocalizations.of(context)!.stepBusinessDetails,
             style: Theme.of(context).textTheme.headlineSmall,
           ),
           const SizedBox(height: AppConstants.paddingL),
@@ -856,7 +855,7 @@ class _PublishAppScreenState extends State<PublishAppScreen> {
             Expanded(
               child: OutlinedButton(
                 onPressed: _previousStep,
-                child: const Text('Précédent'),
+                child: Text(AppLocalizations.of(context)!.previous),
               ),
             ),
           if (_currentStep > 0) const SizedBox(width: AppConstants.paddingM),
@@ -878,7 +877,7 @@ class _PublishAppScreenState extends State<PublishAppScreen> {
                       ),
                     )
                   : Text(
-                      _currentStep < _totalSteps - 1 ? 'Suivant' : 'Publier l\'application',
+                      _currentStep < _totalSteps - 1 ? AppLocalizations.of(context)!.next : AppLocalizations.of(context)!.publishApplication,
                     ),
             ),
           ),
@@ -951,45 +950,45 @@ class _PublishAppScreenState extends State<PublishAppScreen> {
     final tags = formData['tags']?.toString().trim();
 
     if (appName == null || appName.isEmpty) {
-      _showValidationError('Veuillez saisir le nom de l\'application');
+      _showValidationError(AppLocalizations.of(context)!.validationAppNameRequired);
       return false;
     }
     if (tagline == null || tagline.isEmpty) {
-      _showValidationError('Veuillez saisir le slogan de l\'application');
+      _showValidationError(AppLocalizations.of(context)!.validationTaglineRequired);
       return false;
     }
     if (description == null || description.isEmpty) {
-      _showValidationError('Veuillez saisir la description de l\'application');
+      _showValidationError(AppLocalizations.of(context)!.validationDescriptionRequired);
       return false;
     }
     if (category == null || category.toString().isEmpty) {
-      _showValidationError('Veuillez sélectionner une catégorie');
+      _showValidationError(AppLocalizations.of(context)!.validationCategoryRequired);
       return false;
     }
     // Validate that the category ID is valid
     final categoryId = int.tryParse(category.toString());
     if (categoryId == null || categoryId <= 0) {
-      _showValidationError('Catégorie invalide sélectionnée');
+      _showValidationError(AppLocalizations.of(context)!.validationInvalidCategory);
       return false;
     }
     if (targetAudience == null || targetAudience.toString().isEmpty) {
-      _showValidationError('Veuillez sélectionner le public cible');
+      _showValidationError(AppLocalizations.of(context)!.validationTargetAudienceRequired);
       return false;
     }
     if (iconUrl == null || iconUrl.isEmpty) {
-      _showValidationError('Veuillez télécharger l\'icône de l\'application');
+      _showValidationError(AppLocalizations.of(context)!.validationIconRequired);
       return false;
     }
     if (_uploadedScreenshotUrls.isEmpty) {
-      _showValidationError('Veuillez ajouter au moins une capture d\'écran');
+      _showValidationError(AppLocalizations.of(context)!.validationScreenshotsRequired);
       return false;
     }
     if (subcategory == null || subcategory.isEmpty) {
-      _showValidationError('Veuillez saisir la sous-catégorie');
+      _showValidationError(AppLocalizations.of(context)!.validationSubcategoryRequired);
       return false;
     }
     if (tags == null || tags.isEmpty) {
-      _showValidationError('Veuillez ajouter au moins un tag');
+      _showValidationError(AppLocalizations.of(context)!.validationTagsRequired);
       return false;
     }
     return true;
@@ -1004,15 +1003,15 @@ class _PublishAppScreenState extends State<PublishAppScreen> {
     final version = formData['currentVersion']?.toString().trim();
 
     if (appType == null || appType.toString().isEmpty) {
-      _showValidationError('Veuillez sélectionner le type d\'application');
+      _showValidationError(AppLocalizations.of(context)!.validationAppTypeRequired);
       return false;
     }
     if (platforms == null || platforms.isEmpty) {
-      _showValidationError('Veuillez sélectionner au moins une plateforme');
+      _showValidationError(AppLocalizations.of(context)!.validationPlatformsRequired);
       return false;
     }
     if (version == null || version.isEmpty) {
-      _showValidationError('Veuillez saisir la version de l\'application');
+      _showValidationError(AppLocalizations.of(context)!.validationVersionRequired);
       return false;
     }
     return true;
@@ -1023,11 +1022,11 @@ class _PublishAppScreenState extends State<PublishAppScreen> {
     final pricingModel = formData['pricingModel'];
 
     if (licenseType == null || licenseType.toString().isEmpty) {
-      _showValidationError('Veuillez sélectionner le type de licence');
+      _showValidationError(AppLocalizations.of(context)!.validationLicenseTypeRequired);
       return false;
     }
     if (pricingModel == null || pricingModel.toString().isEmpty) {
-      _showValidationError('Veuillez sélectionner le modèle de tarification');
+      _showValidationError(AppLocalizations.of(context)!.validationPricingModelRequired);
       return false;
     }
     return true;
@@ -1038,11 +1037,11 @@ class _PublishAppScreenState extends State<PublishAppScreen> {
     final keyFeatures = formData['keyFeatures']?.toString().trim();
 
     if (businessValue == null || businessValue.isEmpty) {
-      _showValidationError('Veuillez saisir la valeur commerciale');
+      _showValidationError(AppLocalizations.of(context)!.validationBusinessValueRequired);
       return false;
     }
     if (keyFeatures == null || keyFeatures.isEmpty) {
-      _showValidationError('Veuillez ajouter au moins une fonctionnalité clé');
+      _showValidationError(AppLocalizations.of(context)!.validationKeyFeaturesRequired);
       return false;
     }
     return true;
@@ -1064,8 +1063,8 @@ class _PublishAppScreenState extends State<PublishAppScreen> {
   Future<void> _submitForm() async {
     if (!(_formKey.currentState?.saveAndValidate() ?? false)) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Veuillez corriger les erreurs dans le formulaire'),
+        SnackBar(
+          content: Text(AppLocalizations.of(context)!.pleaseFixFormErrors),
           backgroundColor: Colors.red,
         ),
       );
@@ -1155,10 +1154,9 @@ class _PublishAppScreenState extends State<PublishAppScreen> {
           context: context,
           barrierDismissible: false,
           builder: (context) => AlertDialog(
-            title: const Text('Application publiée !'),
-            content: const Text(
-              'Votre application a été publiée avec succès. '
-              'Elle sera visible dans le marketplace après validation par notre équipe.',
+            title: Text(AppLocalizations.of(context)!.appPublishedTitle),
+            content: Text(
+              AppLocalizations.of(context)!.appPublishedContent,
             ),
             actions: [
               TextButton(
@@ -1166,7 +1164,7 @@ class _PublishAppScreenState extends State<PublishAppScreen> {
                   Navigator.of(context).pop(); // Close dialog
                   Navigator.of(context).pop(true); // Return to previous screen with success
                 },
-                child: const Text('OK'),
+                child: Text(AppLocalizations.of(context)!.ok),
               ),
             ],
           ),
@@ -1185,7 +1183,7 @@ class _PublishAppScreenState extends State<PublishAppScreen> {
         } else {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
-              content: Text('Erreur lors de la publication: ${e.toString()}'),
+              content: Text(AppLocalizations.of(context)!.errorPublishing(e.toString())),
               backgroundColor: Colors.red,
             ),
           );
@@ -1200,23 +1198,23 @@ class _PublishAppScreenState extends State<PublishAppScreen> {
 
   String _getStepTitle(int step) {
     switch (step) {
-      case 0: return 'Informations de base';
-      case 1: return 'Détails techniques';
-      case 2: return 'Tarification et licence';
-      case 3: return 'Détails commerciaux';
+      case 0: return AppLocalizations.of(context)!.stepBasicInfo;
+      case 1: return AppLocalizations.of(context)!.stepTechnicalDetails;
+      case 2: return AppLocalizations.of(context)!.stepPricing;
+      case 3: return AppLocalizations.of(context)!.stepBusinessDetails;
       default: return '';
     }
   }
 
   String _getAppTypeLabel(AppType type) {
     switch (type) {
-      case AppType.mobile: return 'Application mobile';
-      case AppType.web: return 'Application web';
-      case AppType.desktop: return 'Application desktop';
-      case AppType.saas: return 'SaaS / Cloud';
-      case AppType.api: return 'API / Service';
-      case AppType.plugin: return 'Plugin / Extension';
-      case AppType.template: return 'Template / Modèle';
+      case AppType.mobile: return AppLocalizations.of(context)!.appTypeMobile;
+      case AppType.web: return AppLocalizations.of(context)!.appTypeWeb;
+      case AppType.desktop: return AppLocalizations.of(context)!.appTypeDesktop;
+      case AppType.saas: return AppLocalizations.of(context)!.appTypeSaas;
+      case AppType.api: return AppLocalizations.of(context)!.appTypeApi;
+      case AppType.plugin: return AppLocalizations.of(context)!.appTypePlugin;
+      case AppType.template: return AppLocalizations.of(context)!.appTypeTemplate;
     }
   }
 
@@ -1234,21 +1232,21 @@ class _PublishAppScreenState extends State<PublishAppScreen> {
 
   String _getPricingModelLabel(PricingModel model) {
     switch (model) {
-      case PricingModel.free: return 'Gratuit';
-      case PricingModel.freemium: return 'Freemium';
-      case PricingModel.paid: return 'Payant';
-      case PricingModel.enterprise: return 'Enterprise';
-      case PricingModel.custom: return 'Sur mesure';
+      case PricingModel.free: return AppLocalizations.of(context)!.pricingModelFree;
+      case PricingModel.freemium: return AppLocalizations.of(context)!.pricingModelFreemium;
+      case PricingModel.paid: return AppLocalizations.of(context)!.pricingModelPaid;
+      case PricingModel.enterprise: return AppLocalizations.of(context)!.pricingModelEnterprise;
+      case PricingModel.custom: return AppLocalizations.of(context)!.pricingModelCustom;
     }
   }
 
   String _getSupportTypeLabel(SupportType type) {
     switch (type) {
-      case SupportType.email: return 'Email';
-      case SupportType.phone: return 'Téléphone';
-      case SupportType.chat: return 'Chat en ligne';
-      case SupportType.training: return 'Formation';
-      case SupportType.documentation: return 'Documentation';
+      case SupportType.email: return AppLocalizations.of(context)!.supportTypeEmail;
+      case SupportType.phone: return AppLocalizations.of(context)!.supportTypePhone;
+      case SupportType.chat: return AppLocalizations.of(context)!.supportTypeChat;
+      case SupportType.training: return AppLocalizations.of(context)!.supportTypeTraining;
+      case SupportType.documentation: return AppLocalizations.of(context)!.supportTypeDocumentation;
     }
   }
 }

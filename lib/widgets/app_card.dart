@@ -3,6 +3,8 @@ import 'package:cached_network_image/cached_network_image.dart';
 import '../models/mauritanian_app.dart';
 import '../utils/constants.dart';
 
+import '../l10n/app_localizations.dart';
+
 /// Reusable card widget for displaying Mauritanian applications
 class AppCard extends StatelessWidget {
   final MauritanianApp app;
@@ -26,12 +28,12 @@ class AppCard extends StatelessWidget {
       clipBehavior: Clip.antiAlias,
       child: InkWell(
         onTap: onTap,
-        child: isCompact ? _buildCompactLayout(theme) : _buildFullLayout(theme),
+        child: isCompact ? _buildCompactLayout(context, theme) : _buildFullLayout(context, theme),
       ),
     );
   }
 
-  Widget _buildFullLayout(ThemeData theme) {
+  Widget _buildFullLayout(BuildContext context, ThemeData theme) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -68,9 +70,9 @@ class AppCard extends StatelessWidget {
                     color: AppConstants.primaryYellow,
                     borderRadius: BorderRadius.circular(AppConstants.borderRadiusM),
                   ),
-                  child: const Text(
-                    'Vedette',
-                    style: TextStyle(
+                  child: Text(
+                    AppLocalizations.of(context)!.featured,
+                    style: const TextStyle(
                       fontSize: 10,
                       fontWeight: FontWeight.bold,
                       color: AppConstants.primaryTextColor,
@@ -82,94 +84,57 @@ class AppCard extends StatelessWidget {
         ),
 
         // App information - FIXED OVERFLOW
-        Expanded(
-          child: Padding(
-            padding: const EdgeInsets.all(AppConstants.paddingS), // Reduced padding
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                // App name
-                Text(
-                  app.name,
-                  style: theme.textTheme.titleSmall?.copyWith( // Smaller title
-                    fontWeight: FontWeight.bold,
-                    fontSize: 14,
-                  ),
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
+        Padding(
+          padding: const EdgeInsets.all(AppConstants.paddingS), // Reduced padding
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              // App name
+              Text(
+                app.name,
+                style: theme.textTheme.titleSmall?.copyWith( // Smaller title
+                  fontWeight: FontWeight.bold,
+                  fontSize: 14,
                 ),
-                const SizedBox(height: 2), // Reduced spacing
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+              ),
+              const SizedBox(height: 2), // Reduced spacing
 
-                // Developer name
-                Text(
-                  app.developerName,
-                  style: theme.textTheme.bodySmall?.copyWith(
-                    color: AppConstants.secondaryTextColor,
-                    fontSize: 11,
-                  ),
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
+              // Developer name
+              Text(
+                app.developerName,
+                style: theme.textTheme.bodySmall?.copyWith(
+                  color: AppConstants.secondaryTextColor,
+                  fontSize: 11,
                 ),
-                const SizedBox(height: 4), // Reduced spacing
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+              ),
+              const SizedBox(height: 4), // Reduced spacing
 
-                // Description - make it flexible to take remaining space
-                Expanded(
-                  child: Text(
-                    app.description,
-                    style: theme.textTheme.bodySmall?.copyWith(
-                      fontSize: 10,
-                    ),
-                    maxLines: 2, // Reduced max lines
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                ),
-                const SizedBox(height: 4), // Reduced spacing
+              // Description
+              Text(
 
-                // Rating and downloads
-                Row(
-                  children: [
-                    Icon(
-                      Icons.star,
-                      size: 12, // Smaller icon
-                      color: AppConstants.primaryYellow,
-                    ),
-                    const SizedBox(width: 2),
-                    Text(
-                      app.rating.toStringAsFixed(1),
-                      style: theme.textTheme.bodySmall?.copyWith(
-                        fontWeight: FontWeight.w500,
-                        fontSize: 10,
-                      ),
-                    ),
-                    const Spacer(),
-                    Icon(
-                      Icons.download,
-                      size: 12, // Smaller icon
-                      color: AppConstants.secondaryTextColor,
-                    ),
-                    const SizedBox(width: 2),
-                    Flexible(
-                      child: Text(
-                        _formatDownloadCount(app.downloadCount),
-                        style: theme.textTheme.bodySmall?.copyWith(
-                          color: AppConstants.secondaryTextColor,
-                          fontSize: 10,
-                        ),
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                    ),
-                  ],
+                // get only the first 100 characters of the description
+                app.description.length > 20 ?  app.description.substring(0, 20) + '...' : app.description,
+                style: theme.textTheme.bodySmall?.copyWith(
+                  fontSize: 10,
                 ),
-              ],
-            ),
+                maxLines: 2, // Reduced max lines
+                overflow: TextOverflow.ellipsis,
+              ),
+              const SizedBox(height: 4), // Reduced spacing
+
+            ],
           ),
         ),
       ],
     );
   }
 
-  Widget _buildCompactLayout(ThemeData theme) {
+  Widget _buildCompactLayout(BuildContext context, ThemeData theme) {
     return Padding(
       padding: const EdgeInsets.all(AppConstants.paddingS), // Reduced padding
       child: Row(
@@ -210,9 +175,9 @@ class AppCard extends StatelessWidget {
                           color: AppConstants.primaryYellow,
                           borderRadius: BorderRadius.circular(AppConstants.borderRadiusM),
                         ),
-                        child: const Text(
-                          'Vedette',
-                          style: TextStyle(
+                        child: Text(
+                          AppLocalizations.of(context)!.featured,
+                          style: const TextStyle(
                             fontSize: 8,
                             fontWeight: FontWeight.bold,
                             color: AppConstants.primaryTextColor,
@@ -235,41 +200,6 @@ class AppCard extends StatelessWidget {
                 ),
                 const SizedBox(height: 6),
 
-                // Rating and downloads
-                Row(
-                  children: [
-                    Icon(
-                      Icons.star,
-                      size: 14,
-                      color: AppConstants.primaryYellow,
-                    ),
-                    const SizedBox(width: 2),
-                    Text(
-                      app.rating.toStringAsFixed(1),
-                      style: theme.textTheme.bodySmall?.copyWith(
-                        fontWeight: FontWeight.w500,
-                        fontSize: 11,
-                      ),
-                    ),
-                    const SizedBox(width: AppConstants.paddingM),
-                    Icon(
-                      Icons.download,
-                      size: 14,
-                      color: AppConstants.secondaryTextColor,
-                    ),
-                    const SizedBox(width: 2),
-                    Flexible(
-                      child: Text(
-                        _formatDownloadCount(app.downloadCount),
-                        style: theme.textTheme.bodySmall?.copyWith(
-                          color: AppConstants.secondaryTextColor,
-                          fontSize: 11,
-                        ),
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                    ),
-                  ],
-                ),
               ],
             ),
           ),
