@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../models/ad_banner.dart';
 import '../utils/constants.dart';
+import '../l10n/app_localizations.dart';
 
 /// Widget for displaying advertisement banners in the marketplace
 class AdBannerWidget extends StatelessWidget {
@@ -44,7 +45,7 @@ class AdBannerWidget extends StatelessWidget {
                 height: _getAdHeight(),
                 fit: BoxFit.cover,
                 errorBuilder: (context, error, stackTrace) {
-                  return _buildPlaceholderAd();
+                  return _buildPlaceholderAd(context);
                 },
               ),
               
@@ -61,9 +62,9 @@ class AdBannerWidget extends StatelessWidget {
                     color: AppConstants.orange,
                     borderRadius: BorderRadius.circular(AppConstants.borderRadiusS),
                   ),
-                  child: const Text(
-                    'Sponsorisé',
-                    style: TextStyle(
+                  child: Text(
+                    AppLocalizations.of(context)!.sponsored,
+                    style: const TextStyle(
                       color: AppConstants.whiteTextColor,
                       fontSize: 10,
                       fontWeight: FontWeight.w600,
@@ -126,7 +127,7 @@ class AdBannerWidget extends StatelessWidget {
     );
   }
 
-  Widget _buildPlaceholderAd() {
+  Widget _buildPlaceholderAd(BuildContext context) {
     return Container(
       width: double.infinity,
       height: _getAdHeight(),
@@ -141,7 +142,7 @@ class AdBannerWidget extends StatelessWidget {
           ),
           const SizedBox(height: 8),
           Text(
-            'Espace publicitaire',
+            AppLocalizations.of(context)!.advertisingSpace,
             style: TextStyle(
               color: Colors.grey[600],
               fontSize: 14,

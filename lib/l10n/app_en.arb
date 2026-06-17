@@ -1724,5 +1724,320 @@
   "pricing": "Pricing",
   "@pricing": {
     "description": "Pricing label"
-  }
+  },
+
+  "allCategories": "All",
+  "@allCategories": { "description": "Label for the 'all categories' filter chip" },
+
+  "appsCountLabel": "{count} apps",
+  "@appsCountLabel": {
+    "description": "Number of apps in a category",
+    "placeholders": { "count": { "type": "int" } }
+  },
+
+  "verificationCodeSent": "Verification code sent to your email!",
+  "@verificationCodeSent": { "description": "Snackbar after registration" },
+
+  "accountCreationError": "Error creating account: {error}",
+  "@accountCreationError": {
+    "description": "Registration failure message",
+    "placeholders": { "error": { "type": "String" } }
+  },
+
+  "joinNoujoumStore": "Join Noujoum Store",
+  "@joinNoujoumStore": { "description": "Register screen heading" },
+
+  "createAccountSubtitle": "Create your account to publish your applications",
+  "@createAccountSubtitle": { "description": "Register screen subtitle" },
+
+  "fullNameLabel": "Full Name *",
+  "@fullNameLabel": { "description": "Full name field label" },
+
+  "pleaseEnterName": "Please enter your name",
+  "@pleaseEnterName": { "description": "Name validation" },
+
+  "emailLabelRequired": "Email *",
+  "@emailLabelRequired": { "description": "Required email field label" },
+
+  "passwordLabelRequired": "Password *",
+  "@passwordLabelRequired": { "description": "Required password field label" },
+
+  "passwordMinLength": "Password must be at least 8 characters",
+  "@passwordMinLength": { "description": "Password length validation" },
+
+  "confirmPasswordLabelRequired": "Confirm Password *",
+  "@confirmPasswordLabelRequired": { "description": "Required confirm password label" },
+
+  "pleaseConfirmPassword": "Please confirm your password",
+  "@pleaseConfirmPassword": { "description": "Confirm password validation" },
+
+  "passwordsDoNotMatch": "Passwords do not match",
+  "@passwordsDoNotMatch": { "description": "Password mismatch validation" },
+
+  "optional": "Optional",
+  "@optional": { "description": "Helper text for optional fields" },
+
+  "optionalBioHelper": "Optional - Describe yourself briefly",
+  "@optionalBioHelper": { "description": "Bio field helper" },
+
+  "companyLabel": "Company",
+  "@companyLabel": { "description": "Company field label" },
+
+  "pleaseEnterCompleteCode": "Please enter the complete code",
+  "@pleaseEnterCompleteCode": { "description": "Verification code validation" },
+
+  "accountCreatedSuccess": "Account created successfully!",
+  "@accountCreatedSuccess": { "description": "Registration completed" },
+
+  "invalidOrExpiredCode": "Invalid or expired code",
+  "@invalidOrExpiredCode": { "description": "Verification failed" },
+
+  "newCodeSent": "New code sent!",
+  "@newCodeSent": { "description": "Resend success" },
+
+  "errorSendingCode": "Error sending the code",
+  "@errorSendingCode": { "description": "Resend failure" },
+
+  "verifyYourEmail": "Verify your email",
+  "@verifyYourEmail": { "description": "Email verification title" },
+
+  "verificationCodeSentTo": "We sent a verification code to\n{email}",
+  "@verificationCodeSentTo": {
+    "description": "Email verification description",
+    "placeholders": { "email": { "type": "String" } }
+  },
+
+  "verify": "Verify",
+  "@verify": { "description": "Verify button" },
+
+  "didNotReceiveCode": "Didn't receive the code? ",
+  "@didNotReceiveCode": { "description": "Resend prompt" },
+
+  "resendWithCountdown": "Resend ({seconds}s)",
+  "@resendWithCountdown": {
+    "description": "Resend button with countdown",
+    "placeholders": { "seconds": { "type": "int" } }
+  },
+
+  "sending": "Sending...",
+  "@sending": { "description": "Resend in progress" },
+
+  "resend": "Resend",
+  "@resend": { "description": "Resend button" },
+
+  "loadingError": "Loading error",
+  "@loadingError": { "description": "Generic loading error title" },
+
+  "subscriptionStatus": "Subscription Status",
+  "@subscriptionStatus": { "description": "Subscription status card title" },
+
+  "noSubscription": "No subscription",
+  "@noSubscription": { "description": "No subscription status" },
+
+  "globalFreeTrialActive": "Global free trial active",
+  "@globalFreeTrialActive": { "description": "Status text" },
+
+  "freeTrialActive": "Free trial active",
+  "@freeTrialActive": { "description": "Status text" },
+
+  "subscriptionActive": "Subscription active",
+  "@subscriptionActive": { "description": "Status text" },
+
+  "freeTrialExpired": "Free trial expired",
+  "@freeTrialExpired": { "description": "Status text" },
+
+  "typeLabel": "Type:",
+  "@typeLabel": { "description": "Subscription type label" },
+
+  "globalFreeTrial": "Global free trial",
+  "@globalFreeTrial": { "description": "Subscription type value" },
+
+  "freeTrial": "Free trial",
+  "@freeTrial": { "description": "Subscription type value" },
+
+  "paidSubscription": "Paid subscription",
+  "@paidSubscription": { "description": "Subscription type value" },
+
+  "timeRemainingLabel": "Time remaining:",
+  "@timeRemainingLabel": { "description": "Time remaining label" },
+
+  "expiresOnLabel": "Expires on:",
+  "@expiresOnLabel": { "description": "Expiry date label" },
+
+  "canPublishLabel": "Can publish:",
+  "@canPublishLabel": { "description": "Can publish label" },
+
+  "yes": "Yes",
+  "@yes": { "description": "Yes" },
+
+  "enjoyGlobalFreeTrial": "Enjoy the global free trial",
+  "@enjoyGlobalFreeTrial": { "description": "Button" },
+
+  "upgradeToPaidSubscription": "Upgrade to a paid subscription",
+  "@upgradeToPaidSubscription": { "description": "Button" },
+
+  "refreshStatus": "Refresh status",
+  "@refreshStatus": { "description": "Button" },
+
+  "chooseSubscription": "Choose a subscription",
+  "@chooseSubscription": { "description": "Button / screen title" },
+
+  "renewSubscription": "Renew subscription",
+  "@renewSubscription": { "description": "Button" },
+
+  "extend": "Extend",
+  "@extend": { "description": "Extend subscription button" },
+
+  "refresh": "Refresh",
+  "@refresh": { "description": "Refresh button" },
+
+  "globalFreeTrialEndedDescription": "The global free trial period has ended. Choose a subscription to continue publishing applications.",
+  "@globalFreeTrialEndedDescription": { "description": "Expired global trial description" },
+
+  "freeTrialEndedDescription": "Your free trial period has ended. Choose a subscription to continue publishing applications.",
+  "@freeTrialEndedDescription": { "description": "Expired trial description" },
+
+  "subscriptionRequiredDescription": "You need an active subscription to publish applications.",
+  "@subscriptionRequiredDescription": { "description": "Subscription required description" },
+
+  "navigationError": "Navigation error: {error}",
+  "@navigationError": {
+    "description": "Navigation error",
+    "placeholders": { "error": { "type": "String" } }
+  },
+
+  "cannotNavigateToSubscriptions": "Cannot navigate to subscriptions",
+  "@cannotNavigateToSubscriptions": { "description": "Navigation failure" },
+
+  "noPackagesAvailable": "No packages available",
+  "@noPackagesAvailable": { "description": "Empty packages" },
+
+  "chooseYourSubscriptionPlan": "Choose your subscription plan",
+  "@chooseYourSubscriptionPlan": { "description": "Packages screen heading" },
+
+  "selectPlanThatSuitsYou": "Select the plan that best suits your needs to publish your applications.",
+  "@selectPlanThatSuitsYou": { "description": "Packages screen subtitle" },
+
+  "chooseThisPlan": "Choose this plan",
+  "@chooseThisPlan": { "description": "Select package button" },
+
+  "sponsored": "Sponsored",
+  "@sponsored": { "description": "Sponsored ad label" },
+
+  "advertisingSpace": "Advertising space",
+  "@advertisingSpace": { "description": "Ad placeholder" },
+
+  "pricingModelLabel": "Pricing Model *",
+  "@pricingModelLabel": { "description": "Pricing model field label" },
+
+  "priceFieldLabel": "Price *",
+  "@priceFieldLabel": { "description": "Price field label" },
+
+  "priceFieldHint": "Ex: 500 MRU/month, Free, On quote",
+  "@priceFieldHint": { "description": "Price field hint" },
+
+  "offersFreeTrial": "Offers a free trial",
+  "@offersFreeTrial": { "description": "Free trial checkbox" },
+
+  "trialDurationDays": "Trial duration (days)",
+  "@trialDurationDays": { "description": "Trial duration field label" },
+
+  "trialDaysHint": "Ex: 14",
+  "@trialDaysHint": { "description": "Trial duration hint" },
+
+  "businessValueLabel": "Business Value *",
+  "@businessValueLabel": { "description": "Business value field label" },
+
+  "businessValueHint": "Ex: Improves client management and increases sales by 30%",
+  "@businessValueHint": { "description": "Business value hint" },
+
+  "keyFeaturesLabel": "Key Features *",
+  "@keyFeaturesLabel": { "description": "Key features field label" },
+
+  "keyFeaturesHint": "Separate features with commas",
+  "@keyFeaturesHint": { "description": "Key features hint" },
+
+  "targetBusinessSectors": "Target Business Sectors",
+  "@targetBusinessSectors": { "description": "Business sectors field label" },
+
+  "sectorCommerce": "Commerce",
+  "@sectorCommerce": { "description": "Business sector" },
+
+  "sectorServices": "Services",
+  "@sectorServices": { "description": "Business sector" },
+
+  "sectorIndustry": "Industry",
+  "@sectorIndustry": { "description": "Business sector" },
+
+  "sectorHealth": "Health",
+  "@sectorHealth": { "description": "Business sector" },
+
+  "sectorEducation": "Education",
+  "@sectorEducation": { "description": "Business sector" },
+
+  "sectorAgriculture": "Agriculture",
+  "@sectorAgriculture": { "description": "Business sector" },
+
+  "supportOptionsOffered": "Support options offered",
+  "@supportOptionsOffered": { "description": "Support options field label" },
+
+  "priceWithCurrency": "{amount} MRU",
+  "@priceWithCurrency": {
+    "description": "Price formatted with currency",
+    "placeholders": { "amount": { "type": "String" } }
+  },
+
+  "pricePerMonthValue": "{amount} MRU/month",
+  "@pricePerMonthValue": {
+    "description": "Monthly price",
+    "placeholders": { "amount": { "type": "String" } }
+  },
+
+  "durationOneMonth": "1 month",
+  "@durationOneMonth": { "description": "Duration" },
+
+  "durationOneYear": "1 year",
+  "@durationOneYear": { "description": "Duration" },
+
+  "durationMonthsValue": "{count} months",
+  "@durationMonthsValue": {
+    "description": "Duration in months",
+    "placeholders": { "count": { "type": "int" } }
+  },
+
+  "expired": "Expired",
+  "@expired": { "description": "Expired status" },
+
+  "expiresToday": "Expires today",
+  "@expiresToday": { "description": "Expiry today" },
+
+  "expiresTomorrow": "Expires tomorrow",
+  "@expiresTomorrow": { "description": "Expiry tomorrow" },
+
+  "expiresInDays": "Expires in {days} days",
+  "@expiresInDays": {
+    "description": "Expiry in days",
+    "placeholders": { "days": { "type": "int" } }
+  },
+
+  "expiresInMonths": "Expires in {months} months",
+  "@expiresInMonths": {
+    "description": "Expiry in months",
+    "placeholders": { "months": { "type": "int" } }
+  },
+
+  "statusActive": "Active",
+  "@statusActive": { "description": "Status" },
+
+  "statusCancelled": "Cancelled",
+  "@statusCancelled": { "description": "Status" },
+
+  "statusPending": "Pending",
+  "@statusPending": { "description": "Transaction status" },
+
+  "statusApproved": "Approved",
+  "@statusApproved": { "description": "Transaction status" },
+
+  "statusRejected": "Rejected",
+  "@statusRejected": { "description": "Transaction status" }
 }

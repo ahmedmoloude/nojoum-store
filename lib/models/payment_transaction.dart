@@ -1,6 +1,7 @@
 import 'subscription_package.dart';
 import 'user_subscription.dart';
 import 'user.dart';
+import '../l10n/app_localizations.dart';
 
 enum TransactionStatus { pending, approved, rejected, cancelled }
 
@@ -130,16 +131,16 @@ class PaymentTransaction {
   bool get isRejected => status == TransactionStatus.rejected;
   bool get isCancelled => status == TransactionStatus.cancelled;
 
-  String get statusLabel {
+  String statusLabel(AppLocalizations l10n) {
     switch (status) {
       case TransactionStatus.pending:
-        return 'En attente';
+        return l10n.statusPending;
       case TransactionStatus.approved:
-        return 'Approuvé';
+        return l10n.statusApproved;
       case TransactionStatus.rejected:
-        return 'Rejeté';
+        return l10n.statusRejected;
       case TransactionStatus.cancelled:
-        return 'Annulé';
+        return l10n.statusCancelled;
     }
   }
 

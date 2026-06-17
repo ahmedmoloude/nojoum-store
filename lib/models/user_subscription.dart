@@ -1,4 +1,5 @@
 import 'subscription_package.dart';
+import '../l10n/app_localizations.dart';
 
 enum SubscriptionStatus { freeTrial, active, expired, cancelled }
 
@@ -108,32 +109,32 @@ class UserSubscription {
     return expiresAt.difference(DateTime.now()).inDays;
   }
 
-  String get statusLabel {
+  String statusLabel(AppLocalizations l10n) {
     switch (status) {
       case SubscriptionStatus.freeTrial:
-        return 'Essai gratuit';
+        return l10n.freeTrial;
       case SubscriptionStatus.active:
-        return 'Actif';
+        return l10n.statusActive;
       case SubscriptionStatus.expired:
-        return 'Expiré';
+        return l10n.expired;
       case SubscriptionStatus.cancelled:
-        return 'Annulé';
+        return l10n.statusCancelled;
     }
   }
 
-  String get timeRemainingText {
-    if (isExpired) return 'Expiré';
-    
+  String timeRemainingText(AppLocalizations l10n) {
+    if (isExpired) return l10n.expired;
+
     final days = daysRemaining;
     if (days == 0) {
-      return 'Expire aujourd\'hui';
+      return l10n.expiresToday;
     } else if (days == 1) {
-      return 'Expire demain';
+      return l10n.expiresTomorrow;
     } else if (days < 30) {
-      return 'Expire dans $days jours';
+      return l10n.expiresInDays(days);
     } else {
       final months = (days / 30).floor();
-      return 'Expire dans $months mois';
+      return l10n.expiresInMonths(months);
     }
   }
 

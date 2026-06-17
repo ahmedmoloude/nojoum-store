@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'dart:async';
 import '../../services/auth_service.dart';
+import '../../l10n/app_localizations.dart';
 
 class EmailVerificationScreen extends StatefulWidget {
   final String email;
@@ -69,7 +70,7 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
 
   Future<void> _verifyCode() async {
     if (_verificationCode.length != 6) {
-      _showSnackBar('Veuillez saisir le code complet', Colors.orange);
+      _showSnackBar(AppLocalizations.of(context)!.pleaseEnterCompleteCode, Colors.orange);
       return;
     }
 
@@ -91,11 +92,11 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
 
       if (mounted) {
         Navigator.of(context).popUntil((route) => route.isFirst);
-        _showSnackBar('Compte créé avec succès!', Colors.green);
+        _showSnackBar(AppLocalizations.of(context)!.accountCreatedSuccess, Colors.green);
       }
     } catch (e) {
       if (mounted) {
-        _showSnackBar('Code invalide ou expiré', Colors.red);
+        _showSnackBar(AppLocalizations.of(context)!.invalidOrExpiredCode, Colors.red);
         // Clear the code inputs
         for (var controller in _controllers) {
           controller.clear();
@@ -125,12 +126,12 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
       );
 
       if (mounted) {
-        _showSnackBar('Nouveau code envoyé!', Colors.green);
+        _showSnackBar(AppLocalizations.of(context)!.newCodeSent, Colors.green);
         _startResendCountdown();
       }
     } catch (e) {
       if (mounted) {
-        _showSnackBar('Erreur lors de l\'envoi du code', Colors.red);
+        _showSnackBar(AppLocalizations.of(context)!.errorSendingCode, Colors.red);
       }
     } finally {
       if (mounted) {
@@ -152,6 +153,7 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -188,21 +190,21 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
               const SizedBox(height: 32),
               
               // Title
-              const Text(
-                'Vérifiez votre email',
-                style: TextStyle(
+              Text(
+                l10n.verifyYourEmail,
+                style: const TextStyle(
                   fontSize: 28,
                   fontWeight: FontWeight.bold,
                   color: Colors.black,
                 ),
                 textAlign: TextAlign.center,
               ),
-              
+
               const SizedBox(height: 16),
-              
+
               // Description
               Text(
-                'Nous avons envoyé un code de vérification à\n${widget.email}',
+                l10n.verificationCodeSentTo(widget.email),
                 style: TextStyle(
                   fontSize: 16,
                   color: Colors.grey[600],
@@ -273,9 +275,9 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
                   ),
                   child: _isLoading
                       ? const CircularProgressIndicator(color: Colors.white)
-                      : const Text(
-                          'Vérifier',
-                          style: TextStyle(
+                      : Text(
+                          l10n.verify,
+                          style: const TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.bold,
                             color: Colors.white,
@@ -291,17 +293,17 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    'Vous n\'avez pas reçu le code? ',
+                    l10n.didNotReceiveCode,
                     style: TextStyle(color: Colors.grey[600]),
                   ),
                   GestureDetector(
                     onTap: _resendCountdown > 0 || _isResending ? null : _resendCode,
                     child: Text(
-                      _resendCountdown > 0 
-                          ? 'Renvoyer (${_resendCountdown}s)'
-                          : _isResending 
-                              ? 'Envoi...'
-                              : 'Renvoyer',
+                      _resendCountdown > 0
+                          ? l10n.resendWithCountdown(_resendCountdown)
+                          : _isResending
+                              ? l10n.sending
+                              : l10n.resend,
                       style: TextStyle(
                         color: _resendCountdown > 0 || _isResending 
                             ? Colors.grey[400]

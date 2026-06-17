@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:url_launcher/url_launcher.dart';
+import '../models/app_category.dart';
 import '../models/mauritanian_app.dart';
 import '../utils/constants.dart';
 import '../l10n/app_localizations.dart';
@@ -464,7 +465,7 @@ class _AppDetailScreenState extends State<AppDetailScreen> {
           style: Theme.of(context).textTheme.headlineSmall,
         ),
         const SizedBox(height: AppConstants.paddingM),
-        _buildInfoRow(l10n.category, widget.app.category),
+        _buildInfoRow(l10n.category, AppCategories.getById(widget.app.category)?.displayName ?? widget.app.category),
         if (widget.app.subcategory.isNotEmpty)
           _buildInfoRow(l10n.subcategory, widget.app.subcategory),
         if (widget.app.tags.isNotEmpty)

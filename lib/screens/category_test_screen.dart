@@ -176,7 +176,7 @@ class _CategoryTestScreenState extends State<CategoryTestScreen> {
                     ),
                   ),
                   title: Text(
-                    category.name,
+                    category.displayName,
                     style: const TextStyle(fontWeight: FontWeight.bold),
                   ),
                   subtitle: Column(

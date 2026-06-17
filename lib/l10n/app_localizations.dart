@@ -1948,10 +1948,10 @@ abstract class AppLocalizations {
   /// **'Verified'**
   String get verified;
 
-  /// Free trial label
+  /// Subscription type value
   ///
   /// In en, this message translates to:
-  /// **'Free Trial'**
+  /// **'Free trial'**
   String get freeTrial;
 
   /// Trial days
@@ -1995,6 +1995,570 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Pricing'**
   String get pricing;
+
+  /// Label for the 'all categories' filter chip
+  ///
+  /// In en, this message translates to:
+  /// **'All'**
+  String get allCategories;
+
+  /// Number of apps in a category
+  ///
+  /// In en, this message translates to:
+  /// **'{count} apps'**
+  String appsCountLabel(int count);
+
+  /// Snackbar after registration
+  ///
+  /// In en, this message translates to:
+  /// **'Verification code sent to your email!'**
+  String get verificationCodeSent;
+
+  /// Registration failure message
+  ///
+  /// In en, this message translates to:
+  /// **'Error creating account: {error}'**
+  String accountCreationError(String error);
+
+  /// Register screen heading
+  ///
+  /// In en, this message translates to:
+  /// **'Join Noujoum Store'**
+  String get joinNoujoumStore;
+
+  /// Register screen subtitle
+  ///
+  /// In en, this message translates to:
+  /// **'Create your account to publish your applications'**
+  String get createAccountSubtitle;
+
+  /// Full name field label
+  ///
+  /// In en, this message translates to:
+  /// **'Full Name *'**
+  String get fullNameLabel;
+
+  /// Name validation
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter your name'**
+  String get pleaseEnterName;
+
+  /// Required email field label
+  ///
+  /// In en, this message translates to:
+  /// **'Email *'**
+  String get emailLabelRequired;
+
+  /// Required password field label
+  ///
+  /// In en, this message translates to:
+  /// **'Password *'**
+  String get passwordLabelRequired;
+
+  /// Password length validation
+  ///
+  /// In en, this message translates to:
+  /// **'Password must be at least 8 characters'**
+  String get passwordMinLength;
+
+  /// Required confirm password label
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm Password *'**
+  String get confirmPasswordLabelRequired;
+
+  /// Confirm password validation
+  ///
+  /// In en, this message translates to:
+  /// **'Please confirm your password'**
+  String get pleaseConfirmPassword;
+
+  /// Password mismatch validation
+  ///
+  /// In en, this message translates to:
+  /// **'Passwords do not match'**
+  String get passwordsDoNotMatch;
+
+  /// Helper text for optional fields
+  ///
+  /// In en, this message translates to:
+  /// **'Optional'**
+  String get optional;
+
+  /// Bio field helper
+  ///
+  /// In en, this message translates to:
+  /// **'Optional - Describe yourself briefly'**
+  String get optionalBioHelper;
+
+  /// Company field label
+  ///
+  /// In en, this message translates to:
+  /// **'Company'**
+  String get companyLabel;
+
+  /// Verification code validation
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter the complete code'**
+  String get pleaseEnterCompleteCode;
+
+  /// Registration completed
+  ///
+  /// In en, this message translates to:
+  /// **'Account created successfully!'**
+  String get accountCreatedSuccess;
+
+  /// Verification failed
+  ///
+  /// In en, this message translates to:
+  /// **'Invalid or expired code'**
+  String get invalidOrExpiredCode;
+
+  /// Resend success
+  ///
+  /// In en, this message translates to:
+  /// **'New code sent!'**
+  String get newCodeSent;
+
+  /// Resend failure
+  ///
+  /// In en, this message translates to:
+  /// **'Error sending the code'**
+  String get errorSendingCode;
+
+  /// Email verification title
+  ///
+  /// In en, this message translates to:
+  /// **'Verify your email'**
+  String get verifyYourEmail;
+
+  /// Email verification description
+  ///
+  /// In en, this message translates to:
+  /// **'We sent a verification code to\n{email}'**
+  String verificationCodeSentTo(String email);
+
+  /// Verify button
+  ///
+  /// In en, this message translates to:
+  /// **'Verify'**
+  String get verify;
+
+  /// Resend prompt
+  ///
+  /// In en, this message translates to:
+  /// **'Didn\'t receive the code? '**
+  String get didNotReceiveCode;
+
+  /// Resend button with countdown
+  ///
+  /// In en, this message translates to:
+  /// **'Resend ({seconds}s)'**
+  String resendWithCountdown(int seconds);
+
+  /// Resend in progress
+  ///
+  /// In en, this message translates to:
+  /// **'Sending...'**
+  String get sending;
+
+  /// Resend button
+  ///
+  /// In en, this message translates to:
+  /// **'Resend'**
+  String get resend;
+
+  /// Generic loading error title
+  ///
+  /// In en, this message translates to:
+  /// **'Loading error'**
+  String get loadingError;
+
+  /// Subscription status card title
+  ///
+  /// In en, this message translates to:
+  /// **'Subscription Status'**
+  String get subscriptionStatus;
+
+  /// No subscription status
+  ///
+  /// In en, this message translates to:
+  /// **'No subscription'**
+  String get noSubscription;
+
+  /// Status text
+  ///
+  /// In en, this message translates to:
+  /// **'Global free trial active'**
+  String get globalFreeTrialActive;
+
+  /// Status text
+  ///
+  /// In en, this message translates to:
+  /// **'Free trial active'**
+  String get freeTrialActive;
+
+  /// Status text
+  ///
+  /// In en, this message translates to:
+  /// **'Subscription active'**
+  String get subscriptionActive;
+
+  /// Status text
+  ///
+  /// In en, this message translates to:
+  /// **'Free trial expired'**
+  String get freeTrialExpired;
+
+  /// Subscription type label
+  ///
+  /// In en, this message translates to:
+  /// **'Type:'**
+  String get typeLabel;
+
+  /// Subscription type value
+  ///
+  /// In en, this message translates to:
+  /// **'Global free trial'**
+  String get globalFreeTrial;
+
+  /// Subscription type value
+  ///
+  /// In en, this message translates to:
+  /// **'Paid subscription'**
+  String get paidSubscription;
+
+  /// Time remaining label
+  ///
+  /// In en, this message translates to:
+  /// **'Time remaining:'**
+  String get timeRemainingLabel;
+
+  /// Expiry date label
+  ///
+  /// In en, this message translates to:
+  /// **'Expires on:'**
+  String get expiresOnLabel;
+
+  /// Can publish label
+  ///
+  /// In en, this message translates to:
+  /// **'Can publish:'**
+  String get canPublishLabel;
+
+  /// Yes
+  ///
+  /// In en, this message translates to:
+  /// **'Yes'**
+  String get yes;
+
+  /// Button
+  ///
+  /// In en, this message translates to:
+  /// **'Enjoy the global free trial'**
+  String get enjoyGlobalFreeTrial;
+
+  /// Button
+  ///
+  /// In en, this message translates to:
+  /// **'Upgrade to a paid subscription'**
+  String get upgradeToPaidSubscription;
+
+  /// Button
+  ///
+  /// In en, this message translates to:
+  /// **'Refresh status'**
+  String get refreshStatus;
+
+  /// Button / screen title
+  ///
+  /// In en, this message translates to:
+  /// **'Choose a subscription'**
+  String get chooseSubscription;
+
+  /// Button
+  ///
+  /// In en, this message translates to:
+  /// **'Renew subscription'**
+  String get renewSubscription;
+
+  /// Extend subscription button
+  ///
+  /// In en, this message translates to:
+  /// **'Extend'**
+  String get extend;
+
+  /// Refresh button
+  ///
+  /// In en, this message translates to:
+  /// **'Refresh'**
+  String get refresh;
+
+  /// Expired global trial description
+  ///
+  /// In en, this message translates to:
+  /// **'The global free trial period has ended. Choose a subscription to continue publishing applications.'**
+  String get globalFreeTrialEndedDescription;
+
+  /// Expired trial description
+  ///
+  /// In en, this message translates to:
+  /// **'Your free trial period has ended. Choose a subscription to continue publishing applications.'**
+  String get freeTrialEndedDescription;
+
+  /// Subscription required description
+  ///
+  /// In en, this message translates to:
+  /// **'You need an active subscription to publish applications.'**
+  String get subscriptionRequiredDescription;
+
+  /// Navigation error
+  ///
+  /// In en, this message translates to:
+  /// **'Navigation error: {error}'**
+  String navigationError(String error);
+
+  /// Navigation failure
+  ///
+  /// In en, this message translates to:
+  /// **'Cannot navigate to subscriptions'**
+  String get cannotNavigateToSubscriptions;
+
+  /// Empty packages
+  ///
+  /// In en, this message translates to:
+  /// **'No packages available'**
+  String get noPackagesAvailable;
+
+  /// Packages screen heading
+  ///
+  /// In en, this message translates to:
+  /// **'Choose your subscription plan'**
+  String get chooseYourSubscriptionPlan;
+
+  /// Packages screen subtitle
+  ///
+  /// In en, this message translates to:
+  /// **'Select the plan that best suits your needs to publish your applications.'**
+  String get selectPlanThatSuitsYou;
+
+  /// Select package button
+  ///
+  /// In en, this message translates to:
+  /// **'Choose this plan'**
+  String get chooseThisPlan;
+
+  /// Sponsored ad label
+  ///
+  /// In en, this message translates to:
+  /// **'Sponsored'**
+  String get sponsored;
+
+  /// Ad placeholder
+  ///
+  /// In en, this message translates to:
+  /// **'Advertising space'**
+  String get advertisingSpace;
+
+  /// Pricing model field label
+  ///
+  /// In en, this message translates to:
+  /// **'Pricing Model *'**
+  String get pricingModelLabel;
+
+  /// Price field label
+  ///
+  /// In en, this message translates to:
+  /// **'Price *'**
+  String get priceFieldLabel;
+
+  /// Price field hint
+  ///
+  /// In en, this message translates to:
+  /// **'Ex: 500 MRU/month, Free, On quote'**
+  String get priceFieldHint;
+
+  /// Free trial checkbox
+  ///
+  /// In en, this message translates to:
+  /// **'Offers a free trial'**
+  String get offersFreeTrial;
+
+  /// Trial duration field label
+  ///
+  /// In en, this message translates to:
+  /// **'Trial duration (days)'**
+  String get trialDurationDays;
+
+  /// Trial duration hint
+  ///
+  /// In en, this message translates to:
+  /// **'Ex: 14'**
+  String get trialDaysHint;
+
+  /// Business value field label
+  ///
+  /// In en, this message translates to:
+  /// **'Business Value *'**
+  String get businessValueLabel;
+
+  /// Business value hint
+  ///
+  /// In en, this message translates to:
+  /// **'Ex: Improves client management and increases sales by 30%'**
+  String get businessValueHint;
+
+  /// Key features field label
+  ///
+  /// In en, this message translates to:
+  /// **'Key Features *'**
+  String get keyFeaturesLabel;
+
+  /// Key features hint
+  ///
+  /// In en, this message translates to:
+  /// **'Separate features with commas'**
+  String get keyFeaturesHint;
+
+  /// Business sectors field label
+  ///
+  /// In en, this message translates to:
+  /// **'Target Business Sectors'**
+  String get targetBusinessSectors;
+
+  /// Business sector
+  ///
+  /// In en, this message translates to:
+  /// **'Commerce'**
+  String get sectorCommerce;
+
+  /// Business sector
+  ///
+  /// In en, this message translates to:
+  /// **'Services'**
+  String get sectorServices;
+
+  /// Business sector
+  ///
+  /// In en, this message translates to:
+  /// **'Industry'**
+  String get sectorIndustry;
+
+  /// Business sector
+  ///
+  /// In en, this message translates to:
+  /// **'Health'**
+  String get sectorHealth;
+
+  /// Business sector
+  ///
+  /// In en, this message translates to:
+  /// **'Education'**
+  String get sectorEducation;
+
+  /// Business sector
+  ///
+  /// In en, this message translates to:
+  /// **'Agriculture'**
+  String get sectorAgriculture;
+
+  /// Support options field label
+  ///
+  /// In en, this message translates to:
+  /// **'Support options offered'**
+  String get supportOptionsOffered;
+
+  /// Price formatted with currency
+  ///
+  /// In en, this message translates to:
+  /// **'{amount} MRU'**
+  String priceWithCurrency(String amount);
+
+  /// Monthly price
+  ///
+  /// In en, this message translates to:
+  /// **'{amount} MRU/month'**
+  String pricePerMonthValue(String amount);
+
+  /// Duration
+  ///
+  /// In en, this message translates to:
+  /// **'1 month'**
+  String get durationOneMonth;
+
+  /// Duration
+  ///
+  /// In en, this message translates to:
+  /// **'1 year'**
+  String get durationOneYear;
+
+  /// Duration in months
+  ///
+  /// In en, this message translates to:
+  /// **'{count} months'**
+  String durationMonthsValue(int count);
+
+  /// Expired status
+  ///
+  /// In en, this message translates to:
+  /// **'Expired'**
+  String get expired;
+
+  /// Expiry today
+  ///
+  /// In en, this message translates to:
+  /// **'Expires today'**
+  String get expiresToday;
+
+  /// Expiry tomorrow
+  ///
+  /// In en, this message translates to:
+  /// **'Expires tomorrow'**
+  String get expiresTomorrow;
+
+  /// Expiry in days
+  ///
+  /// In en, this message translates to:
+  /// **'Expires in {days} days'**
+  String expiresInDays(int days);
+
+  /// Expiry in months
+  ///
+  /// In en, this message translates to:
+  /// **'Expires in {months} months'**
+  String expiresInMonths(int months);
+
+  /// Status
+  ///
+  /// In en, this message translates to:
+  /// **'Active'**
+  String get statusActive;
+
+  /// Status
+  ///
+  /// In en, this message translates to:
+  /// **'Cancelled'**
+  String get statusCancelled;
+
+  /// Transaction status
+  ///
+  /// In en, this message translates to:
+  /// **'Pending'**
+  String get statusPending;
+
+  /// Transaction status
+  ///
+  /// In en, this message translates to:
+  /// **'Approved'**
+  String get statusApproved;
+
+  /// Transaction status
+  ///
+  /// In en, this message translates to:
+  /// **'Rejected'**
+  String get statusRejected;
 }
 
 class _AppLocalizationsDelegate

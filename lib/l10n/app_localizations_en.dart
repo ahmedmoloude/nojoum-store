@@ -986,7 +986,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get verified => 'Verified';
 
   @override
-  String get freeTrial => 'Free Trial';
+  String get freeTrial => 'Free trial';
 
   @override
   String trialDays(int days) {
@@ -1010,4 +1010,313 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get pricing => 'Pricing';
+
+  @override
+  String get allCategories => 'All';
+
+  @override
+  String appsCountLabel(int count) {
+    return '$count apps';
+  }
+
+  @override
+  String get verificationCodeSent => 'Verification code sent to your email!';
+
+  @override
+  String accountCreationError(String error) {
+    return 'Error creating account: $error';
+  }
+
+  @override
+  String get joinNoujoumStore => 'Join Noujoum Store';
+
+  @override
+  String get createAccountSubtitle =>
+      'Create your account to publish your applications';
+
+  @override
+  String get fullNameLabel => 'Full Name *';
+
+  @override
+  String get pleaseEnterName => 'Please enter your name';
+
+  @override
+  String get emailLabelRequired => 'Email *';
+
+  @override
+  String get passwordLabelRequired => 'Password *';
+
+  @override
+  String get passwordMinLength => 'Password must be at least 8 characters';
+
+  @override
+  String get confirmPasswordLabelRequired => 'Confirm Password *';
+
+  @override
+  String get pleaseConfirmPassword => 'Please confirm your password';
+
+  @override
+  String get passwordsDoNotMatch => 'Passwords do not match';
+
+  @override
+  String get optional => 'Optional';
+
+  @override
+  String get optionalBioHelper => 'Optional - Describe yourself briefly';
+
+  @override
+  String get companyLabel => 'Company';
+
+  @override
+  String get pleaseEnterCompleteCode => 'Please enter the complete code';
+
+  @override
+  String get accountCreatedSuccess => 'Account created successfully!';
+
+  @override
+  String get invalidOrExpiredCode => 'Invalid or expired code';
+
+  @override
+  String get newCodeSent => 'New code sent!';
+
+  @override
+  String get errorSendingCode => 'Error sending the code';
+
+  @override
+  String get verifyYourEmail => 'Verify your email';
+
+  @override
+  String verificationCodeSentTo(String email) {
+    return 'We sent a verification code to\n$email';
+  }
+
+  @override
+  String get verify => 'Verify';
+
+  @override
+  String get didNotReceiveCode => 'Didn\'t receive the code? ';
+
+  @override
+  String resendWithCountdown(int seconds) {
+    return 'Resend (${seconds}s)';
+  }
+
+  @override
+  String get sending => 'Sending...';
+
+  @override
+  String get resend => 'Resend';
+
+  @override
+  String get loadingError => 'Loading error';
+
+  @override
+  String get subscriptionStatus => 'Subscription Status';
+
+  @override
+  String get noSubscription => 'No subscription';
+
+  @override
+  String get globalFreeTrialActive => 'Global free trial active';
+
+  @override
+  String get freeTrialActive => 'Free trial active';
+
+  @override
+  String get subscriptionActive => 'Subscription active';
+
+  @override
+  String get freeTrialExpired => 'Free trial expired';
+
+  @override
+  String get typeLabel => 'Type:';
+
+  @override
+  String get globalFreeTrial => 'Global free trial';
+
+  @override
+  String get paidSubscription => 'Paid subscription';
+
+  @override
+  String get timeRemainingLabel => 'Time remaining:';
+
+  @override
+  String get expiresOnLabel => 'Expires on:';
+
+  @override
+  String get canPublishLabel => 'Can publish:';
+
+  @override
+  String get yes => 'Yes';
+
+  @override
+  String get enjoyGlobalFreeTrial => 'Enjoy the global free trial';
+
+  @override
+  String get upgradeToPaidSubscription => 'Upgrade to a paid subscription';
+
+  @override
+  String get refreshStatus => 'Refresh status';
+
+  @override
+  String get chooseSubscription => 'Choose a subscription';
+
+  @override
+  String get renewSubscription => 'Renew subscription';
+
+  @override
+  String get extend => 'Extend';
+
+  @override
+  String get refresh => 'Refresh';
+
+  @override
+  String get globalFreeTrialEndedDescription =>
+      'The global free trial period has ended. Choose a subscription to continue publishing applications.';
+
+  @override
+  String get freeTrialEndedDescription =>
+      'Your free trial period has ended. Choose a subscription to continue publishing applications.';
+
+  @override
+  String get subscriptionRequiredDescription =>
+      'You need an active subscription to publish applications.';
+
+  @override
+  String navigationError(String error) {
+    return 'Navigation error: $error';
+  }
+
+  @override
+  String get cannotNavigateToSubscriptions =>
+      'Cannot navigate to subscriptions';
+
+  @override
+  String get noPackagesAvailable => 'No packages available';
+
+  @override
+  String get chooseYourSubscriptionPlan => 'Choose your subscription plan';
+
+  @override
+  String get selectPlanThatSuitsYou =>
+      'Select the plan that best suits your needs to publish your applications.';
+
+  @override
+  String get chooseThisPlan => 'Choose this plan';
+
+  @override
+  String get sponsored => 'Sponsored';
+
+  @override
+  String get advertisingSpace => 'Advertising space';
+
+  @override
+  String get pricingModelLabel => 'Pricing Model *';
+
+  @override
+  String get priceFieldLabel => 'Price *';
+
+  @override
+  String get priceFieldHint => 'Ex: 500 MRU/month, Free, On quote';
+
+  @override
+  String get offersFreeTrial => 'Offers a free trial';
+
+  @override
+  String get trialDurationDays => 'Trial duration (days)';
+
+  @override
+  String get trialDaysHint => 'Ex: 14';
+
+  @override
+  String get businessValueLabel => 'Business Value *';
+
+  @override
+  String get businessValueHint =>
+      'Ex: Improves client management and increases sales by 30%';
+
+  @override
+  String get keyFeaturesLabel => 'Key Features *';
+
+  @override
+  String get keyFeaturesHint => 'Separate features with commas';
+
+  @override
+  String get targetBusinessSectors => 'Target Business Sectors';
+
+  @override
+  String get sectorCommerce => 'Commerce';
+
+  @override
+  String get sectorServices => 'Services';
+
+  @override
+  String get sectorIndustry => 'Industry';
+
+  @override
+  String get sectorHealth => 'Health';
+
+  @override
+  String get sectorEducation => 'Education';
+
+  @override
+  String get sectorAgriculture => 'Agriculture';
+
+  @override
+  String get supportOptionsOffered => 'Support options offered';
+
+  @override
+  String priceWithCurrency(String amount) {
+    return '$amount MRU';
+  }
+
+  @override
+  String pricePerMonthValue(String amount) {
+    return '$amount MRU/month';
+  }
+
+  @override
+  String get durationOneMonth => '1 month';
+
+  @override
+  String get durationOneYear => '1 year';
+
+  @override
+  String durationMonthsValue(int count) {
+    return '$count months';
+  }
+
+  @override
+  String get expired => 'Expired';
+
+  @override
+  String get expiresToday => 'Expires today';
+
+  @override
+  String get expiresTomorrow => 'Expires tomorrow';
+
+  @override
+  String expiresInDays(int days) {
+    return 'Expires in $days days';
+  }
+
+  @override
+  String expiresInMonths(int months) {
+    return 'Expires in $months months';
+  }
+
+  @override
+  String get statusActive => 'Active';
+
+  @override
+  String get statusCancelled => 'Cancelled';
+
+  @override
+  String get statusPending => 'Pending';
+
+  @override
+  String get statusApproved => 'Approved';
+
+  @override
+  String get statusRejected => 'Rejected';
 }

@@ -430,7 +430,7 @@ class _PublishAppScreenState extends State<PublishAppScreen> {
                     items: _categories
                         .map((category) => DropdownMenuItem(
                               value: category.id,
-                              child: Text(category.name),
+                              child: Text(category.displayName),
                             ))
                         .toList(),
                     validator: (value) {
@@ -620,13 +620,13 @@ class _PublishAppScreenState extends State<PublishAppScreen> {
 
             FormBuilderTextField(
               name: 'subcategory',
-              decoration: const InputDecoration(
-                labelText: 'Sous-catégorie *',
-                hintText: 'Ex: CRM, Comptabilité, etc.',
+              decoration: InputDecoration(
+                labelText: AppLocalizations.of(context)!.subcategoryLabel,
+                hintText: AppLocalizations.of(context)!.subcategoryHint,
               ),
               validator: (value) {
                 if (value == null || value.isEmpty) {
-                  return 'La sous-catégorie est requise';
+                  return AppLocalizations.of(context)!.subcategoryRequired;
                 }
                 return null;
               },
@@ -635,14 +635,14 @@ class _PublishAppScreenState extends State<PublishAppScreen> {
 
             FormBuilderTextField(
               name: 'tags',
-              decoration: const InputDecoration(
-                labelText: 'Tags *',
-                hintText: 'Séparez les tags par des virgules (ex: gestion, client, vente)',
+              decoration: InputDecoration(
+                labelText: AppLocalizations.of(context)!.tagsLabel,
+                hintText: AppLocalizations.of(context)!.tagsHint,
               ),
               maxLines: 2,
               validator: (value) {
                 if (value == null || value.isEmpty) {
-                  return 'Au moins un tag est requis';
+                  return AppLocalizations.of(context)!.tagsRequired;
                 }
                 return null;
               },
@@ -729,8 +729,8 @@ class _PublishAppScreenState extends State<PublishAppScreen> {
 
           FormBuilderDropdown<PricingModel>(
             name: 'pricingModel',
-            decoration: const InputDecoration(
-              labelText: 'Modèle de tarification *',
+            decoration: InputDecoration(
+              labelText: AppLocalizations.of(context)!.pricingModelLabel,
             ),
             items: PricingModel.values
                 .map((model) => DropdownMenuItem(
@@ -743,24 +743,24 @@ class _PublishAppScreenState extends State<PublishAppScreen> {
 
           FormBuilderTextField(
             name: 'pricing',
-            decoration: const InputDecoration(
-              labelText: 'Prix *',
-              hintText: 'Ex: 500 MRU/mois, Gratuit, Sur devis',
+            decoration: InputDecoration(
+              labelText: AppLocalizations.of(context)!.priceFieldLabel,
+              hintText: AppLocalizations.of(context)!.priceFieldHint,
             ),
           ),
           const SizedBox(height: AppConstants.paddingM),
 
           FormBuilderCheckbox(
             name: 'hasFreeTrial',
-            title: const Text('Offre un essai gratuit'),
+            title: Text(AppLocalizations.of(context)!.offersFreeTrial),
           ),
           const SizedBox(height: AppConstants.paddingM),
 
           FormBuilderTextField(
             name: 'trialDays',
-            decoration: const InputDecoration(
-              labelText: 'Durée de l\'essai (jours)',
-              hintText: 'Ex: 14',
+            decoration: InputDecoration(
+              labelText: AppLocalizations.of(context)!.trialDurationDays,
+              hintText: AppLocalizations.of(context)!.trialDaysHint,
             ),
             keyboardType: TextInputType.number,
           ),
@@ -783,9 +783,9 @@ class _PublishAppScreenState extends State<PublishAppScreen> {
 
           FormBuilderTextField(
             name: 'businessValue',
-            decoration: const InputDecoration(
-              labelText: 'Valeur commerciale *',
-              hintText: 'Ex: Améliore la gestion client et augmente les ventes de 30%',
+            decoration: InputDecoration(
+              labelText: AppLocalizations.of(context)!.businessValueLabel,
+              hintText: AppLocalizations.of(context)!.businessValueHint,
             ),
             maxLines: 2,
           ),
@@ -793,9 +793,9 @@ class _PublishAppScreenState extends State<PublishAppScreen> {
 
           FormBuilderTextField(
             name: 'keyFeatures',
-            decoration: const InputDecoration(
-              labelText: 'Fonctionnalités clés *',
-              hintText: 'Séparez les fonctionnalités par des virgules',
+            decoration: InputDecoration(
+              labelText: AppLocalizations.of(context)!.keyFeaturesLabel,
+              hintText: AppLocalizations.of(context)!.keyFeaturesHint,
             ),
             maxLines: 3,
           ),
@@ -803,24 +803,24 @@ class _PublishAppScreenState extends State<PublishAppScreen> {
 
           FormBuilderCheckboxGroup<String>(
             name: 'businessSectors',
-            decoration: const InputDecoration(
-              labelText: 'Secteurs d\'activité ciblés',
+            decoration: InputDecoration(
+              labelText: AppLocalizations.of(context)!.targetBusinessSectors,
             ),
-            options: const [
-              FormBuilderFieldOption(value: 'Commerce', child: Text('Commerce')),
-              FormBuilderFieldOption(value: 'Services', child: Text('Services')),
-              FormBuilderFieldOption(value: 'Industrie', child: Text('Industrie')),
-              FormBuilderFieldOption(value: 'Santé', child: Text('Santé')),
-              FormBuilderFieldOption(value: 'Éducation', child: Text('Éducation')),
-              FormBuilderFieldOption(value: 'Agriculture', child: Text('Agriculture')),
+            options: [
+              FormBuilderFieldOption(value: 'Commerce', child: Text(AppLocalizations.of(context)!.sectorCommerce)),
+              FormBuilderFieldOption(value: 'Services', child: Text(AppLocalizations.of(context)!.sectorServices)),
+              FormBuilderFieldOption(value: 'Industrie', child: Text(AppLocalizations.of(context)!.sectorIndustry)),
+              FormBuilderFieldOption(value: 'Santé', child: Text(AppLocalizations.of(context)!.sectorHealth)),
+              FormBuilderFieldOption(value: 'Éducation', child: Text(AppLocalizations.of(context)!.sectorEducation)),
+              FormBuilderFieldOption(value: 'Agriculture', child: Text(AppLocalizations.of(context)!.sectorAgriculture)),
             ],
           ),
           const SizedBox(height: AppConstants.paddingM),
 
           FormBuilderCheckboxGroup<SupportType>(
             name: 'supportOptions',
-            decoration: const InputDecoration(
-              labelText: 'Options de support offertes',
+            decoration: InputDecoration(
+              labelText: AppLocalizations.of(context)!.supportOptionsOffered,
             ),
             options: SupportType.values
                 .map((type) => FormBuilderFieldOption(

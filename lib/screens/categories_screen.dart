@@ -118,6 +118,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                     MaterialPageRoute(
                       builder: (context) => CatalogScreen(
                         initialCategory: category.id,
+                        category: category,
                       ),
                     ),
                   );

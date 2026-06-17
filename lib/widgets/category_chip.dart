@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../models/app_category.dart';
 import '../utils/constants.dart';
+import '../l10n/app_localizations.dart';
 
 /// Reusable chip widget for displaying application categories
 class CategoryChip extends StatelessWidget {
@@ -58,7 +59,7 @@ class CategoryChip extends StatelessWidget {
               Expanded(
                 child: Center(
                   child: Text(
-                    category.name,
+                    category.displayName,
                     style: theme.textTheme.labelSmall?.copyWith( // Smaller text
                       fontWeight: FontWeight.w600,
                       color: isSelected 
@@ -77,7 +78,7 @@ class CategoryChip extends StatelessWidget {
               if (showCount && appCount != null) ...[
                 const SizedBox(height: 1), // Minimal spacing
                 Text(
-                  '$appCount app${appCount! > 1 ? 's' : ''}',
+                  AppLocalizations.of(context)!.appsCountLabel(appCount!),
                   style: theme.textTheme.labelSmall?.copyWith(
                     color: AppConstants.secondaryTextColor,
                     fontSize: 9, // Very small font for count
@@ -123,7 +124,7 @@ class CategoryFilterChips extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(right: AppConstants.paddingS),
               child: FilterChip(
-                label: const Text('Toutes'),
+                label: Text(AppLocalizations.of(context)!.allCategories),
                 selected: selectedCategoryId == null,
                 onSelected: (selected) {
                   if (selected) {
@@ -149,7 +150,7 @@ class CategoryFilterChips extends StatelessWidget {
             return Padding(
               padding: const EdgeInsets.only(right: AppConstants.paddingS),
               child: FilterChip(
-                label: Text(category.name),
+                label: Text(category.displayName),
                 selected: isSelected,
                 onSelected: (selected) {
                   onCategorySelected(selected ? category.id : null);
@@ -219,7 +220,7 @@ class CompactCategoryChip extends StatelessWidget {
             // FIXED: Added Flexible to prevent overflow in horizontal layout
             Flexible(
               child: Text(
-                category.name,
+                category.displayName,
                 style: theme.textTheme.labelSmall?.copyWith(
                   color: category.color,
                   fontWeight: FontWeight.w600,

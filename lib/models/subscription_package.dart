@@ -1,3 +1,5 @@
+import '../l10n/app_localizations.dart';
+
 class SubscriptionPackage {
   final int id;
   final String name;
@@ -66,10 +68,11 @@ class SubscriptionPackage {
   }
 
   // Helper getters
-  String get formattedPrice => '${price.toInt()} MRU';
-  
-  String? get formattedOriginalPrice => originalPrice != null 
-      ? '${originalPrice!.toInt()} MRU' 
+  String formattedPrice(AppLocalizations l10n) =>
+      l10n.priceWithCurrency(price.toInt().toString());
+
+  String? formattedOriginalPrice(AppLocalizations l10n) => originalPrice != null
+      ? l10n.priceWithCurrency(originalPrice!.toInt().toString())
       : null;
 
   int? get discountPercentage {
@@ -81,18 +84,18 @@ class SubscriptionPackage {
 
   bool get hasDiscount => originalPrice != null && originalPrice! > price;
 
-  String get durationText {
+  String durationText(AppLocalizations l10n) {
     if (durationMonths == 1) {
-      return '1 mois';
+      return l10n.durationOneMonth;
     } else if (durationMonths == 12) {
-      return '1 année';
+      return l10n.durationOneYear;
     } else {
-      return '$durationMonths mois';
+      return l10n.durationMonthsValue(durationMonths);
     }
   }
 
-  String get pricePerMonth {
+  String pricePerMonth(AppLocalizations l10n) {
     final monthlyPrice = price / durationMonths;
-    return '${monthlyPrice.toInt()} MRU/mois';
+    return l10n.pricePerMonthValue(monthlyPrice.toInt().toString());
   }
 }

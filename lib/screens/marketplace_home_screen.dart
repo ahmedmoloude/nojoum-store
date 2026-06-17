@@ -461,7 +461,7 @@ class _MarketplaceHomeScreenState extends State<MarketplaceHomeScreen> {
             onTap: () => Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => CatalogScreen(initialCategory: category.id),
+                builder: (context) => CatalogScreen(initialCategory: category.id, category: category),
               ),
             ),
           );

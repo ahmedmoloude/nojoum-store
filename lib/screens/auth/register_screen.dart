@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../../services/auth_service.dart';
 import 'email_verification_screen.dart';
 import '../../utils/constants.dart';
+import '../../l10n/app_localizations.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -74,8 +75,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
         );
 
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Code de vérification envoyé à votre email!'),
+          SnackBar(
+            content: Text(AppLocalizations.of(context)!.verificationCodeSent),
             backgroundColor: Colors.green,
           ),
         );
@@ -84,7 +85,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('Erreur lors de la création du compte: ${e.toString()}'),
+            content: Text(AppLocalizations.of(context)!.accountCreationError(e.toString())),
             backgroundColor: Colors.red,
           ),
         );
@@ -101,10 +102,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final l10n = AppLocalizations.of(context)!;
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Créer un compte'),
+        title: Text(l10n.createAccount),
         backgroundColor: AppConstants.primaryBlue,
         foregroundColor: Colors.white,
       ),
@@ -117,18 +119,18 @@ class _RegisterScreenState extends State<RegisterScreen> {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 Text(
-                  'Rejoignez Noujoum Store',
+                  l10n.joinNoujoumStore,
                   style: theme.textTheme.headlineSmall?.copyWith(
                     color: AppConstants.primaryBlue,
                     fontWeight: FontWeight.bold,
                   ),
                   textAlign: TextAlign.center,
                 ),
-                
+
                 const SizedBox(height: AppConstants.paddingM),
-                
+
                 Text(
-                  'Créez votre compte pour publier vos applications',
+                  l10n.createAccountSubtitle,
                   style: theme.textTheme.bodyLarge,
                   textAlign: TextAlign.center,
                 ),
@@ -138,14 +140,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 // Name Field
                 TextFormField(
                   controller: _nameController,
-                  decoration: const InputDecoration(
-                    labelText: 'Nom complet *',
-                    prefixIcon: Icon(Icons.person),
-                    border: OutlineInputBorder(),
+                  decoration: InputDecoration(
+                    labelText: l10n.fullNameLabel,
+                    prefixIcon: const Icon(Icons.person),
+                    border: const OutlineInputBorder(),
                   ),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'Veuillez saisir votre nom';
+                      return l10n.pleaseEnterName;
                     }
                     return null;
                   },
@@ -157,17 +159,17 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 TextFormField(
                   controller: _emailController,
                   keyboardType: TextInputType.emailAddress,
-                  decoration: const InputDecoration(
-                    labelText: 'Email *',
-                    prefixIcon: Icon(Icons.email),
-                    border: OutlineInputBorder(),
+                  decoration: InputDecoration(
+                    labelText: l10n.emailLabelRequired,
+                    prefixIcon: const Icon(Icons.email),
+                    border: const OutlineInputBorder(),
                   ),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'Veuillez saisir votre email';
+                      return l10n.pleaseEnterEmail;
                     }
                     if (!value.contains('@')) {
-                      return 'Veuillez saisir un email valide';
+                      return l10n.pleaseEnterValidEmail;
                     }
                     return null;
                   },
@@ -180,7 +182,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   controller: _passwordController,
                   obscureText: _obscurePassword,
                   decoration: InputDecoration(
-                    labelText: 'Mot de passe *',
+                    labelText: l10n.passwordLabelRequired,
                     prefixIcon: const Icon(Icons.lock),
                     suffixIcon: IconButton(
                       icon: Icon(
@@ -196,10 +198,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   ),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'Veuillez saisir un mot de passe';
+                      return l10n.pleaseEnterPassword;
                     }
                     if (value.length < 8) {
-                      return 'Le mot de passe doit contenir au moins 8 caractères';
+                      return l10n.passwordMinLength;
                     }
                     return null;
                   },
@@ -212,7 +214,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   controller: _confirmPasswordController,
                   obscureText: _obscureConfirmPassword,
                   decoration: InputDecoration(
-                    labelText: 'Confirmer le mot de passe *',
+                    labelText: l10n.confirmPasswordLabelRequired,
                     prefixIcon: const Icon(Icons.lock_outline),
                     suffixIcon: IconButton(
                       icon: Icon(
@@ -228,10 +230,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   ),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'Veuillez confirmer votre mot de passe';
+                      return l10n.pleaseConfirmPassword;
                     }
                     if (value != _passwordController.text) {
-                      return 'Les mots de passe ne correspondent pas';
+                      return l10n.passwordsDoNotMatch;
                     }
                     return null;
                   },
@@ -243,11 +245,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 TextFormField(
                   controller: _phoneController,
                   keyboardType: TextInputType.phone,
-                  decoration: const InputDecoration(
-                    labelText: 'Téléphone',
-                    prefixIcon: Icon(Icons.phone),
-                    border: OutlineInputBorder(),
-                    helperText: 'Optionnel',
+                  decoration: InputDecoration(
+                    labelText: l10n.phone,
+                    prefixIcon: const Icon(Icons.phone),
+                    border: const OutlineInputBorder(),
+                    helperText: l10n.optional,
                   ),
                 ),
                 
@@ -256,11 +258,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 // Company Field (Optional)
                 TextFormField(
                   controller: _companyController,
-                  decoration: const InputDecoration(
-                    labelText: 'Entreprise',
-                    prefixIcon: Icon(Icons.business),
-                    border: OutlineInputBorder(),
-                    helperText: 'Optionnel',
+                  decoration: InputDecoration(
+                    labelText: l10n.companyLabel,
+                    prefixIcon: const Icon(Icons.business),
+                    border: const OutlineInputBorder(),
+                    helperText: l10n.optional,
                   ),
                 ),
                 
@@ -270,11 +272,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 TextFormField(
                   controller: _websiteController,
                   keyboardType: TextInputType.url,
-                  decoration: const InputDecoration(
-                    labelText: 'Site web',
-                    prefixIcon: Icon(Icons.web),
-                    border: OutlineInputBorder(),
-                    helperText: 'Optionnel',
+                  decoration: InputDecoration(
+                    labelText: l10n.website,
+                    prefixIcon: const Icon(Icons.web),
+                    border: const OutlineInputBorder(),
+                    helperText: l10n.optional,
                   ),
                 ),
                 
@@ -284,11 +286,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 TextFormField(
                   controller: _bioController,
                   maxLines: 3,
-                  decoration: const InputDecoration(
-                    labelText: 'Bio',
-                    prefixIcon: Icon(Icons.info),
-                    border: OutlineInputBorder(),
-                    helperText: 'Optionnel - Décrivez-vous brièvement',
+                  decoration: InputDecoration(
+                    labelText: l10n.bio,
+                    prefixIcon: const Icon(Icons.info),
+                    border: const OutlineInputBorder(),
+                    helperText: l10n.optionalBioHelper,
                   ),
                 ),
                 
@@ -311,21 +313,21 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
                           ),
                         )
-                      : const Text('Créer le compte'),
+                      : Text(l10n.createAccount),
                 ),
-                
+
                 const SizedBox(height: AppConstants.paddingM),
-                
+
                 // Login Link
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Text('Déjà un compte? '),
+                    Text('${l10n.alreadyHaveAccount} '),
                     TextButton(
                       onPressed: () {
                         Navigator.of(context).pop();
                       },
-                      child: const Text('Se connecter'),
+                      child: Text(l10n.loginButton),
                     ),
                   ],
                 ),

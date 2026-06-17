@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../services/language_service.dart';
 
 /// Model representing an application category in the Noujoum Store
 class AppCategory {
@@ -34,6 +35,15 @@ class AppCategory {
   @override
   String toString() {
     return 'AppCategory(id: $id, name: $name)';
+  }
+
+  /// Category name localized to the current app language.
+  /// Returns the Arabic name when the app is in Arabic (and one is available),
+  /// otherwise falls back to the default (French/English) [name].
+  String get displayName {
+    final isArabic = LanguageService.instance.currentLanguageCode == 'ar';
+    if (isArabic && nameArabic.isNotEmpty) return nameArabic;
+    return name;
   }
 
   /// Create AppCategory from API JSON response

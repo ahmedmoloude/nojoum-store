@@ -211,7 +211,7 @@ class _PaymentHistoryScreenState extends State<PaymentHistoryScreen> {
                       ),
                       const SizedBox(width: AppConstants.paddingXS),
                       Text(
-                        transaction.statusLabel,
+                        transaction.statusLabel(AppLocalizations.of(context)!),
                         style: Theme.of(context).textTheme.bodySmall?.copyWith(
                           color: statusColor,
                           fontWeight: FontWeight.w600,

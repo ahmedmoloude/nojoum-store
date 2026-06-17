@@ -975,7 +975,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get verified => 'موثق';
 
   @override
-  String get freeTrial => 'تجربة مجانية';
+  String get freeTrial => 'نسخة تجريبية مجانية';
 
   @override
   String trialDays(int days) {
@@ -999,4 +999,313 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get pricing => 'التسعير';
+
+  @override
+  String get allCategories => 'الكل';
+
+  @override
+  String appsCountLabel(int count) {
+    return '$count تطبيق';
+  }
+
+  @override
+  String get verificationCodeSent =>
+      'تم إرسال رمز التحقق إلى بريدك الإلكتروني!';
+
+  @override
+  String accountCreationError(String error) {
+    return 'خطأ في إنشاء الحساب: $error';
+  }
+
+  @override
+  String get joinNoujoumStore => 'انضم إلى متجر نجوم';
+
+  @override
+  String get createAccountSubtitle => 'أنشئ حسابك لنشر تطبيقاتك';
+
+  @override
+  String get fullNameLabel => 'الاسم الكامل *';
+
+  @override
+  String get pleaseEnterName => 'الرجاء إدخال اسمك';
+
+  @override
+  String get emailLabelRequired => 'البريد الإلكتروني *';
+
+  @override
+  String get passwordLabelRequired => 'كلمة المرور *';
+
+  @override
+  String get passwordMinLength =>
+      'يجب أن تتكون كلمة المرور من 8 أحرف على الأقل';
+
+  @override
+  String get confirmPasswordLabelRequired => 'تأكيد كلمة المرور *';
+
+  @override
+  String get pleaseConfirmPassword => 'الرجاء تأكيد كلمة المرور';
+
+  @override
+  String get passwordsDoNotMatch => 'كلمتا المرور غير متطابقتين';
+
+  @override
+  String get optional => 'اختياري';
+
+  @override
+  String get optionalBioHelper => 'اختياري - صف نفسك بإيجاز';
+
+  @override
+  String get companyLabel => 'الشركة';
+
+  @override
+  String get pleaseEnterCompleteCode => 'الرجاء إدخال الرمز كاملاً';
+
+  @override
+  String get accountCreatedSuccess => 'تم إنشاء الحساب بنجاح!';
+
+  @override
+  String get invalidOrExpiredCode => 'رمز غير صالح أو منتهي الصلاحية';
+
+  @override
+  String get newCodeSent => 'تم إرسال رمز جديد!';
+
+  @override
+  String get errorSendingCode => 'خطأ في إرسال الرمز';
+
+  @override
+  String get verifyYourEmail => 'تحقق من بريدك الإلكتروني';
+
+  @override
+  String verificationCodeSentTo(String email) {
+    return 'لقد أرسلنا رمز تحقق إلى\n$email';
+  }
+
+  @override
+  String get verify => 'تحقق';
+
+  @override
+  String get didNotReceiveCode => 'لم تستلم الرمز؟ ';
+
+  @override
+  String resendWithCountdown(int seconds) {
+    return 'إعادة الإرسال ($secondsث)';
+  }
+
+  @override
+  String get sending => 'جارٍ الإرسال...';
+
+  @override
+  String get resend => 'إعادة الإرسال';
+
+  @override
+  String get loadingError => 'خطأ في التحميل';
+
+  @override
+  String get subscriptionStatus => 'حالة الاشتراك';
+
+  @override
+  String get noSubscription => 'لا يوجد اشتراك';
+
+  @override
+  String get globalFreeTrialActive => 'النسخة التجريبية المجانية العامة نشطة';
+
+  @override
+  String get freeTrialActive => 'النسخة التجريبية المجانية نشطة';
+
+  @override
+  String get subscriptionActive => 'الاشتراك نشط';
+
+  @override
+  String get freeTrialExpired => 'انتهت النسخة التجريبية المجانية';
+
+  @override
+  String get typeLabel => 'النوع:';
+
+  @override
+  String get globalFreeTrial => 'نسخة تجريبية مجانية عامة';
+
+  @override
+  String get paidSubscription => 'اشتراك مدفوع';
+
+  @override
+  String get timeRemainingLabel => 'الوقت المتبقي:';
+
+  @override
+  String get expiresOnLabel => 'تنتهي في:';
+
+  @override
+  String get canPublishLabel => 'يمكن النشر:';
+
+  @override
+  String get yes => 'نعم';
+
+  @override
+  String get enjoyGlobalFreeTrial => 'استمتع بالنسخة التجريبية المجانية العامة';
+
+  @override
+  String get upgradeToPaidSubscription => 'الترقية إلى اشتراك مدفوع';
+
+  @override
+  String get refreshStatus => 'تحديث الحالة';
+
+  @override
+  String get chooseSubscription => 'اختر اشتراكاً';
+
+  @override
+  String get renewSubscription => 'تجديد الاشتراك';
+
+  @override
+  String get extend => 'تمديد';
+
+  @override
+  String get refresh => 'تحديث';
+
+  @override
+  String get globalFreeTrialEndedDescription =>
+      'انتهت فترة النسخة التجريبية المجانية العامة. اختر اشتراكاً لمواصلة نشر التطبيقات.';
+
+  @override
+  String get freeTrialEndedDescription =>
+      'انتهت فترة النسخة التجريبية المجانية الخاصة بك. اختر اشتراكاً لمواصلة نشر التطبيقات.';
+
+  @override
+  String get subscriptionRequiredDescription =>
+      'تحتاج إلى اشتراك نشط لنشر التطبيقات.';
+
+  @override
+  String navigationError(String error) {
+    return 'خطأ في التنقل: $error';
+  }
+
+  @override
+  String get cannotNavigateToSubscriptions => 'تعذر الانتقال إلى الاشتراكات';
+
+  @override
+  String get noPackagesAvailable => 'لا توجد باقات متاحة';
+
+  @override
+  String get chooseYourSubscriptionPlan => 'اختر خطة اشتراكك';
+
+  @override
+  String get selectPlanThatSuitsYou =>
+      'اختر الخطة التي تناسب احتياجاتك لنشر تطبيقاتك.';
+
+  @override
+  String get chooseThisPlan => 'اختر هذه الخطة';
+
+  @override
+  String get sponsored => 'برعاية';
+
+  @override
+  String get advertisingSpace => 'مساحة إعلانية';
+
+  @override
+  String get pricingModelLabel => 'نموذج التسعير *';
+
+  @override
+  String get priceFieldLabel => 'السعر *';
+
+  @override
+  String get priceFieldHint => 'مثال: 500 أوقية/شهر، مجاني، حسب الطلب';
+
+  @override
+  String get offersFreeTrial => 'يقدم نسخة تجريبية مجانية';
+
+  @override
+  String get trialDurationDays => 'مدة التجربة (أيام)';
+
+  @override
+  String get trialDaysHint => 'مثال: 14';
+
+  @override
+  String get businessValueLabel => 'القيمة التجارية *';
+
+  @override
+  String get businessValueHint =>
+      'مثال: يحسن إدارة العملاء ويزيد المبيعات بنسبة 30%';
+
+  @override
+  String get keyFeaturesLabel => 'الميزات الرئيسية *';
+
+  @override
+  String get keyFeaturesHint => 'افصل الميزات بفواصل';
+
+  @override
+  String get targetBusinessSectors => 'القطاعات التجارية المستهدفة';
+
+  @override
+  String get sectorCommerce => 'تجارة';
+
+  @override
+  String get sectorServices => 'خدمات';
+
+  @override
+  String get sectorIndustry => 'صناعة';
+
+  @override
+  String get sectorHealth => 'صحة';
+
+  @override
+  String get sectorEducation => 'تعليم';
+
+  @override
+  String get sectorAgriculture => 'زراعة';
+
+  @override
+  String get supportOptionsOffered => 'خيارات الدعم المقدمة';
+
+  @override
+  String priceWithCurrency(String amount) {
+    return '$amount أوقية';
+  }
+
+  @override
+  String pricePerMonthValue(String amount) {
+    return '$amount أوقية/شهر';
+  }
+
+  @override
+  String get durationOneMonth => 'شهر واحد';
+
+  @override
+  String get durationOneYear => 'سنة واحدة';
+
+  @override
+  String durationMonthsValue(int count) {
+    return '$count أشهر';
+  }
+
+  @override
+  String get expired => 'منتهي';
+
+  @override
+  String get expiresToday => 'تنتهي اليوم';
+
+  @override
+  String get expiresTomorrow => 'تنتهي غداً';
+
+  @override
+  String expiresInDays(int days) {
+    return 'تنتهي خلال $days يوم';
+  }
+
+  @override
+  String expiresInMonths(int months) {
+    return 'تنتهي خلال $months أشهر';
+  }
+
+  @override
+  String get statusActive => 'نشط';
+
+  @override
+  String get statusCancelled => 'ملغى';
+
+  @override
+  String get statusPending => 'قيد الانتظار';
+
+  @override
+  String get statusApproved => 'موافق عليه';
+
+  @override
+  String get statusRejected => 'مرفوض';
 }

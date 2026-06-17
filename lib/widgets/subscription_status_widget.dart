@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../models/user_subscription.dart';
 import '../services/subscription_service.dart';
 import '../utils/constants.dart';
+import '../l10n/app_localizations.dart';
 import '../screens/subscription_packages_screen.dart';
 
 class SubscriptionStatusWidget extends StatefulWidget {
@@ -74,13 +75,13 @@ class _SubscriptionStatusWidgetState extends State<SubscriptionStatusWidget> {
               ),
               const SizedBox(height: AppConstants.paddingS),
               Text(
-                'Erreur de chargement',
+                AppLocalizations.of(context)!.loadingError,
                 style: Theme.of(context).textTheme.titleMedium,
               ),
               const SizedBox(height: AppConstants.paddingS),
               ElevatedButton(
                 onPressed: _loadSubscriptionStatus,
-                child: const Text('Réessayer'),
+                child: Text(AppLocalizations.of(context)!.retry),
               ),
             ],
           ),
@@ -104,7 +105,7 @@ class _SubscriptionStatusWidgetState extends State<SubscriptionStatusWidget> {
                 ),
                 const SizedBox(width: AppConstants.paddingS),
                 Text(
-                  'Statut d\'abonnement',
+                  AppLocalizations.of(context)!.subscriptionStatus,
                   style: Theme.of(context).textTheme.titleMedium?.copyWith(
                     fontWeight: FontWeight.bold,
                     color: AppConstants.primaryGold,
@@ -125,7 +126,7 @@ class _SubscriptionStatusWidgetState extends State<SubscriptionStatusWidget> {
     final canPublish = _subscriptionStatus?['canPublish'] ?? false;
     final isFreeTrial = _subscriptionStatus?['isFreeTrial'] ?? false;
     final isGlobalFreeTrial = _subscriptionStatus?['isGlobalFreeTrial'] ?? false;
-    final subscriptionStatusText = _subscriptionStatus?['subscriptionStatus'] ?? 'Aucun abonnement';
+    final subscriptionStatusText = _subscriptionStatus?['subscriptionStatus'] ?? AppLocalizations.of(context)!.noSubscription;
     final subscription = _subscriptionStatus?['subscription'] as UserSubscription?;
     final daysRemaining = _subscriptionStatus?['daysRemaining'];
 
@@ -155,20 +156,21 @@ class _SubscriptionStatusWidgetState extends State<SubscriptionStatusWidget> {
     required dynamic daysRemaining,
   }) {
     // Determine the appropriate status text and color
+    final l10n = AppLocalizations.of(context)!;
     String displayStatus;
     Color statusColor;
 
     if (isGlobalFreeTrial && canPublish) {
-      displayStatus = 'Essai gratuit global actif';
+      displayStatus = l10n.globalFreeTrialActive;
       statusColor = AppConstants.primaryOrange;
     } else if (isFreeTrial && canPublish && !isGlobalFreeTrial) {
-      displayStatus = 'Essai gratuit actif';
+      displayStatus = l10n.freeTrialActive;
       statusColor = AppConstants.primaryOrange;
     } else if (canPublish && hasSubscription) {
-      displayStatus = 'Abonnement actif';
+      displayStatus = l10n.subscriptionActive;
       statusColor = AppConstants.mauritanianGreen;
     } else if ((isFreeTrial || isGlobalFreeTrial) && !canPublish) {
-      displayStatus = 'Essai gratuit expiré';
+      displayStatus = l10n.freeTrialExpired;
       statusColor = Colors.red;
     } else {
       displayStatus = subscriptionStatusText;
@@ -201,34 +203,34 @@ class _SubscriptionStatusWidgetState extends State<SubscriptionStatusWidget> {
         // Subscription details
         if (subscription != null || isFreeTrial || isGlobalFreeTrial) ...[
           _buildDetailRow(
-            'Type:',
+            l10n.typeLabel,
             isGlobalFreeTrial
-                ? 'Essai gratuit global'
+                ? l10n.globalFreeTrial
                 : isFreeTrial
-                    ? 'Essai gratuit'
-                    : subscription?.package?.name ?? 'Abonnement payant',
+                    ? l10n.freeTrial
+                    : subscription?.package?.name ?? l10n.paidSubscription,
           ),
           const SizedBox(height: AppConstants.paddingS),
 
           if (subscription != null && daysRemaining != null) ...[
             _buildDetailRow(
-              'Temps restant:',
-              subscription.timeRemainingText,
+              l10n.timeRemainingLabel,
+              subscription.timeRemainingText(l10n),
             ),
             const SizedBox(height: AppConstants.paddingS),
           ],
 
           if (subscription != null) ...[
             _buildDetailRow(
-              'Expire le:',
+              l10n.expiresOnLabel,
               '${subscription.expiresAt.day}/${subscription.expiresAt.month}/${subscription.expiresAt.year}',
             ),
             const SizedBox(height: AppConstants.paddingS),
           ],
 
           _buildDetailRow(
-            'Peut publier:',
-            canPublish ? 'Oui' : 'Non',
+            l10n.canPublishLabel,
+            canPublish ? l10n.yes : l10n.no,
           ),
         ],
 
@@ -260,8 +262,8 @@ class _SubscriptionStatusWidgetState extends State<SubscriptionStatusWidget> {
                           ),
                         )
                       : Text(isGlobalFreeTrial
-                          ? 'Profitez de l\'essai gratuit global'
-                          : 'Passer à un abonnement payant'),
+                          ? l10n.enjoyGlobalFreeTrial
+                          : l10n.upgradeToPaidSubscription),
                 ),
               ),
               const SizedBox(height: AppConstants.paddingS),
@@ -273,7 +275,7 @@ class _SubscriptionStatusWidgetState extends State<SubscriptionStatusWidget> {
                     foregroundColor: AppConstants.primaryGold,
                     side: BorderSide(color: AppConstants.primaryGold),
                   ),
-                  child: const Text('Actualiser le statut'),
+                  child: Text(l10n.refreshStatus),
                 ),
               ),
             ],
@@ -300,7 +302,7 @@ class _SubscriptionStatusWidgetState extends State<SubscriptionStatusWidget> {
                         valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
                       ),
                     )
-                  : Text(isFreeTrial ? 'Choisir un abonnement' : 'Renouveler l\'abonnement'),
+                  : Text(isFreeTrial ? l10n.chooseSubscription : l10n.renewSubscription),
             ),
           ),
         ] else ...[
@@ -326,7 +328,7 @@ class _SubscriptionStatusWidgetState extends State<SubscriptionStatusWidget> {
                             valueColor: AlwaysStoppedAnimation<Color>(AppConstants.primaryGold),
                           ),
                         )
-                      : const Text('Étendre'),
+                      : Text(l10n.extend),
                 ),
               ),
               const SizedBox(width: AppConstants.paddingM),
@@ -337,7 +339,7 @@ class _SubscriptionStatusWidgetState extends State<SubscriptionStatusWidget> {
                     backgroundColor: AppConstants.mauritanianGreen,
                     foregroundColor: AppConstants.whiteTextColor,
                   ),
-                  child: const Text('Actualiser'),
+                  child: Text(l10n.refresh),
                 ),
               ),
             ],
@@ -348,6 +350,7 @@ class _SubscriptionStatusWidgetState extends State<SubscriptionStatusWidget> {
   }
 
   Widget _buildNoSubscriptionContent() {
+    final l10n = AppLocalizations.of(context)!;
     final isFreeTrial = _subscriptionStatus?['isFreeTrial'] ?? false;
     final isGlobalFreeTrial = _subscriptionStatus?['isGlobalFreeTrial'] ?? false;
     final canPublish = _subscriptionStatus?['canPublish'] ?? false;
@@ -356,13 +359,13 @@ class _SubscriptionStatusWidgetState extends State<SubscriptionStatusWidget> {
     String descriptionText;
 
     if ((isFreeTrial || isGlobalFreeTrial) && !canPublish) {
-      statusText = 'Essai gratuit expiré';
+      statusText = l10n.freeTrialExpired;
       descriptionText = isGlobalFreeTrial
-          ? 'La période d\'essai gratuit global est terminée. Choisissez un abonnement pour continuer à publier des applications.'
-          : 'Votre période d\'essai gratuit est terminée. Choisissez un abonnement pour continuer à publier des applications.';
+          ? l10n.globalFreeTrialEndedDescription
+          : l10n.freeTrialEndedDescription;
     } else {
-      statusText = 'Abonnement requis';
-      descriptionText = 'Vous devez avoir un abonnement actif pour publier des applications.';
+      statusText = l10n.subscriptionRequiredTitle;
+      descriptionText = l10n.subscriptionRequiredDescription;
     }
 
     return Column(
@@ -413,7 +416,7 @@ class _SubscriptionStatusWidgetState extends State<SubscriptionStatusWidget> {
                       valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
                     ),
                   )
-                : const Text('Choisir un abonnement'),
+                : Text(l10n.chooseSubscription),
           ),
         ),
       ],
@@ -539,7 +542,7 @@ class _SubscriptionStatusWidgetState extends State<SubscriptionStatusWidget> {
           setState(() {
             _isNavigating = false;
           });
-          _showNavigationError('Erreur de navigation: $error');
+          _showNavigationError(AppLocalizations.of(context)!.navigationError(error.toString()));
         }
       });
     } catch (e) {
@@ -548,7 +551,7 @@ class _SubscriptionStatusWidgetState extends State<SubscriptionStatusWidget> {
         setState(() {
           _isNavigating = false;
         });
-        _showNavigationError('Impossible de naviguer vers les abonnements');
+        _showNavigationError(AppLocalizations.of(context)!.cannotNavigateToSubscriptions);
       }
     }
   }

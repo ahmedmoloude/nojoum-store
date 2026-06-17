@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../models/subscription_package.dart';
 import '../services/subscription_service.dart';
 import '../utils/constants.dart';
+import '../l10n/app_localizations.dart';
 import 'payment_screen.dart';
 
 class SubscriptionPackagesScreen extends StatefulWidget {
@@ -48,7 +49,7 @@ class _SubscriptionPackagesScreenState extends State<SubscriptionPackagesScreen>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Choisir un abonnement'),
+        title: Text(AppLocalizations.of(context)!.chooseSubscription),
         backgroundColor: AppConstants.primaryGold,
         foregroundColor: AppConstants.whiteTextColor,
       ),
@@ -72,7 +73,7 @@ class _SubscriptionPackagesScreenState extends State<SubscriptionPackagesScreen>
           ),
           const SizedBox(height: AppConstants.paddingM),
           Text(
-            'Erreur de chargement',
+            AppLocalizations.of(context)!.loadingError,
             style: Theme.of(context).textTheme.headlineSmall,
           ),
           const SizedBox(height: AppConstants.paddingS),
@@ -86,7 +87,7 @@ class _SubscriptionPackagesScreenState extends State<SubscriptionPackagesScreen>
           const SizedBox(height: AppConstants.paddingL),
           ElevatedButton(
             onPressed: _loadPackages,
-            child: const Text('Réessayer'),
+            child: Text(AppLocalizations.of(context)!.retry),
           ),
         ],
       ),
@@ -95,8 +96,8 @@ class _SubscriptionPackagesScreenState extends State<SubscriptionPackagesScreen>
 
   Widget _buildPackagesList() {
     if (_packages.isEmpty) {
-      return const Center(
-        child: Text('Aucun package disponible'),
+      return Center(
+        child: Text(AppLocalizations.of(context)!.noPackagesAvailable),
       );
     }
 
@@ -106,7 +107,7 @@ class _SubscriptionPackagesScreenState extends State<SubscriptionPackagesScreen>
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Choisissez votre plan d\'abonnement',
+            AppLocalizations.of(context)!.chooseYourSubscriptionPlan,
             style: Theme.of(context).textTheme.headlineSmall?.copyWith(
               fontWeight: FontWeight.bold,
               color: AppConstants.primaryTextColor,
@@ -114,7 +115,7 @@ class _SubscriptionPackagesScreenState extends State<SubscriptionPackagesScreen>
           ),
           const SizedBox(height: AppConstants.paddingS),
           Text(
-            'Sélectionnez le plan qui convient le mieux à vos besoins pour publier vos applications.',
+            AppLocalizations.of(context)!.selectPlanThatSuitsYou,
             style: Theme.of(context).textTheme.bodyMedium?.copyWith(
               color: AppConstants.secondaryTextColor,
             ),
@@ -190,7 +191,7 @@ class _SubscriptionPackagesScreenState extends State<SubscriptionPackagesScreen>
                       children: [
                         if (package.hasDiscount) ...[
                           Text(
-                            package.formattedOriginalPrice!,
+                            package.formattedOriginalPrice(AppLocalizations.of(context)!)!,
                             style: Theme.of(context).textTheme.bodySmall?.copyWith(
                               decoration: TextDecoration.lineThrough,
                               color: AppConstants.secondaryTextColor,
@@ -199,14 +200,14 @@ class _SubscriptionPackagesScreenState extends State<SubscriptionPackagesScreen>
                           const SizedBox(height: 2),
                         ],
                         Text(
-                          package.formattedPrice,
+                          package.formattedPrice(AppLocalizations.of(context)!),
                           style: Theme.of(context).textTheme.headlineMedium?.copyWith(
                             fontWeight: FontWeight.bold,
                             color: AppConstants.primaryGold,
                           ),
                         ),
                         Text(
-                          package.pricePerMonth,
+                          package.pricePerMonth(AppLocalizations.of(context)!),
                           style: Theme.of(context).textTheme.bodySmall?.copyWith(
                             color: AppConstants.secondaryTextColor,
                           ),
@@ -252,7 +253,7 @@ class _SubscriptionPackagesScreenState extends State<SubscriptionPackagesScreen>
                       ),
                     ),
                     child: Text(
-                      'Choisir ce plan',
+                      AppLocalizations.of(context)!.chooseThisPlan,
                       style: const TextStyle(
                         fontWeight: FontWeight.w600,
                       ),

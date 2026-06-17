@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../data/app_repository.dart';
+import '../models/app_category.dart';
 import '../models/mauritanian_app.dart';
 import '../utils/constants.dart';
 import '../widgets/app_card.dart';
@@ -10,11 +11,13 @@ import 'app_detail_screen.dart';
 class CatalogScreen extends StatefulWidget {
   final String? initialCategory;
   final String? initialFilter;
+  final AppCategory? category;
 
   const CatalogScreen({
     super.key,
     this.initialCategory,
     this.initialFilter,
+    this.category,
   });
 
   @override
@@ -192,7 +195,8 @@ class _CatalogScreenState extends State<CatalogScreen> {
     if (widget.initialFilter == 'featured') {
       return AppLocalizations.of(context)!.featuredApps;
     } else if (widget.initialCategory != null) {
-      return '${AppLocalizations.of(context)!.categoryLabel}: ${widget.initialCategory}';
+      final categoryName = widget.category?.displayName ?? widget.initialCategory;
+      return '${AppLocalizations.of(context)!.categoryLabel}: $categoryName';
     } else {
       return AppLocalizations.of(context)!.allApps;
     }

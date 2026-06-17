@@ -215,7 +215,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
                 ),
               ),
               Text(
-                widget.package.durationText,
+                widget.package.durationText(AppLocalizations.of(context)!),
                 style: Theme.of(context).textTheme.bodyMedium,
               ),
             ],
@@ -231,7 +231,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
                 ),
               ),
               Text(
-                widget.package.formattedPrice,
+                widget.package.formattedPrice(AppLocalizations.of(context)!),
                 style: Theme.of(context).textTheme.headlineSmall?.copyWith(
                   fontWeight: FontWeight.bold,
                   color: AppConstants.primaryGold,

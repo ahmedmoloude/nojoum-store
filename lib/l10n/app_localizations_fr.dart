@@ -1034,4 +1034,316 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get pricing => 'Tarification';
+
+  @override
+  String get allCategories => 'Toutes';
+
+  @override
+  String appsCountLabel(int count) {
+    return '$count applications';
+  }
+
+  @override
+  String get verificationCodeSent =>
+      'Code de vérification envoyé à votre email!';
+
+  @override
+  String accountCreationError(String error) {
+    return 'Erreur lors de la création du compte: $error';
+  }
+
+  @override
+  String get joinNoujoumStore => 'Rejoignez Noujoum Store';
+
+  @override
+  String get createAccountSubtitle =>
+      'Créez votre compte pour publier vos applications';
+
+  @override
+  String get fullNameLabel => 'Nom complet *';
+
+  @override
+  String get pleaseEnterName => 'Veuillez saisir votre nom';
+
+  @override
+  String get emailLabelRequired => 'Email *';
+
+  @override
+  String get passwordLabelRequired => 'Mot de passe *';
+
+  @override
+  String get passwordMinLength =>
+      'Le mot de passe doit contenir au moins 8 caractères';
+
+  @override
+  String get confirmPasswordLabelRequired => 'Confirmer le mot de passe *';
+
+  @override
+  String get pleaseConfirmPassword => 'Veuillez confirmer votre mot de passe';
+
+  @override
+  String get passwordsDoNotMatch => 'Les mots de passe ne correspondent pas';
+
+  @override
+  String get optional => 'Optionnel';
+
+  @override
+  String get optionalBioHelper => 'Optionnel - Décrivez-vous brièvement';
+
+  @override
+  String get companyLabel => 'Entreprise';
+
+  @override
+  String get pleaseEnterCompleteCode => 'Veuillez saisir le code complet';
+
+  @override
+  String get accountCreatedSuccess => 'Compte créé avec succès!';
+
+  @override
+  String get invalidOrExpiredCode => 'Code invalide ou expiré';
+
+  @override
+  String get newCodeSent => 'Nouveau code envoyé!';
+
+  @override
+  String get errorSendingCode => 'Erreur lors de l\'envoi du code';
+
+  @override
+  String get verifyYourEmail => 'Vérifiez votre email';
+
+  @override
+  String verificationCodeSentTo(String email) {
+    return 'Nous avons envoyé un code de vérification à\n$email';
+  }
+
+  @override
+  String get verify => 'Vérifier';
+
+  @override
+  String get didNotReceiveCode => 'Vous n\'avez pas reçu le code? ';
+
+  @override
+  String resendWithCountdown(int seconds) {
+    return 'Renvoyer (${seconds}s)';
+  }
+
+  @override
+  String get sending => 'Envoi...';
+
+  @override
+  String get resend => 'Renvoyer';
+
+  @override
+  String get loadingError => 'Erreur de chargement';
+
+  @override
+  String get subscriptionStatus => 'Statut d\'abonnement';
+
+  @override
+  String get noSubscription => 'Aucun abonnement';
+
+  @override
+  String get globalFreeTrialActive => 'Essai gratuit global actif';
+
+  @override
+  String get freeTrialActive => 'Essai gratuit actif';
+
+  @override
+  String get subscriptionActive => 'Abonnement actif';
+
+  @override
+  String get freeTrialExpired => 'Essai gratuit expiré';
+
+  @override
+  String get typeLabel => 'Type:';
+
+  @override
+  String get globalFreeTrial => 'Essai gratuit global';
+
+  @override
+  String get paidSubscription => 'Abonnement payant';
+
+  @override
+  String get timeRemainingLabel => 'Temps restant:';
+
+  @override
+  String get expiresOnLabel => 'Expire le:';
+
+  @override
+  String get canPublishLabel => 'Peut publier:';
+
+  @override
+  String get yes => 'Oui';
+
+  @override
+  String get enjoyGlobalFreeTrial => 'Profitez de l\'essai gratuit global';
+
+  @override
+  String get upgradeToPaidSubscription => 'Passer à un abonnement payant';
+
+  @override
+  String get refreshStatus => 'Actualiser le statut';
+
+  @override
+  String get chooseSubscription => 'Choisir un abonnement';
+
+  @override
+  String get renewSubscription => 'Renouveler l\'abonnement';
+
+  @override
+  String get extend => 'Étendre';
+
+  @override
+  String get refresh => 'Actualiser';
+
+  @override
+  String get globalFreeTrialEndedDescription =>
+      'La période d\'essai gratuit global est terminée. Choisissez un abonnement pour continuer à publier des applications.';
+
+  @override
+  String get freeTrialEndedDescription =>
+      'Votre période d\'essai gratuit est terminée. Choisissez un abonnement pour continuer à publier des applications.';
+
+  @override
+  String get subscriptionRequiredDescription =>
+      'Vous devez avoir un abonnement actif pour publier des applications.';
+
+  @override
+  String navigationError(String error) {
+    return 'Erreur de navigation: $error';
+  }
+
+  @override
+  String get cannotNavigateToSubscriptions =>
+      'Impossible de naviguer vers les abonnements';
+
+  @override
+  String get noPackagesAvailable => 'Aucun package disponible';
+
+  @override
+  String get chooseYourSubscriptionPlan =>
+      'Choisissez votre plan d\'abonnement';
+
+  @override
+  String get selectPlanThatSuitsYou =>
+      'Sélectionnez le plan qui convient le mieux à vos besoins pour publier vos applications.';
+
+  @override
+  String get chooseThisPlan => 'Choisir ce plan';
+
+  @override
+  String get sponsored => 'Sponsorisé';
+
+  @override
+  String get advertisingSpace => 'Espace publicitaire';
+
+  @override
+  String get pricingModelLabel => 'Modèle de tarification *';
+
+  @override
+  String get priceFieldLabel => 'Prix *';
+
+  @override
+  String get priceFieldHint => 'Ex: 500 MRU/mois, Gratuit, Sur devis';
+
+  @override
+  String get offersFreeTrial => 'Offre un essai gratuit';
+
+  @override
+  String get trialDurationDays => 'Durée de l\'essai (jours)';
+
+  @override
+  String get trialDaysHint => 'Ex: 14';
+
+  @override
+  String get businessValueLabel => 'Valeur commerciale *';
+
+  @override
+  String get businessValueHint =>
+      'Ex: Améliore la gestion client et augmente les ventes de 30%';
+
+  @override
+  String get keyFeaturesLabel => 'Fonctionnalités clés *';
+
+  @override
+  String get keyFeaturesHint => 'Séparez les fonctionnalités par des virgules';
+
+  @override
+  String get targetBusinessSectors => 'Secteurs d\'activité ciblés';
+
+  @override
+  String get sectorCommerce => 'Commerce';
+
+  @override
+  String get sectorServices => 'Services';
+
+  @override
+  String get sectorIndustry => 'Industrie';
+
+  @override
+  String get sectorHealth => 'Santé';
+
+  @override
+  String get sectorEducation => 'Éducation';
+
+  @override
+  String get sectorAgriculture => 'Agriculture';
+
+  @override
+  String get supportOptionsOffered => 'Options de support offertes';
+
+  @override
+  String priceWithCurrency(String amount) {
+    return '$amount MRU';
+  }
+
+  @override
+  String pricePerMonthValue(String amount) {
+    return '$amount MRU/mois';
+  }
+
+  @override
+  String get durationOneMonth => '1 mois';
+
+  @override
+  String get durationOneYear => '1 année';
+
+  @override
+  String durationMonthsValue(int count) {
+    return '$count mois';
+  }
+
+  @override
+  String get expired => 'Expiré';
+
+  @override
+  String get expiresToday => 'Expire aujourd\'hui';
+
+  @override
+  String get expiresTomorrow => 'Expire demain';
+
+  @override
+  String expiresInDays(int days) {
+    return 'Expire dans $days jours';
+  }
+
+  @override
+  String expiresInMonths(int months) {
+    return 'Expire dans $months mois';
+  }
+
+  @override
+  String get statusActive => 'Actif';
+
+  @override
+  String get statusCancelled => 'Annulé';
+
+  @override
+  String get statusPending => 'En attente';
+
+  @override
+  String get statusApproved => 'Approuvé';
+
+  @override
+  String get statusRejected => 'Rejeté';
 }
