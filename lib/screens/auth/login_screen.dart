@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import '../../services/auth_service.dart';
-import '../../services/api_service.dart';
 import '../../utils/constants.dart';
 import '../../l10n/app_localizations.dart';
 import 'register_screen.dart';
@@ -88,7 +87,7 @@ class _LoginScreenState extends State<LoginScreen> {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 const SizedBox(height: AppConstants.paddingXL),
-                
+
                 // Logo or App Name
                 Text(
                   AppConstants.appName,
@@ -98,17 +97,17 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   textAlign: TextAlign.center,
                 ),
-                
+
                 const SizedBox(height: AppConstants.paddingL),
-                
+
                 Text(
                   l10n.loginSubtitle,
                   style: theme.textTheme.bodyLarge,
                   textAlign: TextAlign.center,
                 ),
-                
+
                 const SizedBox(height: AppConstants.paddingXL),
-                
+
                 // Email Field
                 TextFormField(
                   controller: _emailController,
@@ -128,9 +127,9 @@ class _LoginScreenState extends State<LoginScreen> {
                     return null;
                   },
                 ),
-                
+
                 const SizedBox(height: AppConstants.paddingM),
-                
+
                 // Password Field
                 TextFormField(
                   controller: _passwordController,
@@ -140,7 +139,9 @@ class _LoginScreenState extends State<LoginScreen> {
                     prefixIcon: const Icon(Icons.lock),
                     suffixIcon: IconButton(
                       icon: Icon(
-                        _obscurePassword ? Icons.visibility : Icons.visibility_off,
+                        _obscurePassword
+                            ? Icons.visibility
+                            : Icons.visibility_off,
                       ),
                       onPressed: () {
                         setState(() {
@@ -157,16 +158,17 @@ class _LoginScreenState extends State<LoginScreen> {
                     return null;
                   },
                 ),
-                
+
                 const SizedBox(height: AppConstants.paddingL),
-                
+
                 // Login Button
                 ElevatedButton(
                   onPressed: _isLoading ? null : _login,
                   style: ElevatedButton.styleFrom(
                     backgroundColor: AppConstants.primaryBlue,
                     foregroundColor: Colors.white,
-                    padding: const EdgeInsets.symmetric(vertical: AppConstants.paddingM),
+                    padding: const EdgeInsets.symmetric(
+                        vertical: AppConstants.paddingM),
                   ),
                   child: _isLoading
                       ? const SizedBox(
@@ -174,14 +176,15 @@ class _LoginScreenState extends State<LoginScreen> {
                           width: 20,
                           child: CircularProgressIndicator(
                             strokeWidth: 2,
-                            valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                            valueColor:
+                                AlwaysStoppedAnimation<Color>(Colors.white),
                           ),
                         )
                       : Text(l10n.loginButton),
                 ),
-                
+
                 const SizedBox(height: AppConstants.paddingM),
-                
+
                 // Register Link
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -200,13 +203,14 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                   ],
                 ),
-                
+
                 const Spacer(),
-                
+
                 // Guest Mode Button
                 OutlinedButton(
                   onPressed: () {
-                    Navigator.of(context).pop(false); // Return to app without login
+                    Navigator.of(context)
+                        .pop(false); // Return to app without login
                   },
                   child: Text(l10n.continueWithoutAccount),
                 ),

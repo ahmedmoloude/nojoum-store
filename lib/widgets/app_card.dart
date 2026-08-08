@@ -28,7 +28,9 @@ class AppCard extends StatelessWidget {
       clipBehavior: Clip.antiAlias,
       child: InkWell(
         onTap: onTap,
-        child: isCompact ? _buildCompactLayout(context, theme) : _buildFullLayout(context, theme),
+        child: isCompact
+            ? _buildCompactLayout(context, theme)
+            : _buildFullLayout(context, theme),
       ),
     );
   }
@@ -54,7 +56,8 @@ class AppCard extends StatelessWidget {
                 ),
               ),
               child: Center(
-                child: _buildAppIcon(AppConstants.appIconSizeM), // Reduced icon size
+                child: _buildAppIcon(
+                    AppConstants.appIconSizeM), // Reduced icon size
               ),
             ),
             if (showFeaturedBadge && app.isFeatured)
@@ -68,7 +71,8 @@ class AppCard extends StatelessWidget {
                   ),
                   decoration: BoxDecoration(
                     color: AppConstants.primaryYellow,
-                    borderRadius: BorderRadius.circular(AppConstants.borderRadiusM),
+                    borderRadius:
+                        BorderRadius.circular(AppConstants.borderRadiusM),
                   ),
                   child: Text(
                     AppLocalizations.of(context)!.featured,
@@ -85,7 +89,8 @@ class AppCard extends StatelessWidget {
 
         // App information - FIXED OVERFLOW
         Padding(
-          padding: const EdgeInsets.all(AppConstants.paddingS), // Reduced padding
+          padding:
+              const EdgeInsets.all(AppConstants.paddingS), // Reduced padding
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
@@ -93,7 +98,8 @@ class AppCard extends StatelessWidget {
               // App name
               Text(
                 app.name,
-                style: theme.textTheme.titleSmall?.copyWith( // Smaller title
+                style: theme.textTheme.titleSmall?.copyWith(
+                  // Smaller title
                   fontWeight: FontWeight.bold,
                   fontSize: 14,
                 ),
@@ -116,9 +122,10 @@ class AppCard extends StatelessWidget {
 
               // Description
               Text(
-
                 // get only the first 100 characters of the description
-                app.description.length > 20 ?  app.description.substring(0, 20) + '...' : app.description,
+                app.description.length > 20
+                    ? '${app.description.substring(0, 20)}...'
+                    : app.description,
                 style: theme.textTheme.bodySmall?.copyWith(
                   fontSize: 10,
                 ),
@@ -126,7 +133,6 @@ class AppCard extends StatelessWidget {
                 overflow: TextOverflow.ellipsis,
               ),
               const SizedBox(height: 4), // Reduced spacing
-
             ],
           ),
         ),
@@ -166,14 +172,16 @@ class AppCard extends StatelessWidget {
                     ),
                     if (showFeaturedBadge && app.isFeatured)
                       Container(
-                        margin: const EdgeInsets.only(left: AppConstants.paddingS),
+                        margin:
+                            const EdgeInsets.only(left: AppConstants.paddingS),
                         padding: const EdgeInsets.symmetric(
                           horizontal: AppConstants.paddingS,
                           vertical: 2,
                         ),
                         decoration: BoxDecoration(
                           color: AppConstants.primaryYellow,
-                          borderRadius: BorderRadius.circular(AppConstants.borderRadiusM),
+                          borderRadius:
+                              BorderRadius.circular(AppConstants.borderRadiusM),
                         ),
                         child: Text(
                           AppLocalizations.of(context)!.featured,
@@ -199,7 +207,6 @@ class AppCard extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                 ),
                 const SizedBox(height: 6),
-
               ],
             ),
           ),
@@ -225,7 +232,9 @@ class AppCard extends StatelessWidget {
       child: ClipRRect(
         borderRadius: BorderRadius.circular(AppConstants.borderRadiusM),
         child: CachedNetworkImage(
-          imageUrl: app.iconUrl.startsWith('http') ? app.iconUrl : 'https://noujoumstore.com' + app.iconUrl,
+          imageUrl: app.iconUrl.startsWith('http')
+              ? app.iconUrl
+              : 'https://noujoumstore.com${app.iconUrl}',
           fit: BoxFit.cover,
           placeholder: (context, url) => Container(
             color: AppConstants.primaryGreen.withOpacity(0.1),

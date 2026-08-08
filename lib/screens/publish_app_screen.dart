@@ -29,7 +29,7 @@ class _PublishAppScreenState extends State<PublishAppScreen> {
   final ImagePicker _imagePicker = ImagePicker();
   String? _uploadedIconUrl;
   bool _isUploadingIcon = false;
-  List<String> _uploadedScreenshotUrls = [];
+  final List<String> _uploadedScreenshotUrls = [];
   bool _isUploadingScreenshots = false;
 
   // Categories from API
@@ -48,26 +48,31 @@ class _PublishAppScreenState extends State<PublishAppScreen> {
       setState(() => _isUploadingIcon = true);
 
       final file = File(picked.path);
-      final resp = await ApiService.uploadFile(file, fields: {'folder': 'app-icons'});
+      final resp =
+          await ApiService.uploadFile(file, fields: {'folder': 'app-icons'});
       final url = (resp['data'] ?? {})['url']?.toString();
       if (url == null || url.isEmpty) {
         throw Exception('Upload failed');
       }
 
       setState(() {
-        _uploadedIconUrl = 'https://noujoumstore.com' + url;
+        _uploadedIconUrl = 'https://noujoumstore.com$url';
       });
       field.didChange(url);
 
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(AppLocalizations.of(context)!.iconUploadedSuccess)),
+          SnackBar(
+              content: Text(AppLocalizations.of(context)!.iconUploadedSuccess)),
         );
       }
     } catch (e) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(AppLocalizations.of(context)!.uploadFailed(e.toString())), backgroundColor: Colors.red),
+          SnackBar(
+              content: Text(
+                  AppLocalizations.of(context)!.uploadFailed(e.toString())),
+              backgroundColor: Colors.red),
         );
       }
     } finally {
@@ -75,7 +80,8 @@ class _PublishAppScreenState extends State<PublishAppScreen> {
     }
   }
 
-  Future<void> _pickAndUploadScreenshots(FormFieldState<List<String>> field) async {
+  Future<void> _pickAndUploadScreenshots(
+      FormFieldState<List<String>> field) async {
     try {
       final List<XFile> picked = await _imagePicker.pickMultiImage(
         maxWidth: 1024,
@@ -99,10 +105,11 @@ class _PublishAppScreenState extends State<PublishAppScreen> {
       List<String> newUrls = [];
       for (final pickedFile in picked) {
         final file = File(pickedFile.path);
-        final resp = await ApiService.uploadFile(file, fields: {'folder': 'app-screenshots'});
+        final resp = await ApiService.uploadFile(file,
+            fields: {'folder': 'app-screenshots'});
         final url = (resp['data'] ?? {})['url']?.toString();
         if (url != null && url.isNotEmpty) {
-          newUrls.add( 'https://noujoumstore.com' + url);
+          newUrls.add('https://noujoumstore.com$url');
         }
       }
 
@@ -113,13 +120,18 @@ class _PublishAppScreenState extends State<PublishAppScreen> {
 
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(AppLocalizations.of(context)!.screenshotsUploadedCount(newUrls.length))),
+          SnackBar(
+              content: Text(AppLocalizations.of(context)!
+                  .screenshotsUploadedCount(newUrls.length))),
         );
       }
     } catch (e) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(AppLocalizations.of(context)!.uploadFailedGeneric(e.toString())), backgroundColor: Colors.red),
+          SnackBar(
+              content: Text(AppLocalizations.of(context)!
+                  .uploadFailedGeneric(e.toString())),
+              backgroundColor: Colors.red),
         );
       }
     } finally {
@@ -241,7 +253,8 @@ class _PublishAppScreenState extends State<PublishAppScreen> {
               // Navigate to subscription packages
               await Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => const SubscriptionPackagesScreen()),
+                MaterialPageRoute(
+                    builder: (context) => const SubscriptionPackagesScreen()),
               );
             },
             style: ElevatedButton.styleFrom(
@@ -325,7 +338,8 @@ class _PublishAppScreenState extends State<PublishAppScreen> {
 
               return Expanded(
                 child: Container(
-                  margin: EdgeInsets.symmetric(horizontal: AppConstants.paddingXS),
+                  margin:
+                      EdgeInsets.symmetric(horizontal: AppConstants.paddingXS),
                   height: 4,
                   decoration: BoxDecoration(
                     color: isActive
@@ -339,7 +353,8 @@ class _PublishAppScreenState extends State<PublishAppScreen> {
           ),
           const SizedBox(height: AppConstants.paddingM),
           Text(
-            AppLocalizations.of(context)!.stepProgress(_currentStep + 1, _totalSteps),
+            AppLocalizations.of(context)!
+                .stepProgress(_currentStep + 1, _totalSteps),
             style: theme.textTheme.titleMedium?.copyWith(
               color: AppConstants.whiteTextColor,
               fontWeight: FontWeight.w600,
@@ -363,291 +378,329 @@ class _PublishAppScreenState extends State<PublishAppScreen> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-            Text(
-              AppLocalizations.of(context)!.stepBasicInfo,
-              style: Theme.of(context).textTheme.headlineSmall,
+          Text(
+            AppLocalizations.of(context)!.stepBasicInfo,
+            style: Theme.of(context).textTheme.headlineSmall,
+          ),
+          const SizedBox(height: AppConstants.paddingL),
+          FormBuilderTextField(
+            name: 'appName',
+            decoration: InputDecoration(
+              labelText: AppLocalizations.of(context)!.appNameLabel,
+              hintText: AppLocalizations.of(context)!.appNameHint,
             ),
-            const SizedBox(height: AppConstants.paddingL),
-
-            FormBuilderTextField(
-              name: 'appName',
-              decoration: InputDecoration(
-                labelText: AppLocalizations.of(context)!.appNameLabel,
-                hintText: AppLocalizations.of(context)!.appNameHint,
-              ),
-              validator: (value) {
-                if (value == null || value.isEmpty) {
-                  return AppLocalizations.of(context)!.appNameRequired;
-                }
-                return null;
-              },
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return AppLocalizations.of(context)!.appNameRequired;
+              }
+              return null;
+            },
+          ),
+          const SizedBox(height: AppConstants.paddingM),
+          FormBuilderTextField(
+            name: 'tagline',
+            decoration: InputDecoration(
+              labelText: AppLocalizations.of(context)!.taglineLabel,
+              hintText: AppLocalizations.of(context)!.taglineHint,
             ),
-            const SizedBox(height: AppConstants.paddingM),
-
-            FormBuilderTextField(
-              name: 'tagline',
-              decoration: InputDecoration(
-                labelText: AppLocalizations.of(context)!.taglineLabel,
-                hintText: AppLocalizations.of(context)!.taglineHint,
-              ),
-              validator: (value) {
-                if (value == null || value.isEmpty) {
-                  return AppLocalizations.of(context)!.taglineRequired;
-                }
-                return null;
-              },
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return AppLocalizations.of(context)!.taglineRequired;
+              }
+              return null;
+            },
+          ),
+          const SizedBox(height: AppConstants.paddingM),
+          FormBuilderTextField(
+            name: 'description',
+            decoration: InputDecoration(
+              labelText: AppLocalizations.of(context)!.shortDescriptionLabel,
+              hintText: AppLocalizations.of(context)!.shortDescriptionHint,
             ),
-            const SizedBox(height: AppConstants.paddingM),
-
-            FormBuilderTextField(
-              name: 'description',
-              decoration: InputDecoration(
-                labelText: AppLocalizations.of(context)!.shortDescriptionLabel,
-                hintText: AppLocalizations.of(context)!.shortDescriptionHint,
-              ),
-              maxLines: 3,
-              validator: (value) {
-                if (value == null || value.isEmpty) {
-                  return AppLocalizations.of(context)!.shortDescriptionRequired;
-                }
-                return null;
-              },
-            ),
-            const SizedBox(height: AppConstants.paddingM),
-
-            _isLoadingCategories
-                ? const Center(
-                    child: Padding(
-                      padding: EdgeInsets.all(16.0),
-                      child: CircularProgressIndicator(),
-                    ),
-                  )
-                : FormBuilderDropdown<String>(
-                    name: 'category',
-                    decoration: InputDecoration(
-                      labelText: AppLocalizations.of(context)!.mainCategoryLabel,
-                    ),
-                    items: _categories
-                        .map((category) => DropdownMenuItem(
-                              value: category.id,
-                              child: Text(category.displayName),
-                            ))
-                        .toList(),
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return AppLocalizations.of(context)!.selectCategoryValidation;
-                      }
-                      return null;
-                    },
+            maxLines: 3,
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return AppLocalizations.of(context)!.shortDescriptionRequired;
+              }
+              return null;
+            },
+          ),
+          const SizedBox(height: AppConstants.paddingM),
+          _isLoadingCategories
+              ? const Center(
+                  child: Padding(
+                    padding: EdgeInsets.all(16.0),
+                    child: CircularProgressIndicator(),
                   ),
-            const SizedBox(height: AppConstants.paddingM),
-
-            FormBuilderDropdown<String>(
-              name: 'targetAudience',
-              decoration: InputDecoration(
-                labelText: AppLocalizations.of(context)!.targetAudienceLabel,
-              ),
-              items: [
-                DropdownMenuItem(value: 'Individual', child: Text(AppLocalizations.of(context)!.individuals)),
-                DropdownMenuItem(value: 'Small Business', child: Text(AppLocalizations.of(context)!.smallBusiness)),
-                DropdownMenuItem(value: 'Enterprise', child: Text(AppLocalizations.of(context)!.enterprise)),
-                DropdownMenuItem(value: 'Government', child: Text(AppLocalizations.of(context)!.government)),
-              ],
-              validator: (value) {
-                if (value == null || value.isEmpty) {
-                  return AppLocalizations.of(context)!.selectTargetAudienceValidation;
-                }
-                return null;
-              },
+                )
+              : FormBuilderDropdown<String>(
+                  name: 'category',
+                  decoration: InputDecoration(
+                    labelText: AppLocalizations.of(context)!.mainCategoryLabel,
+                  ),
+                  items: _categories
+                      .map((category) => DropdownMenuItem(
+                            value: category.id,
+                            child: Text(category.displayName),
+                          ))
+                      .toList(),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return AppLocalizations.of(context)!
+                          .selectCategoryValidation;
+                    }
+                    return null;
+                  },
+                ),
+          const SizedBox(height: AppConstants.paddingM),
+          FormBuilderDropdown<String>(
+            name: 'targetAudience',
+            decoration: InputDecoration(
+              labelText: AppLocalizations.of(context)!.targetAudienceLabel,
             ),
-            const SizedBox(height: AppConstants.paddingM),
-
-            FormBuilderField<String>(
-              name: 'iconUrl',
-              validator: (value) {
-                if (value == null || value.isEmpty) {
-                  return AppLocalizations.of(context)!.uploadIconValidation;
-                }
-                return null;
-              },
-              builder: (field) {
-                return Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      AppLocalizations.of(context)!.appIconLabel,
-                      style: Theme.of(context).textTheme.bodyMedium,
-                    ),
-                    const SizedBox(height: 8),
-                    Row(
-                      children: [
-                        Container(
-                          width: 72,
-                          height: 72,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(AppConstants.borderRadiusS),
-                            color: AppConstants.primaryGreen.withOpacity(0.1),
-                          ),
-                          clipBehavior: Clip.antiAlias,
-                          child: _uploadedIconUrl != null
-                              ? Image.network(_uploadedIconUrl!, fit: BoxFit.cover)
-                              : const Icon(Icons.apps, color: AppConstants.primaryGreen),
+            items: [
+              DropdownMenuItem(
+                  value: 'Individual',
+                  child: Text(AppLocalizations.of(context)!.individuals)),
+              DropdownMenuItem(
+                  value: 'Small Business',
+                  child: Text(AppLocalizations.of(context)!.smallBusiness)),
+              DropdownMenuItem(
+                  value: 'Enterprise',
+                  child: Text(AppLocalizations.of(context)!.enterprise)),
+              DropdownMenuItem(
+                  value: 'Government',
+                  child: Text(AppLocalizations.of(context)!.government)),
+            ],
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return AppLocalizations.of(context)!
+                    .selectTargetAudienceValidation;
+              }
+              return null;
+            },
+          ),
+          const SizedBox(height: AppConstants.paddingM),
+          FormBuilderField<String>(
+            name: 'iconUrl',
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return AppLocalizations.of(context)!.uploadIconValidation;
+              }
+              return null;
+            },
+            builder: (field) {
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    AppLocalizations.of(context)!.appIconLabel,
+                    style: Theme.of(context).textTheme.bodyMedium,
+                  ),
+                  const SizedBox(height: 8),
+                  Row(
+                    children: [
+                      Container(
+                        width: 72,
+                        height: 72,
+                        decoration: BoxDecoration(
+                          borderRadius:
+                              BorderRadius.circular(AppConstants.borderRadiusS),
+                          color: AppConstants.primaryGreen.withOpacity(0.1),
                         ),
-                        const SizedBox(width: AppConstants.paddingM),
-                        ElevatedButton.icon(
-                          onPressed: _isUploadingIcon ? null : () => _pickAndUploadIcon(field),
-                          icon: _isUploadingIcon
-                              ? const SizedBox(width: 16, height: 16, child: CircularProgressIndicator(strokeWidth: 2, valueColor: AlwaysStoppedAnimation<Color>(Colors.white)))
-                              : const Icon(Icons.upload_file),
-                          label: Text(_uploadedIconUrl == null ? AppLocalizations.of(context)!.uploadIcon : AppLocalizations.of(context)!.replace),
-                          style: ElevatedButton.styleFrom(backgroundColor: AppConstants.teal),
-                        ),
-                      ],
-                    ),
-                    if (field.hasError)
-                      Padding(
-                        padding: const EdgeInsets.only(top: 8.0),
-                        child: Text(field.errorText!, style: const TextStyle(color: Colors.red)),
+                        clipBehavior: Clip.antiAlias,
+                        child: _uploadedIconUrl != null
+                            ? Image.network(_uploadedIconUrl!,
+                                fit: BoxFit.cover)
+                            : const Icon(Icons.apps,
+                                color: AppConstants.primaryGreen),
                       ),
-                  ],
-                );
-              },
-            ),
-            const SizedBox(height: AppConstants.paddingM),
-
-            FormBuilderField<List<String>>(
-              name: 'screenshots',
-              validator: (value) {
-                if (_uploadedScreenshotUrls.isEmpty) {
-                  return AppLocalizations.of(context)!.screenshotsRequired;
-                }
-                return null;
-              },
-              builder: (field) {
-                return Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      AppLocalizations.of(context)!.screenshotsLabel,
-                      style: Theme.of(context).textTheme.bodyMedium,
-                    ),
-                    const SizedBox(height: 8),
-
-                    // Upload button
-                    ElevatedButton.icon(
-                      onPressed: _isUploadingScreenshots ? null : () => _pickAndUploadScreenshots(field),
-                      icon: _isUploadingScreenshots
-                          ? const SizedBox(width: 16, height: 16, child: CircularProgressIndicator(strokeWidth: 2, valueColor: AlwaysStoppedAnimation<Color>(Colors.white)))
-                          : const Icon(Icons.add_photo_alternate),
-                      label: Text(_uploadedScreenshotUrls.isEmpty ? AppLocalizations.of(context)!.addScreenshots : AppLocalizations.of(context)!.addMoreScreenshots),
-                      style: ElevatedButton.styleFrom(backgroundColor: AppConstants.teal),
-                    ),
-
-                    const SizedBox(height: 12),
-
-                    // Display uploaded screenshots
-                    if (_uploadedScreenshotUrls.isNotEmpty) ...[
-                      Text(
-                        AppLocalizations.of(context)!.screenshotsUploadedStatus(_uploadedScreenshotUrls.length),
-                        style: Theme.of(context).textTheme.bodySmall?.copyWith(color: Colors.green),
-                      ),
-                      const SizedBox(height: 8),
-                      SizedBox(
-                        height: 100,
-                        child: ListView.builder(
-                          scrollDirection: Axis.horizontal,
-                          itemCount: _uploadedScreenshotUrls.length,
-                          itemBuilder: (context, index) {
-                            return Container(
-                              margin: const EdgeInsets.only(right: 8),
-                              child: Stack(
-                                children: [
-                                  Container(
-                                    width: 80,
-                                    height: 100,
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(AppConstants.borderRadiusS),
-                                      border: Border.all(color: Colors.grey.shade300),
-                                    ),
-                                    clipBehavior: Clip.antiAlias,
-                                    child: Image.network(
-                                      _uploadedScreenshotUrls[index],
-                                      fit: BoxFit.cover,
-                                      errorBuilder: (context, error, stackTrace) => Container(
-                                        color: Colors.grey.shade200,
-                                        child: const Icon(Icons.image, color: Colors.grey),
-                                      ),
-                                    ),
-                                  ),
-                                  Positioned(
-                                    top: 4,
-                                    right: 4,
-                                    child: GestureDetector(
-                                      onTap: () => _removeScreenshot(index, field),
-                                      child: Container(
-                                        width: 20,
-                                        height: 20,
-                                        decoration: const BoxDecoration(
-                                          color: Colors.red,
-                                          shape: BoxShape.circle,
-                                        ),
-                                        child: const Icon(
-                                          Icons.close,
-                                          size: 14,
-                                          color: Colors.white,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            );
-                          },
-                        ),
+                      const SizedBox(width: AppConstants.paddingM),
+                      ElevatedButton.icon(
+                        onPressed: _isUploadingIcon
+                            ? null
+                            : () => _pickAndUploadIcon(field),
+                        icon: _isUploadingIcon
+                            ? const SizedBox(
+                                width: 16,
+                                height: 16,
+                                child: CircularProgressIndicator(
+                                    strokeWidth: 2,
+                                    valueColor: AlwaysStoppedAnimation<Color>(
+                                        Colors.white)))
+                            : const Icon(Icons.upload_file),
+                        label: Text(_uploadedIconUrl == null
+                            ? AppLocalizations.of(context)!.uploadIcon
+                            : AppLocalizations.of(context)!.replace),
+                        style: ElevatedButton.styleFrom(
+                            backgroundColor: AppConstants.teal),
                       ),
                     ],
+                  ),
+                  if (field.hasError)
+                    Padding(
+                      padding: const EdgeInsets.only(top: 8.0),
+                      child: Text(field.errorText!,
+                          style: const TextStyle(color: Colors.red)),
+                    ),
+                ],
+              );
+            },
+          ),
+          const SizedBox(height: AppConstants.paddingM),
+          FormBuilderField<List<String>>(
+            name: 'screenshots',
+            validator: (value) {
+              if (_uploadedScreenshotUrls.isEmpty) {
+                return AppLocalizations.of(context)!.screenshotsRequired;
+              }
+              return null;
+            },
+            builder: (field) {
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    AppLocalizations.of(context)!.screenshotsLabel,
+                    style: Theme.of(context).textTheme.bodyMedium,
+                  ),
+                  const SizedBox(height: 8),
 
-                    if (field.hasError)
-                      Padding(
-                        padding: const EdgeInsets.only(top: 8.0),
-                        child: Text(field.errorText!, style: const TextStyle(color: Colors.red)),
+                  // Upload button
+                  ElevatedButton.icon(
+                    onPressed: _isUploadingScreenshots
+                        ? null
+                        : () => _pickAndUploadScreenshots(field),
+                    icon: _isUploadingScreenshots
+                        ? const SizedBox(
+                            width: 16,
+                            height: 16,
+                            child: CircularProgressIndicator(
+                                strokeWidth: 2,
+                                valueColor: AlwaysStoppedAnimation<Color>(
+                                    Colors.white)))
+                        : const Icon(Icons.add_photo_alternate),
+                    label: Text(_uploadedScreenshotUrls.isEmpty
+                        ? AppLocalizations.of(context)!.addScreenshots
+                        : AppLocalizations.of(context)!.addMoreScreenshots),
+                    style: ElevatedButton.styleFrom(
+                        backgroundColor: AppConstants.teal),
+                  ),
+
+                  const SizedBox(height: 12),
+
+                  // Display uploaded screenshots
+                  if (_uploadedScreenshotUrls.isNotEmpty) ...[
+                    Text(
+                      AppLocalizations.of(context)!.screenshotsUploadedStatus(
+                          _uploadedScreenshotUrls.length),
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodySmall
+                          ?.copyWith(color: Colors.green),
+                    ),
+                    const SizedBox(height: 8),
+                    SizedBox(
+                      height: 100,
+                      child: ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        itemCount: _uploadedScreenshotUrls.length,
+                        itemBuilder: (context, index) {
+                          return Container(
+                            margin: const EdgeInsets.only(right: 8),
+                            child: Stack(
+                              children: [
+                                Container(
+                                  width: 80,
+                                  height: 100,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(
+                                        AppConstants.borderRadiusS),
+                                    border:
+                                        Border.all(color: Colors.grey.shade300),
+                                  ),
+                                  clipBehavior: Clip.antiAlias,
+                                  child: Image.network(
+                                    _uploadedScreenshotUrls[index],
+                                    fit: BoxFit.cover,
+                                    errorBuilder:
+                                        (context, error, stackTrace) =>
+                                            Container(
+                                      color: Colors.grey.shade200,
+                                      child: const Icon(Icons.image,
+                                          color: Colors.grey),
+                                    ),
+                                  ),
+                                ),
+                                Positioned(
+                                  top: 4,
+                                  right: 4,
+                                  child: GestureDetector(
+                                    onTap: () =>
+                                        _removeScreenshot(index, field),
+                                    child: Container(
+                                      width: 20,
+                                      height: 20,
+                                      decoration: const BoxDecoration(
+                                        color: Colors.red,
+                                        shape: BoxShape.circle,
+                                      ),
+                                      child: const Icon(
+                                        Icons.close,
+                                        size: 14,
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          );
+                        },
                       ),
+                    ),
                   ],
-                );
-              },
-            ),
-            const SizedBox(height: AppConstants.paddingM),
 
-            FormBuilderTextField(
-              name: 'subcategory',
-              decoration: InputDecoration(
-                labelText: AppLocalizations.of(context)!.subcategoryLabel,
-                hintText: AppLocalizations.of(context)!.subcategoryHint,
-              ),
-              validator: (value) {
-                if (value == null || value.isEmpty) {
-                  return AppLocalizations.of(context)!.subcategoryRequired;
-                }
-                return null;
-              },
+                  if (field.hasError)
+                    Padding(
+                      padding: const EdgeInsets.only(top: 8.0),
+                      child: Text(field.errorText!,
+                          style: const TextStyle(color: Colors.red)),
+                    ),
+                ],
+              );
+            },
+          ),
+          const SizedBox(height: AppConstants.paddingM),
+          FormBuilderTextField(
+            name: 'subcategory',
+            decoration: InputDecoration(
+              labelText: AppLocalizations.of(context)!.subcategoryLabel,
+              hintText: AppLocalizations.of(context)!.subcategoryHint,
             ),
-            const SizedBox(height: AppConstants.paddingM),
-
-            FormBuilderTextField(
-              name: 'tags',
-              decoration: InputDecoration(
-                labelText: AppLocalizations.of(context)!.tagsLabel,
-                hintText: AppLocalizations.of(context)!.tagsHint,
-              ),
-              maxLines: 2,
-              validator: (value) {
-                if (value == null || value.isEmpty) {
-                  return AppLocalizations.of(context)!.tagsRequired;
-                }
-                return null;
-              },
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return AppLocalizations.of(context)!.subcategoryRequired;
+              }
+              return null;
+            },
+          ),
+          const SizedBox(height: AppConstants.paddingM),
+          FormBuilderTextField(
+            name: 'tags',
+            decoration: InputDecoration(
+              labelText: AppLocalizations.of(context)!.tagsLabel,
+              hintText: AppLocalizations.of(context)!.tagsHint,
             ),
-          ],
+            maxLines: 2,
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return AppLocalizations.of(context)!.tagsRequired;
+              }
+              return null;
+            },
+          ),
+        ],
       ),
     );
   }
@@ -663,7 +716,6 @@ class _PublishAppScreenState extends State<PublishAppScreen> {
             style: Theme.of(context).textTheme.headlineSmall,
           ),
           const SizedBox(height: AppConstants.paddingL),
-
           FormBuilderDropdown<AppType>(
             name: 'appType',
             decoration: InputDecoration(
@@ -677,7 +729,6 @@ class _PublishAppScreenState extends State<PublishAppScreen> {
                 .toList(),
           ),
           const SizedBox(height: AppConstants.paddingM),
-
           FormBuilderCheckboxGroup<Platform>(
             name: 'platforms',
             decoration: InputDecoration(
@@ -691,7 +742,6 @@ class _PublishAppScreenState extends State<PublishAppScreen> {
                 .toList(),
           ),
           const SizedBox(height: AppConstants.paddingM),
-
           FormBuilderTextField(
             name: 'currentVersion',
             decoration: InputDecoration(
@@ -701,7 +751,6 @@ class _PublishAppScreenState extends State<PublishAppScreen> {
             initialValue: '1.0.0',
           ),
           const SizedBox(height: AppConstants.paddingM),
-
           FormBuilderTextField(
             name: 'technicalRequirements',
             decoration: InputDecoration(
@@ -726,7 +775,6 @@ class _PublishAppScreenState extends State<PublishAppScreen> {
             style: Theme.of(context).textTheme.headlineSmall,
           ),
           const SizedBox(height: AppConstants.paddingL),
-
           FormBuilderDropdown<PricingModel>(
             name: 'pricingModel',
             decoration: InputDecoration(
@@ -740,7 +788,6 @@ class _PublishAppScreenState extends State<PublishAppScreen> {
                 .toList(),
           ),
           const SizedBox(height: AppConstants.paddingM),
-
           FormBuilderTextField(
             name: 'pricing',
             decoration: InputDecoration(
@@ -749,13 +796,11 @@ class _PublishAppScreenState extends State<PublishAppScreen> {
             ),
           ),
           const SizedBox(height: AppConstants.paddingM),
-
           FormBuilderCheckbox(
             name: 'hasFreeTrial',
             title: Text(AppLocalizations.of(context)!.offersFreeTrial),
           ),
           const SizedBox(height: AppConstants.paddingM),
-
           FormBuilderTextField(
             name: 'trialDays',
             decoration: InputDecoration(
@@ -780,7 +825,6 @@ class _PublishAppScreenState extends State<PublishAppScreen> {
             style: Theme.of(context).textTheme.headlineSmall,
           ),
           const SizedBox(height: AppConstants.paddingL),
-
           FormBuilderTextField(
             name: 'businessValue',
             decoration: InputDecoration(
@@ -790,7 +834,6 @@ class _PublishAppScreenState extends State<PublishAppScreen> {
             maxLines: 2,
           ),
           const SizedBox(height: AppConstants.paddingM),
-
           FormBuilderTextField(
             name: 'keyFeatures',
             decoration: InputDecoration(
@@ -800,23 +843,33 @@ class _PublishAppScreenState extends State<PublishAppScreen> {
             maxLines: 3,
           ),
           const SizedBox(height: AppConstants.paddingM),
-
           FormBuilderCheckboxGroup<String>(
             name: 'businessSectors',
             decoration: InputDecoration(
               labelText: AppLocalizations.of(context)!.targetBusinessSectors,
             ),
             options: [
-              FormBuilderFieldOption(value: 'Commerce', child: Text(AppLocalizations.of(context)!.sectorCommerce)),
-              FormBuilderFieldOption(value: 'Services', child: Text(AppLocalizations.of(context)!.sectorServices)),
-              FormBuilderFieldOption(value: 'Industrie', child: Text(AppLocalizations.of(context)!.sectorIndustry)),
-              FormBuilderFieldOption(value: 'Santé', child: Text(AppLocalizations.of(context)!.sectorHealth)),
-              FormBuilderFieldOption(value: 'Éducation', child: Text(AppLocalizations.of(context)!.sectorEducation)),
-              FormBuilderFieldOption(value: 'Agriculture', child: Text(AppLocalizations.of(context)!.sectorAgriculture)),
+              FormBuilderFieldOption(
+                  value: 'Commerce',
+                  child: Text(AppLocalizations.of(context)!.sectorCommerce)),
+              FormBuilderFieldOption(
+                  value: 'Services',
+                  child: Text(AppLocalizations.of(context)!.sectorServices)),
+              FormBuilderFieldOption(
+                  value: 'Industrie',
+                  child: Text(AppLocalizations.of(context)!.sectorIndustry)),
+              FormBuilderFieldOption(
+                  value: 'Santé',
+                  child: Text(AppLocalizations.of(context)!.sectorHealth)),
+              FormBuilderFieldOption(
+                  value: 'Éducation',
+                  child: Text(AppLocalizations.of(context)!.sectorEducation)),
+              FormBuilderFieldOption(
+                  value: 'Agriculture',
+                  child: Text(AppLocalizations.of(context)!.sectorAgriculture)),
             ],
           ),
           const SizedBox(height: AppConstants.paddingM),
-
           FormBuilderCheckboxGroup<SupportType>(
             name: 'supportOptions',
             decoration: InputDecoration(
@@ -833,8 +886,6 @@ class _PublishAppScreenState extends State<PublishAppScreen> {
       ),
     );
   }
-
-
 
   Widget _buildNavigationButtons() {
     return Container(
@@ -877,7 +928,9 @@ class _PublishAppScreenState extends State<PublishAppScreen> {
                       ),
                     )
                   : Text(
-                      _currentStep < _totalSteps - 1 ? AppLocalizations.of(context)!.next : AppLocalizations.of(context)!.publishApplication,
+                      _currentStep < _totalSteps - 1
+                          ? AppLocalizations.of(context)!.next
+                          : AppLocalizations.of(context)!.publishApplication,
                     ),
             ),
           ),
@@ -894,7 +947,6 @@ class _PublishAppScreenState extends State<PublishAppScreen> {
         curve: Curves.easeInOut,
       );
     }
-    
   }
 
   void _previousStep() {
@@ -905,14 +957,8 @@ class _PublishAppScreenState extends State<PublishAppScreen> {
   }
 
   bool _validateCurrentStep() {
-
-
-
-
     log('formket currentState ${_formKey.currentState}');
     if (_formKey.currentState == null) return false;
-
-
 
     log('current state ');
     // Save and validate the form first to populate values
@@ -950,68 +996,79 @@ class _PublishAppScreenState extends State<PublishAppScreen> {
     final tags = formData['tags']?.toString().trim();
 
     if (appName == null || appName.isEmpty) {
-      _showValidationError(AppLocalizations.of(context)!.validationAppNameRequired);
+      _showValidationError(
+          AppLocalizations.of(context)!.validationAppNameRequired);
       return false;
     }
     if (tagline == null || tagline.isEmpty) {
-      _showValidationError(AppLocalizations.of(context)!.validationTaglineRequired);
+      _showValidationError(
+          AppLocalizations.of(context)!.validationTaglineRequired);
       return false;
     }
     if (description == null || description.isEmpty) {
-      _showValidationError(AppLocalizations.of(context)!.validationDescriptionRequired);
+      _showValidationError(
+          AppLocalizations.of(context)!.validationDescriptionRequired);
       return false;
     }
     if (category == null || category.toString().isEmpty) {
-      _showValidationError(AppLocalizations.of(context)!.validationCategoryRequired);
+      _showValidationError(
+          AppLocalizations.of(context)!.validationCategoryRequired);
       return false;
     }
     // Validate that the category ID is valid
     final categoryId = int.tryParse(category.toString());
     if (categoryId == null || categoryId <= 0) {
-      _showValidationError(AppLocalizations.of(context)!.validationInvalidCategory);
+      _showValidationError(
+          AppLocalizations.of(context)!.validationInvalidCategory);
       return false;
     }
     if (targetAudience == null || targetAudience.toString().isEmpty) {
-      _showValidationError(AppLocalizations.of(context)!.validationTargetAudienceRequired);
+      _showValidationError(
+          AppLocalizations.of(context)!.validationTargetAudienceRequired);
       return false;
     }
     if (iconUrl == null || iconUrl.isEmpty) {
-      _showValidationError(AppLocalizations.of(context)!.validationIconRequired);
+      _showValidationError(
+          AppLocalizations.of(context)!.validationIconRequired);
       return false;
     }
     if (_uploadedScreenshotUrls.isEmpty) {
-      _showValidationError(AppLocalizations.of(context)!.validationScreenshotsRequired);
+      _showValidationError(
+          AppLocalizations.of(context)!.validationScreenshotsRequired);
       return false;
     }
     if (subcategory == null || subcategory.isEmpty) {
-      _showValidationError(AppLocalizations.of(context)!.validationSubcategoryRequired);
+      _showValidationError(
+          AppLocalizations.of(context)!.validationSubcategoryRequired);
       return false;
     }
     if (tags == null || tags.isEmpty) {
-      _showValidationError(AppLocalizations.of(context)!.validationTagsRequired);
+      _showValidationError(
+          AppLocalizations.of(context)!.validationTagsRequired);
       return false;
     }
     return true;
   }
 
-
   bool _validateTechnicalDetails(Map<String, dynamic> formData) {
-
-    log('formdata ${formData}');
+    log('formdata $formData');
     final appType = formData['appType'];
     final platforms = formData['platforms'] as List?;
     final version = formData['currentVersion']?.toString().trim();
 
     if (appType == null || appType.toString().isEmpty) {
-      _showValidationError(AppLocalizations.of(context)!.validationAppTypeRequired);
+      _showValidationError(
+          AppLocalizations.of(context)!.validationAppTypeRequired);
       return false;
     }
     if (platforms == null || platforms.isEmpty) {
-      _showValidationError(AppLocalizations.of(context)!.validationPlatformsRequired);
+      _showValidationError(
+          AppLocalizations.of(context)!.validationPlatformsRequired);
       return false;
     }
     if (version == null || version.isEmpty) {
-      _showValidationError(AppLocalizations.of(context)!.validationVersionRequired);
+      _showValidationError(
+          AppLocalizations.of(context)!.validationVersionRequired);
       return false;
     }
     return true;
@@ -1022,11 +1079,13 @@ class _PublishAppScreenState extends State<PublishAppScreen> {
     final pricingModel = formData['pricingModel'];
 
     if (licenseType == null || licenseType.toString().isEmpty) {
-      _showValidationError(AppLocalizations.of(context)!.validationLicenseTypeRequired);
+      _showValidationError(
+          AppLocalizations.of(context)!.validationLicenseTypeRequired);
       return false;
     }
     if (pricingModel == null || pricingModel.toString().isEmpty) {
-      _showValidationError(AppLocalizations.of(context)!.validationPricingModelRequired);
+      _showValidationError(
+          AppLocalizations.of(context)!.validationPricingModelRequired);
       return false;
     }
     return true;
@@ -1037,11 +1096,13 @@ class _PublishAppScreenState extends State<PublishAppScreen> {
     final keyFeatures = formData['keyFeatures']?.toString().trim();
 
     if (businessValue == null || businessValue.isEmpty) {
-      _showValidationError(AppLocalizations.of(context)!.validationBusinessValueRequired);
+      _showValidationError(
+          AppLocalizations.of(context)!.validationBusinessValueRequired);
       return false;
     }
     if (keyFeatures == null || keyFeatures.isEmpty) {
-      _showValidationError(AppLocalizations.of(context)!.validationKeyFeaturesRequired);
+      _showValidationError(
+          AppLocalizations.of(context)!.validationKeyFeaturesRequired);
       return false;
     }
     return true;
@@ -1055,8 +1116,6 @@ class _PublishAppScreenState extends State<PublishAppScreen> {
       ),
     );
   }
-
-
 
   bool _isSubmitting = false;
 
@@ -1092,9 +1151,15 @@ class _PublishAppScreenState extends State<PublishAppScreen> {
       // Helper function to parse key features
       List<String> parseKeyFeatures(dynamic keyFeatures) {
         if (keyFeatures == null) return [];
-        if (keyFeatures is List) return keyFeatures.map((e) => e.toString()).toList();
+        if (keyFeatures is List) {
+          return keyFeatures.map((e) => e.toString()).toList();
+        }
         if (keyFeatures is String) {
-          return keyFeatures.split(',').map((e) => e.trim()).where((e) => e.isNotEmpty).toList();
+          return keyFeatures
+              .split(',')
+              .map((e) => e.trim())
+              .where((e) => e.isNotEmpty)
+              .toList();
         }
         return [keyFeatures.toString()];
       }
@@ -1106,30 +1171,40 @@ class _PublishAppScreenState extends State<PublishAppScreen> {
       // Helper function to parse tags
       List<String> parseTags(String? tags) {
         if (tags == null || tags.isEmpty) return [];
-        return tags.split(',').map((e) => e.trim()).where((e) => e.isNotEmpty).toList();
+        return tags
+            .split(',')
+            .map((e) => e.trim())
+            .where((e) => e.isNotEmpty)
+            .toList();
       }
 
       final appData = {
         'app_name': formData['appName'] ?? '',
         'tagline': formData['tagline'] ?? '',
         'description': formData['description'] ?? '',
-        'detailed_description': formData['detailedDescription'] ?? formData['description'],
-        'category_id': int.tryParse(formData['category']?.toString() ?? '0') ?? 0,
+        'detailed_description':
+            formData['detailedDescription'] ?? formData['description'],
+        'category_id':
+            int.tryParse(formData['category']?.toString() ?? '0') ?? 0,
         'subcategory': formData['subcategory'] ?? '',
         'tags': parseTags(formData['tags']),
         'app_type': appTypeString.isNotEmpty ? appTypeString : 'mobile',
-        'supported_platforms': enumListToStringList(formData['platforms'] as List<dynamic>?),
+        'supported_platforms':
+            enumListToStringList(formData['platforms'] as List<dynamic>?),
         'current_version': formData['currentVersion'] ?? '1.0.0',
         'icon_url': formData['iconUrl'] ?? '',
         'screenshots': _uploadedScreenshotUrls,
         'demo_videos': formData['demoVideos'],
         'live_demo': formData['liveDemo'],
         'download_link': formData['downloadLink'],
-        'license_type': pricingModelString.isNotEmpty ? pricingModelString : 'free',
-        'pricing_model': pricingModelString.isNotEmpty ? pricingModelString : 'free',
+        'license_type':
+            pricingModelString.isNotEmpty ? pricingModelString : 'free',
+        'pricing_model':
+            pricingModelString.isNotEmpty ? pricingModelString : 'free',
         'pricing': formData['pricing']?.toString() ?? '0',
         'has_free_trial': formData['hasFreeTrial'] ?? false,
-        'trial_days': int.tryParse(formData['trialDays']?.toString() ?? '0') ?? 0,
+        'trial_days':
+            int.tryParse(formData['trialDays']?.toString() ?? '0') ?? 0,
         'is_open_source': formData['isOpenSource'] ?? false,
         'target_audience': formData['targetAudience'] ?? '',
         'business_sectors': formData['businessSectors'] ?? [],
@@ -1138,11 +1213,10 @@ class _PublishAppScreenState extends State<PublishAppScreen> {
         'technical_requirements': formData['technicalRequirements'],
         'has_documentation': formData['hasDocumentation'] ?? false,
         'documentation_url': formData['documentationUrl'],
-        'support_options': enumListToStringList(formData['supportOptions'] as List<dynamic>?),
+        'support_options':
+            enumListToStringList(formData['supportOptions'] as List<dynamic>?),
         'languages': formData['languages'] ?? ['Français'],
       };
-
-
 
       log('app data $appData');
       // Submit to API
@@ -1162,7 +1236,8 @@ class _PublishAppScreenState extends State<PublishAppScreen> {
               TextButton(
                 onPressed: () {
                   Navigator.of(context).pop(); // Close dialog
-                  Navigator.of(context).pop(true); // Return to previous screen with success
+                  Navigator.of(context)
+                      .pop(true); // Return to previous screen with success
                 },
                 child: Text(AppLocalizations.of(context)!.ok),
               ),
@@ -1183,7 +1258,8 @@ class _PublishAppScreenState extends State<PublishAppScreen> {
         } else {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
-              content: Text(AppLocalizations.of(context)!.errorPublishing(e.toString())),
+              content: Text(
+                  AppLocalizations.of(context)!.errorPublishing(e.toString())),
               backgroundColor: Colors.red,
             ),
           );
@@ -1198,55 +1274,84 @@ class _PublishAppScreenState extends State<PublishAppScreen> {
 
   String _getStepTitle(int step) {
     switch (step) {
-      case 0: return AppLocalizations.of(context)!.stepBasicInfo;
-      case 1: return AppLocalizations.of(context)!.stepTechnicalDetails;
-      case 2: return AppLocalizations.of(context)!.stepPricing;
-      case 3: return AppLocalizations.of(context)!.stepBusinessDetails;
-      default: return '';
+      case 0:
+        return AppLocalizations.of(context)!.stepBasicInfo;
+      case 1:
+        return AppLocalizations.of(context)!.stepTechnicalDetails;
+      case 2:
+        return AppLocalizations.of(context)!.stepPricing;
+      case 3:
+        return AppLocalizations.of(context)!.stepBusinessDetails;
+      default:
+        return '';
     }
   }
 
   String _getAppTypeLabel(AppType type) {
     switch (type) {
-      case AppType.mobile: return AppLocalizations.of(context)!.appTypeMobile;
-      case AppType.web: return AppLocalizations.of(context)!.appTypeWeb;
-      case AppType.desktop: return AppLocalizations.of(context)!.appTypeDesktop;
-      case AppType.saas: return AppLocalizations.of(context)!.appTypeSaas;
-      case AppType.api: return AppLocalizations.of(context)!.appTypeApi;
-      case AppType.plugin: return AppLocalizations.of(context)!.appTypePlugin;
-      case AppType.template: return AppLocalizations.of(context)!.appTypeTemplate;
+      case AppType.mobile:
+        return AppLocalizations.of(context)!.appTypeMobile;
+      case AppType.web:
+        return AppLocalizations.of(context)!.appTypeWeb;
+      case AppType.desktop:
+        return AppLocalizations.of(context)!.appTypeDesktop;
+      case AppType.saas:
+        return AppLocalizations.of(context)!.appTypeSaas;
+      case AppType.api:
+        return AppLocalizations.of(context)!.appTypeApi;
+      case AppType.plugin:
+        return AppLocalizations.of(context)!.appTypePlugin;
+      case AppType.template:
+        return AppLocalizations.of(context)!.appTypeTemplate;
     }
   }
 
   String _getPlatformLabel(Platform platform) {
     switch (platform) {
-      case Platform.iOS: return 'iOS';
-      case Platform.android: return 'Android';
-      case Platform.windows: return 'Windows';
-      case Platform.macOS: return 'macOS';
-      case Platform.linux: return 'Linux';
-      case Platform.web: return 'Web';
-      case Platform.api: return 'API';
+      case Platform.iOS:
+        return 'iOS';
+      case Platform.android:
+        return 'Android';
+      case Platform.windows:
+        return 'Windows';
+      case Platform.macOS:
+        return 'macOS';
+      case Platform.linux:
+        return 'Linux';
+      case Platform.web:
+        return 'Web';
+      case Platform.api:
+        return 'API';
     }
   }
 
   String _getPricingModelLabel(PricingModel model) {
     switch (model) {
-      case PricingModel.free: return AppLocalizations.of(context)!.pricingModelFree;
-      case PricingModel.freemium: return AppLocalizations.of(context)!.pricingModelFreemium;
-      case PricingModel.paid: return AppLocalizations.of(context)!.pricingModelPaid;
-      case PricingModel.enterprise: return AppLocalizations.of(context)!.pricingModelEnterprise;
-      case PricingModel.custom: return AppLocalizations.of(context)!.pricingModelCustom;
+      case PricingModel.free:
+        return AppLocalizations.of(context)!.pricingModelFree;
+      case PricingModel.freemium:
+        return AppLocalizations.of(context)!.pricingModelFreemium;
+      case PricingModel.paid:
+        return AppLocalizations.of(context)!.pricingModelPaid;
+      case PricingModel.enterprise:
+        return AppLocalizations.of(context)!.pricingModelEnterprise;
+      case PricingModel.custom:
+        return AppLocalizations.of(context)!.pricingModelCustom;
     }
   }
 
   String _getSupportTypeLabel(SupportType type) {
     switch (type) {
-      case SupportType.email: return AppLocalizations.of(context)!.supportTypeEmail;
-      case SupportType.phone: return AppLocalizations.of(context)!.supportTypePhone;
-      case SupportType.chat: return AppLocalizations.of(context)!.supportTypeChat;
-      case SupportType.training: return AppLocalizations.of(context)!.supportTypeTraining;
-      case SupportType.documentation: return AppLocalizations.of(context)!.supportTypeDocumentation;
+      case SupportType.email:
+        return AppLocalizations.of(context)!.supportTypeEmail;
+      case SupportType.phone:
+        return AppLocalizations.of(context)!.supportTypePhone;
+      case SupportType.chat:
+        return AppLocalizations.of(context)!.supportTypeChat;
+      case SupportType.training:
+        return AppLocalizations.of(context)!.supportTypeTraining;
+      case SupportType.documentation:
+        return AppLocalizations.of(context)!.supportTypeDocumentation;
     }
   }
 }

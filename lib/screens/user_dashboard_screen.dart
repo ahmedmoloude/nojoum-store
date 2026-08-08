@@ -13,7 +13,6 @@ import 'auth/login_screen.dart';
 import 'publish_app_screen.dart';
 import 'payment_history_screen.dart';
 import 'subscription_packages_screen.dart';
-import 'category_test_screen.dart';
 
 class UserDashboardScreen extends StatefulWidget {
   const UserDashboardScreen({super.key});
@@ -152,177 +151,191 @@ class _UserDashboardScreenState extends State<UserDashboardScreen> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-          Container(
-            width: double.infinity,
-            margin: const EdgeInsets.all(AppConstants.paddingM),
-            padding: const EdgeInsets.all(AppConstants.paddingL),
-            decoration: BoxDecoration(
-              color: AppConstants.primaryGold.withValues(alpha: 0.1),
-              borderRadius: BorderRadius.circular(AppConstants.borderRadiusM),
-              border: Border.all(color: AppConstants.primaryGold.withValues(alpha: 0.2)),
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  children: [
-                    CircleAvatar(
-                      radius: 30,
-                      backgroundColor: AppConstants.primaryGold,
-                      child: Text(
-                        _currentUser!.name.isNotEmpty ? _currentUser!.name[0].toUpperCase() : 'U',
-                        style: const TextStyle(
-                          color: Colors.white,
-                          fontSize: 24,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                    const SizedBox(width: AppConstants.paddingM),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            _currentUser!.name,
-                            style: theme.textTheme.headlineSmall?.copyWith(
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          Text(
-                            _currentUser!.email,
-                            style: theme.textTheme.bodyMedium?.copyWith(
-                              color: AppConstants.secondaryTextColor,
-                            ),
-                          ),
-                          if (_currentUser!.isVerified)
-                            Row(
-                              children: [
-                                Icon(
-                                  Icons.verified,
-                                  size: 16,
-                                  color: AppConstants.successGreen,
-                                ),
-                                const SizedBox(width: 4),
-                                Text(
-                                  l10n.verifiedAccount,
-                                  style: const TextStyle(
-                                    color: AppConstants.successGreen,
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                ),
-                              ],
-                            ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ),
-
-          // Subscription Status
-          Container(
-            margin: const EdgeInsets.symmetric(horizontal: AppConstants.paddingM),
-            child: SubscriptionStatusWidget(
-              onNavigateToPackages: () {
-                debugPrint('UserDashboardScreen: Navigating to subscription packages');
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const SubscriptionPackagesScreen(),
-                  ),
-                );
-              },
-            ),
-          ),
-
-          const SizedBox(height: AppConstants.paddingM),
-
-          // Language Settings
-          Container(
-            margin: const EdgeInsets.symmetric(horizontal: AppConstants.paddingM),
-            child: Card(
-              child: Padding(
-                padding: const EdgeInsets.all(AppConstants.paddingM),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      children: [
-                        const Icon(Icons.language, color: AppConstants.primaryBlue),
-                        const SizedBox(width: AppConstants.paddingS),
-                        Text(
-                          AppLocalizations.of(context)!.language,
-                          style: theme.textTheme.titleMedium?.copyWith(
+            Container(
+              width: double.infinity,
+              margin: const EdgeInsets.all(AppConstants.paddingM),
+              padding: const EdgeInsets.all(AppConstants.paddingL),
+              decoration: BoxDecoration(
+                color: AppConstants.primaryGold.withValues(alpha: 0.1),
+                borderRadius: BorderRadius.circular(AppConstants.borderRadiusM),
+                border: Border.all(
+                    color: AppConstants.primaryGold.withValues(alpha: 0.2)),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      CircleAvatar(
+                        radius: 30,
+                        backgroundColor: AppConstants.primaryGold,
+                        child: Text(
+                          _currentUser!.name.isNotEmpty
+                              ? _currentUser!.name[0].toUpperCase()
+                              : 'U',
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 24,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                      ],
+                      ),
+                      const SizedBox(width: AppConstants.paddingM),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              _currentUser!.name,
+                              style: theme.textTheme.headlineSmall?.copyWith(
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            Text(
+                              _currentUser!.email,
+                              style: theme.textTheme.bodyMedium?.copyWith(
+                                color: AppConstants.secondaryTextColor,
+                              ),
+                            ),
+                            if (_currentUser!.isVerified)
+                              Row(
+                                children: [
+                                  Icon(
+                                    Icons.verified,
+                                    size: 16,
+                                    color: AppConstants.successGreen,
+                                  ),
+                                  const SizedBox(width: 4),
+                                  Text(
+                                    l10n.verifiedAccount,
+                                    style: const TextStyle(
+                                      color: AppConstants.successGreen,
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+
+            // Subscription Status
+            Container(
+              margin:
+                  const EdgeInsets.symmetric(horizontal: AppConstants.paddingM),
+              child: SubscriptionStatusWidget(
+                onNavigateToPackages: () {
+                  debugPrint(
+                      'UserDashboardScreen: Navigating to subscription packages');
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const SubscriptionPackagesScreen(),
                     ),
-                    const SizedBox(height: AppConstants.paddingM),
-                    const LanguageSwitcher(showTitle: false, isCompact: false),
-                  ],
+                  );
+                },
+              ),
+            ),
+
+            const SizedBox(height: AppConstants.paddingM),
+
+            // Language Settings
+            Container(
+              margin:
+                  const EdgeInsets.symmetric(horizontal: AppConstants.paddingM),
+              child: Card(
+                child: Padding(
+                  padding: const EdgeInsets.all(AppConstants.paddingM),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        children: [
+                          const Icon(Icons.language,
+                              color: AppConstants.primaryBlue),
+                          const SizedBox(width: AppConstants.paddingS),
+                          Text(
+                            AppLocalizations.of(context)!.language,
+                            style: theme.textTheme.titleMedium?.copyWith(
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: AppConstants.paddingM),
+                      const LanguageSwitcher(
+                          showTitle: false, isCompact: false),
+                    ],
+                  ),
                 ),
               ),
             ),
-          ),
 
-          const SizedBox(height: AppConstants.paddingM),
+            const SizedBox(height: AppConstants.paddingM),
 
-          // Quick Actions
-          Container(
-            margin: const EdgeInsets.symmetric(horizontal: AppConstants.paddingM),
-            child: Row(
-              children: [
-                Expanded(
-                  child: ElevatedButton.icon(
-                    onPressed: () async {
-                      final result = await Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => const PublishAppScreen()),
-                      );
-                      if (result == true) {
-                        _refreshUserApps();
-                      }
-                    },
-                    icon: const Icon(Icons.add),
-                    label: Text(l10n.publishApp),
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: AppConstants.mauritanianGreen,
-                      foregroundColor: Colors.white,
-                      padding: const EdgeInsets.symmetric(vertical: AppConstants.paddingM),
+            // Quick Actions
+            Container(
+              margin:
+                  const EdgeInsets.symmetric(horizontal: AppConstants.paddingM),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: ElevatedButton.icon(
+                      onPressed: () async {
+                        final result = await Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const PublishAppScreen()),
+                        );
+                        if (result == true) {
+                          _refreshUserApps();
+                        }
+                      },
+                      icon: const Icon(Icons.add),
+                      label: Text(l10n.publishApp),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: AppConstants.mauritanianGreen,
+                        foregroundColor: Colors.white,
+                        padding: const EdgeInsets.symmetric(
+                            vertical: AppConstants.paddingM),
+                      ),
                     ),
                   ),
-                ),
-                const SizedBox(width: AppConstants.paddingM),
-                Expanded(
-                  child: ElevatedButton.icon(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => const PaymentHistoryScreen()),
-                      );
-                    },
-                    icon: const Icon(Icons.receipt_long),
-                    label: Text(l10n.payments),
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: AppConstants.primaryGold,
-                      foregroundColor: Colors.white,
-                      padding: const EdgeInsets.symmetric(vertical: AppConstants.paddingM),
+                  const SizedBox(width: AppConstants.paddingM),
+                  Expanded(
+                    child: ElevatedButton.icon(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  const PaymentHistoryScreen()),
+                        );
+                      },
+                      icon: const Icon(Icons.receipt_long),
+                      label: Text(l10n.payments),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: AppConstants.primaryGold,
+                        foregroundColor: Colors.white,
+                        padding: const EdgeInsets.symmetric(
+                            vertical: AppConstants.paddingM),
+                      ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
 
-          const SizedBox(height: AppConstants.paddingM),
+            const SizedBox(height: AppConstants.paddingM),
 
-          // User Apps Section
-          FutureBuilder<List<MauritanianApp>>(
+            // User Apps Section
+            FutureBuilder<List<MauritanianApp>>(
               future: _userAppsFuture,
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
@@ -391,7 +404,9 @@ class _UserDashboardScreenState extends State<UserDashboardScreen> {
                           onPressed: () async {
                             final result = await Navigator.push(
                               context,
-                              MaterialPageRoute(builder: (context) => const PublishAppScreen()),
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      const PublishAppScreen()),
                             );
                             if (result == true) {
                               _refreshUserApps();
@@ -413,7 +428,8 @@ class _UserDashboardScreenState extends State<UserDashboardScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: AppConstants.paddingM),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: AppConstants.paddingM),
                       child: Text(
                         l10n.myApps(userApps.length),
                         style: theme.textTheme.headlineSmall?.copyWith(
@@ -425,12 +441,14 @@ class _UserDashboardScreenState extends State<UserDashboardScreen> {
                     ListView.builder(
                       shrinkWrap: true,
                       physics: const NeverScrollableScrollPhysics(),
-                      padding: const EdgeInsets.symmetric(horizontal: AppConstants.paddingM),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: AppConstants.paddingM),
                       itemCount: userApps.length,
                       itemBuilder: (context, index) {
                         final app = userApps[index];
                         return Container(
-                          margin: const EdgeInsets.only(bottom: AppConstants.paddingM),
+                          margin: const EdgeInsets.only(
+                              bottom: AppConstants.paddingM),
                           child: AppCard(
                             app: app,
                             showFeaturedBadge: true,
@@ -438,7 +456,8 @@ class _UserDashboardScreenState extends State<UserDashboardScreen> {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => AppDetailScreen(app: app),
+                                  builder: (context) =>
+                                      AppDetailScreen(app: app),
                                 ),
                               );
                             },
@@ -504,7 +523,8 @@ class _UserDashboardScreenState extends State<UserDashboardScreen> {
                 ),
                 child: Text(
                   l10n.loginButton,
-                  style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+                  style: const TextStyle(
+                      fontSize: 16, fontWeight: FontWeight.w600),
                 ),
               ),
             ],

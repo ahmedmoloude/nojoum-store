@@ -26,31 +26,34 @@ class CategoryChip extends StatelessWidget {
 
     return Card(
       elevation: isSelected ? AppConstants.elevationM : AppConstants.elevationS,
-      color: isSelected ? category.color.withOpacity(0.1) : AppConstants.cardColor,
+      color:
+          isSelected ? category.color.withOpacity(0.1) : AppConstants.cardColor,
       child: InkWell(
         onTap: onTap,
         borderRadius: BorderRadius.circular(AppConstants.borderRadiusM),
         child: Container(
-          padding: const EdgeInsets.all(AppConstants.paddingS), // Reduced padding
+          padding:
+              const EdgeInsets.all(AppConstants.paddingS), // Reduced padding
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             mainAxisSize: MainAxisSize.min, // Added to minimize space usage
             children: [
               // Category icon - made more compact
               Container(
-                padding: const EdgeInsets.all(AppConstants.paddingXS), // Reduced padding
+                padding: const EdgeInsets.all(
+                    AppConstants.paddingXS), // Reduced padding
                 decoration: BoxDecoration(
-                  color: isSelected 
-                      ? category.color 
+                  color: isSelected
+                      ? category.color
                       : category.color.withOpacity(0.1),
-                  borderRadius: BorderRadius.circular(AppConstants.borderRadiusM), // Reduced radius
+                  borderRadius: BorderRadius.circular(
+                      AppConstants.borderRadiusM), // Reduced radius
                 ),
                 child: Icon(
                   category.icon,
                   size: AppConstants.iconSizeM, // Reduced icon size
-                  color: isSelected 
-                      ? AppConstants.whiteTextColor 
-                      : category.color,
+                  color:
+                      isSelected ? AppConstants.whiteTextColor : category.color,
                 ),
               ),
               const SizedBox(height: AppConstants.paddingXS), // Reduced spacing
@@ -60,10 +63,11 @@ class CategoryChip extends StatelessWidget {
                 child: Center(
                   child: Text(
                     category.displayName,
-                    style: theme.textTheme.labelSmall?.copyWith( // Smaller text
+                    style: theme.textTheme.labelSmall?.copyWith(
+                      // Smaller text
                       fontWeight: FontWeight.w600,
-                      color: isSelected 
-                          ? category.color 
+                      color: isSelected
+                          ? category.color
                           : AppConstants.primaryTextColor,
                       fontSize: 11, // Explicit smaller font size
                     ),
@@ -134,11 +138,11 @@ class CategoryFilterChips extends StatelessWidget {
                 selectedColor: AppConstants.primaryGreen.withOpacity(0.2),
                 checkmarkColor: AppConstants.primaryGreen,
                 labelStyle: TextStyle(
-                  color: selectedCategoryId == null 
-                      ? AppConstants.primaryGreen 
+                  color: selectedCategoryId == null
+                      ? AppConstants.primaryGreen
                       : AppConstants.primaryTextColor,
-                  fontWeight: selectedCategoryId == null 
-                      ? FontWeight.w600 
+                  fontWeight: selectedCategoryId == null
+                      ? FontWeight.w600
                       : FontWeight.normal,
                 ),
               ),
@@ -158,11 +162,13 @@ class CategoryFilterChips extends StatelessWidget {
                 selectedColor: category.color.withOpacity(0.2),
                 checkmarkColor: category.color,
                 labelStyle: TextStyle(
-                  color: isSelected ? category.color : AppConstants.primaryTextColor,
+                  color: isSelected
+                      ? category.color
+                      : AppConstants.primaryTextColor,
                   fontWeight: isSelected ? FontWeight.w600 : FontWeight.normal,
                 ),
-                avatar: isSelected 
-                    ? null 
+                avatar: isSelected
+                    ? null
                     : Icon(
                         category.icon,
                         size: AppConstants.iconSizeS,
@@ -170,7 +176,7 @@ class CategoryFilterChips extends StatelessWidget {
                       ),
               ),
             );
-          }).toList(),
+          }),
         ],
       ),
     );

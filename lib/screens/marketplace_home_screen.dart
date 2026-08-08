@@ -6,7 +6,6 @@ import '../models/mauritanian_app.dart';
 import '../utils/constants.dart';
 import '../widgets/app_card.dart';
 import '../widgets/category_chip.dart';
-import '../widgets/ad_banner_widget.dart';
 import '../l10n/app_localizations.dart';
 import 'app_detail_screen.dart';
 import 'catalog_screen.dart';
@@ -59,19 +58,30 @@ class _MarketplaceHomeScreenState extends State<MarketplaceHomeScreen> {
                   gradient: LinearGradient(
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
-                    colors: [AppConstants.backgroundColor, AppConstants.primaryGold],
+                    colors: [
+                      AppConstants.backgroundColor,
+                      AppConstants.primaryGold
+                    ],
                   ),
                 ),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    SizedBox(height: 40),
-                    Image.asset(
-                      'assets/images/noujoum_store_logo.png',
-                      width: 200,
+                child: SafeArea(
+                  child: Center(
+                    child: SingleChildScrollView(
+                      physics: const NeverScrollableScrollPhysics(),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const SizedBox(height: 16),
+                          Image.asset(
+                            'assets/images/noujoum_store_logo.png',
+                            width: 180,
+                            fit: BoxFit.contain,
+                          ),
+                          const SizedBox(height: AppConstants.paddingS),
+                        ],
+                      ),
                     ),
-                    SizedBox(height: AppConstants.paddingS),
-                  ],
+                  ),
                 ),
               ),
             ),
@@ -92,20 +102,21 @@ class _MarketplaceHomeScreenState extends State<MarketplaceHomeScreen> {
               children: [
                 // Mode Toggle Section
                 _buildModeToggle(theme),
-                
+
                 // Hero Banner with CTA
                 _buildHeroBanner(theme),
-                
+
                 // Ad Carousel Placeholder
                 _buildAdCarousel(),
-                
+
                 // Quick Stats
                 FutureBuilder<Map<String, String>>(
                   future: _statsFuture,
                   builder: (context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting) {
                       return Container(
-                        margin: EdgeInsets.symmetric(horizontal: AppConstants.paddingM),
+                        margin: EdgeInsets.symmetric(
+                            horizontal: AppConstants.paddingM),
                         height: 80,
                         child: Center(child: CircularProgressIndicator()),
                       );
@@ -119,14 +130,20 @@ class _MarketplaceHomeScreenState extends State<MarketplaceHomeScreen> {
                 FutureBuilder<List<MauritanianApp>>(
                   future: _featuredAppsFuture,
                   builder: (context, snapshot) {
-                    if (!snapshot.hasData || snapshot.data!.isEmpty) return SizedBox();
+                    if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                      return SizedBox();
+                    }
                     return Column(
                       children: [
-                        _buildSectionHeader(AppLocalizations.of(context)!.featuredApps, AppLocalizations.of(context)!.viewAll, theme, () {
+                        _buildSectionHeader(
+                            AppLocalizations.of(context)!.featuredApps,
+                            AppLocalizations.of(context)!.viewAll,
+                            theme, () {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => CatalogScreen(initialFilter: 'featured'),
+                              builder: (context) =>
+                                  CatalogScreen(initialFilter: 'featured'),
                             ),
                           );
                         }),
@@ -143,10 +160,14 @@ class _MarketplaceHomeScreenState extends State<MarketplaceHomeScreen> {
                     if (!snapshot.hasData) return SizedBox();
                     return Column(
                       children: [
-                        _buildSectionHeader(AppLocalizations.of(context)!.popularCategories, AppLocalizations.of(context)!.viewAll, theme, () {
+                        _buildSectionHeader(
+                            AppLocalizations.of(context)!.popularCategories,
+                            AppLocalizations.of(context)!.viewAll,
+                            theme, () {
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => CategoriesScreen()),
+                            MaterialPageRoute(
+                                builder: (context) => CategoriesScreen()),
                           );
                         }),
                         _buildCategoriesGrid(snapshot.data!),
@@ -154,16 +175,16 @@ class _MarketplaceHomeScreenState extends State<MarketplaceHomeScreen> {
                     );
                   },
                 ),
-                
+
                 // Sponsored Apps Carousel Placeholder
                 _buildSponsoredSection(theme),
-                
+
                 // Success Stories Section
                 // _buildSuccessStories(theme),r
-                
+
                 // Newsletter Signup
                 // _buildNewsletterSignup(theme),
-                
+
                 SizedBox(height: AppConstants.paddingXL),
               ],
             ),
@@ -195,21 +216,28 @@ class _MarketplaceHomeScreenState extends State<MarketplaceHomeScreen> {
               child: Container(
                 padding: EdgeInsets.symmetric(vertical: AppConstants.paddingM),
                 decoration: BoxDecoration(
-                  color: _isBrowseMode ? AppConstants.primaryGold : Colors.transparent,
-                  borderRadius: BorderRadius.circular(AppConstants.borderRadiusL),
+                  color: _isBrowseMode
+                      ? AppConstants.primaryGold
+                      : Colors.transparent,
+                  borderRadius:
+                      BorderRadius.circular(AppConstants.borderRadiusL),
                 ),
                 child: Column(
                   children: [
                     Icon(
                       Icons.apps,
-                      color: _isBrowseMode ? AppConstants.whiteTextColor : AppConstants.primaryGold,
+                      color: _isBrowseMode
+                          ? AppConstants.whiteTextColor
+                          : AppConstants.primaryGold,
                       size: AppConstants.iconSizeL,
                     ),
                     SizedBox(height: AppConstants.paddingS),
                     Text(
                       AppLocalizations.of(context)!.browseApps,
                       style: theme.textTheme.titleMedium?.copyWith(
-                        color: _isBrowseMode ? AppConstants.whiteTextColor : AppConstants.primaryGold,
+                        color: _isBrowseMode
+                            ? AppConstants.whiteTextColor
+                            : AppConstants.primaryGold,
                         fontWeight: FontWeight.w600,
                       ),
                       textAlign: TextAlign.center,
@@ -225,21 +253,28 @@ class _MarketplaceHomeScreenState extends State<MarketplaceHomeScreen> {
               child: Container(
                 padding: EdgeInsets.symmetric(vertical: AppConstants.paddingM),
                 decoration: BoxDecoration(
-                  color: !_isBrowseMode ? AppConstants.mauritanianGreen : Colors.transparent,
-                  borderRadius: BorderRadius.circular(AppConstants.borderRadiusL),
+                  color: !_isBrowseMode
+                      ? AppConstants.mauritanianGreen
+                      : Colors.transparent,
+                  borderRadius:
+                      BorderRadius.circular(AppConstants.borderRadiusL),
                 ),
                 child: Column(
                   children: [
                     Icon(
                       Icons.publish,
-                      color: !_isBrowseMode ? AppConstants.whiteTextColor : AppConstants.mauritanianGreen,
+                      color: !_isBrowseMode
+                          ? AppConstants.whiteTextColor
+                          : AppConstants.mauritanianGreen,
                       size: AppConstants.iconSizeL,
                     ),
                     SizedBox(height: AppConstants.paddingS),
                     Text(
                       AppLocalizations.of(context)!.publishMyApp,
                       style: theme.textTheme.titleMedium?.copyWith(
-                        color: !_isBrowseMode ? AppConstants.whiteTextColor : AppConstants.mauritanianGreen,
+                        color: !_isBrowseMode
+                            ? AppConstants.whiteTextColor
+                            : AppConstants.mauritanianGreen,
                         fontWeight: FontWeight.w600,
                       ),
                       textAlign: TextAlign.center,
@@ -271,8 +306,8 @@ class _MarketplaceHomeScreenState extends State<MarketplaceHomeScreen> {
         children: [
           Text(
             _isBrowseMode
-              ? AppLocalizations.of(context)!.discoverBestSolutions
-              : AppLocalizations.of(context)!.shareYourInnovation,
+                ? AppLocalizations.of(context)!.discoverBestSolutions
+                : AppLocalizations.of(context)!.shareYourInnovation,
             style: theme.textTheme.headlineSmall?.copyWith(
               color: AppConstants.whiteTextColor,
               fontWeight: FontWeight.bold,
@@ -281,8 +316,9 @@ class _MarketplaceHomeScreenState extends State<MarketplaceHomeScreen> {
           SizedBox(height: AppConstants.paddingM),
           Text(
             _isBrowseMode
-              ? AppLocalizations.of(context)!.findAppsCreatedByLocalDevelopers
-              : AppLocalizations.of(context)!.joinMarketplaceConnectWithClients,
+                ? AppLocalizations.of(context)!.findAppsCreatedByLocalDevelopers
+                : AppLocalizations.of(context)!
+                    .joinMarketplaceConnectWithClients,
             style: theme.textTheme.bodyMedium?.copyWith(
               color: AppConstants.whiteTextColor.withOpacity(0.9),
             ),
@@ -311,7 +347,9 @@ class _MarketplaceHomeScreenState extends State<MarketplaceHomeScreen> {
               ),
             ),
             child: Text(
-              _isBrowseMode ? AppLocalizations.of(context)!.exploreNow : AppLocalizations.of(context)!.startPublishing,
+              _isBrowseMode
+                  ? AppLocalizations.of(context)!.exploreNow
+                  : AppLocalizations.of(context)!.startPublishing,
               style: const TextStyle(fontWeight: FontWeight.w600),
             ),
           ),
@@ -395,9 +433,11 @@ class _MarketplaceHomeScreenState extends State<MarketplaceHomeScreen> {
     );
   }
 
-  Widget _buildSectionHeader(String title, String actionText, ThemeData theme, VoidCallback onTap) {
+  Widget _buildSectionHeader(
+      String title, String actionText, ThemeData theme, VoidCallback onTap) {
     return Padding(
-      padding: EdgeInsets.fromLTRB(AppConstants.paddingM, AppConstants.paddingL, AppConstants.paddingM, AppConstants.paddingM),
+      padding: EdgeInsets.fromLTRB(AppConstants.paddingM, AppConstants.paddingL,
+          AppConstants.paddingM, AppConstants.paddingM),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -422,7 +462,8 @@ class _MarketplaceHomeScreenState extends State<MarketplaceHomeScreen> {
             app: app,
             onTap: () => Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => AppDetailScreen(app: app)),
+              MaterialPageRoute(
+                  builder: (context) => AppDetailScreen(app: app)),
             ),
             showFeaturedBadge: true,
           ),
@@ -461,7 +502,8 @@ class _MarketplaceHomeScreenState extends State<MarketplaceHomeScreen> {
             onTap: () => Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => CatalogScreen(initialCategory: category.id, category: category),
+                builder: (context) => CatalogScreen(
+                    initialCategory: category.id, category: category),
               ),
             ),
           );
@@ -473,7 +515,8 @@ class _MarketplaceHomeScreenState extends State<MarketplaceHomeScreen> {
   Widget _buildSponsoredSection(ThemeData theme) {
     return Column(
       children: [
-        _buildSectionHeader(AppLocalizations.of(context)!.sponsoredAppsTitle, AppLocalizations.of(context)!.viewAll, theme, () {}),
+        _buildSectionHeader(AppLocalizations.of(context)!.sponsoredAppsTitle,
+            AppLocalizations.of(context)!.viewAll, theme, () {}),
         Container(
           margin: EdgeInsets.symmetric(horizontal: AppConstants.paddingM),
           height: 100,
@@ -489,7 +532,7 @@ class _MarketplaceHomeScreenState extends State<MarketplaceHomeScreen> {
                 Icon(Icons.star, size: 32, color: Colors.orange[400]),
                 SizedBox(height: 8),
                 Text(
-              AppLocalizations.of(context)!.sponsoredAppsTitle,
+                  AppLocalizations.of(context)!.sponsoredAppsTitle,
                   style: TextStyle(color: Colors.orange[700], fontSize: 14),
                 ),
               ],
@@ -518,7 +561,7 @@ class _MarketplaceHomeScreenState extends State<MarketplaceHomeScreen> {
     return Column(
       children: [
         _buildSectionHeader(l10n.successStories, '', theme, () {}),
-        Container(
+        SizedBox(
           height: 120,
           child: ListView.builder(
             scrollDirection: Axis.horizontal,
@@ -532,7 +575,8 @@ class _MarketplaceHomeScreenState extends State<MarketplaceHomeScreen> {
                 padding: EdgeInsets.all(AppConstants.paddingM),
                 decoration: BoxDecoration(
                   color: AppConstants.surfaceColor,
-                  borderRadius: BorderRadius.circular(AppConstants.borderRadiusM),
+                  borderRadius:
+                      BorderRadius.circular(AppConstants.borderRadiusM),
                   boxShadow: [
                     BoxShadow(
                       color: Colors.black.withOpacity(0.05),
@@ -547,7 +591,8 @@ class _MarketplaceHomeScreenState extends State<MarketplaceHomeScreen> {
                       padding: EdgeInsets.all(AppConstants.paddingM),
                       decoration: BoxDecoration(
                         color: AppConstants.mauritanianGreen.withOpacity(0.1),
-                        borderRadius: BorderRadius.circular(AppConstants.borderRadiusM),
+                        borderRadius:
+                            BorderRadius.circular(AppConstants.borderRadiusM),
                       ),
                       child: Icon(
                         story['icon'] as IconData,
@@ -629,7 +674,8 @@ class _MarketplaceHomeScreenState extends State<MarketplaceHomeScreen> {
                   decoration: InputDecoration(
                     hintText: AppLocalizations.of(context)!.yourEmailHint,
                     border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(AppConstants.borderRadiusM),
+                      borderRadius:
+                          BorderRadius.circular(AppConstants.borderRadiusM),
                     ),
                     contentPadding: EdgeInsets.symmetric(
                       horizontal: AppConstants.paddingM,
@@ -662,8 +708,6 @@ class _MarketplaceHomeScreenState extends State<MarketplaceHomeScreen> {
         l10n.appsAvailableCount: '${stats['total_apps'] ?? 0}+',
         l10n.activeDevelopersCount: '${stats['total_developers'] ?? 0}+',
       };
-
-
     } catch (e) {
       // Fallback to default values if API fails
       return {
